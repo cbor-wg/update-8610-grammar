@@ -4,20 +4,21 @@ v: 3
 title: "Updates to the CDDL grammar of RFC 8610"
 abbrev: "CDDL grammar updates"
 
-docname: draft-bormann-update-8610-grammar-latest
+docname: draft-bormann-cbor-update-8610-grammar-latest
 stream: IETF
 updates: 8610
 # date:
 cat: std
 consensus: true
-# area: ART
-# workgroup: CBOR
+area: ART
+workgroup: CBOR
 keyword:
  - Concise Data Definition Language
 venue:
-#  group: CBOR
-#  mail: cbor@ietf.org
+  group: CBOR
+  mail: cbor@ietf.org
   github: "cbor-wg/update-8610-grammar"
+  latest: https://cbor-wg.github.io/update-8610-grammar/
 
 author:
   -
