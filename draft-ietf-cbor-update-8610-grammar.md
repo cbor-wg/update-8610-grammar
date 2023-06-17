@@ -91,7 +91,7 @@ informative:
     of draft-bormann-cbor-cddl-2-draft and previously
     draft-bormann-cbor-cddl-freezer.
     This submission extracts out those grammar changes that are ready
-    for WG adoption and publication.
+    for publication.
 
 --- middle
 
