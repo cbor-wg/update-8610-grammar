@@ -4,7 +4,7 @@ v: 3
 title: "Updates to the CDDL grammar of RFC 8610"
 abbrev: "CDDL grammar updates"
 
-docname: draft-bormann-cbor-update-8610-grammar-latest
+docname: draft-ietf-cbor-update-8610-grammar-latest
 stream: IETF
 updates: 8610
 # date:
@@ -39,7 +39,7 @@ normative:
 informative:
   RFC5234: abnf
   RFC7405: abnf-case
-  I-D.bormann-cbor-cddl-more-control: more-control
+  I-D.ietf-cbor-cddl-more-control: more-control
   I-D.draft-bormann-cbor-cddl-freezer: freezer
   I-D.bormann-cbor-cddl-2-draft: cddl-2-draft
 #  useful:
