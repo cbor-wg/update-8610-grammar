@@ -95,8 +95,6 @@ The Terminology from {{-cddl}} applies.
 The grammar in {{-cddl}} is based on ABNF, which is defined in {{-abnf}}
 and {{-abnf-case}}.
 
-{::boilerplate bcp14-tagged}
-
 # Clarifications and Changes based on Errata Reports {#clari}
 
 
