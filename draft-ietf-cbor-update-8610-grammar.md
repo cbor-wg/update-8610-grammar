@@ -241,8 +241,15 @@ foo = h'
 
 ... which would be supported by the existing ABNF in {{-cddl}}.
 
-### No change needed after {{e6527}}
+### No change needed after addressing {{<<e6527}} (Section {{<e6527}})
 {:unnumbered}
+
+[^headingbug]
+
+[^headingbug]: note that the HTML rendering of the heading is
+    butchered by xml2rfc, as noted in
+    https://github.com/ietf-tools/xml2rfc/issues/683; we except
+    this to have been fixed before this document is published
 
 This document takes the simpler approach of leaving the processing of
 the content of the byte string literal to a semantic step after
