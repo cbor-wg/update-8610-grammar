@@ -34,14 +34,14 @@ author:
 
 normative:
   RFC8610: cddl
-  RFC9165: control1
+  RFC5234: abnf
 
 informative:
-  RFC5234: abnf
   RFC7405: abnf-case
-  I-D.ietf-cbor-cddl-more-control: more-control
-  I-D.draft-bormann-cbor-cddl-freezer: freezer
-  I-D.bormann-cbor-cddl-2-draft: cddl-2-draft
+  RFC9165: control1
+  I-D.ietf-cbor-cddl-modules: modules
+  I-D.ietf-cbor-edn-literals: edn
+#  I-D.ietf-cbor-cddl-more-control: more-control
 #  useful:
 #    target: https://github.com/cbor-wg/cddl/wiki/Useful-CDDL
 #    title: Useful CDDL
@@ -101,7 +101,7 @@ and {{-abnf-case}}.
 
 
 *Compatibility*:
-: errata fix (targets 1.0 and 2.0)
+: errata fix
 
 A number of errata reports have been made around some details of text
 string and byte string literal syntax: {{Err6527}} and {{Err6543}}.
@@ -253,8 +253,8 @@ It does require some care when copy-pasting into CDDL models from ABNF
 that contains single quotes (which may also hide as apostrophes
 in comments); these need to be escaped or possibly replaced by `%x27`.
 
-Finally, our approach may leave the door open wider to extending
-`bsqual` as proposed in {{Appendix A.1 of -cddl-2-draft}}.
+Finally, our approach would lend support to extending `bsqual` in CDDL
+similar to the way this is done for CBOR diagnostic notation in {{-edn}}.
 
 
 # Small Enabling Grammar Changes
@@ -283,8 +283,8 @@ This makes sense when the file has to stand alone, as a CDDL data
 model needs to have at least one rule to provide an entry point (start
 rule).
 
-With CDDL 2.0, CDDL files can also include directives<!-- (see
-{{directives}}) -->, and these might be the source of all the rules that
+With CDDL modules {{-modules}}, CDDL files can also include directives,
+and these might be the source of all the rules that
 ultimately make up the module created by the file.
 Any other rule content in the file has to be available for directive
 processing, making the requirement for at least one rule cumbersome.
@@ -309,7 +309,7 @@ Non-literal Tag Numbers {#tagnum}
 *Compatibility*:
 : backward (not forward)
 
-The CDDL 1.0 syntax for expressing tags in CDDL is (ABNF as in {{-abnf}}):
+The existing ABNF syntax for expressing tags in CDDL is:
 
 ~~~ abnf
 ; extracted from RFC 8610 ABNF:
@@ -323,7 +323,7 @@ has a range of tag numbers 1668546817 (0x63740101) to 1668612095
 (0x6374FFFF) to tag specific content formats.
 This can currently not be expressed in CDDL.
 
-CDDL 2.0 extends this to:
+This update extends this to:
 
 ~~~ abnf
 ; new rules collectively defining the tagged case:
