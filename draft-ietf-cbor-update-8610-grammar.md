@@ -67,54 +67,27 @@ informative:
 
 --- abstract
 
-[^abs1-]
+The Concise Data Definition Language (CDDL), as defined in
+RFC 8610 and RFC 9165,
+provides an easy and unambiguous way to express structures for
+protocol messages and data formats that are represented in CBOR or
+JSON.
 
-[^abs1-]:
-    At the time of writing,
-    the Concise Data Definition Language (CDDL) is defined by
-    RFC 8610 and RFC 9165.
-    The latter has used the extension point provided in RFC 8610,
-    the _control operator_.
-
-    As CDDL is being used in larger projects, the need for corrections
-    and additional features has become known that cannot be easily
-    mapped into this single extension point.
-    Hence, there is a need for evolution of the base CDDL
-    specification itself.
-
-    The present document updates errata and makes other small fixes for
-    the ABNF grammar defined for CDDL in RFC 8610.
-
-[^status]
-
-[^status]: Previous versions of the changes in this document were part
-    of draft-bormann-cbor-cddl-2-draft and previously
-    draft-bormann-cbor-cddl-freezer.
-    This submission extracts out those grammar changes that are ready
-    for publication.
+The present document updates RFC 8610 by addressing errata and making
+other small fixes for the ABNF grammar defined for CDDL there.
 
 --- middle
 
 # Introduction
 
-[^abs1-]
+The Concise Data Definition Language (CDDL), as defined in
+{{-cddl}} and {{-control1}},
+provides an easy and unambiguous way to express structures for
+protocol messages and data formats that are represented in CBOR or
+JSON.
 
-[^status]
-
-[^seealso]
-
-[^seealso]: Proposals for grammar and other changes that need more
-    work can be found in {{-cddl-2-draft}}.  Proposals for other
-    additions to the CDDL specification base are in {{-freezer}}.
-
-Note that the existing extension point "control operator" ({{Section
-3.8 of -cddl}}) can be exercised for new features in parallel to the
-work described here; one set of such proposals is in {{-more-control}}.
-
-The present document, in conjunction with {{-cddl}} as well as
-{{-control1}} and {{-more-control}}, is intended to be the specification
-base of what has colloquially been called CDDL 1.1.
-Additional documents describe further work on CDDL.
+The present document updates {{-cddl}} by addressing errata and making
+other small fixes for the ABNF grammar defined for CDDL there.
 
 ## Conventions and Definitions
 
