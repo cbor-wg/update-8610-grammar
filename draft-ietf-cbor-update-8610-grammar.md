@@ -121,6 +121,8 @@ text = %x22 *SCHAR %x22
 SCHAR = %x20-21 / %x23-5B / %x5D-7E / %x80-10FFFD / SESC
 SESC = "\" (%x20-7E / %x80-10FFFD)
 ~~~
+{: #e6527-old1 title="Old ABNF for strings with permissive ABNF for
+SESC, but not allowing hex escapes"}
 
 This allows almost any non-C0 character to be escaped by a backslash,
 but critically misses out on the `\uXXXX` and `\uHHHH\uLLLL` forms
@@ -139,7 +141,8 @@ non-surrogate = ((DIGIT / "A"/"B"/"C" / "E"/"F") 3HEXDIG) /
 high-surrogate = "D" ("8"/"9"/"A"/"B") 2HEXDIG
 low-surrogate = "D" ("C"/"D"/"E"/"F") 2HEXDIG
 ~~~
-{: #e6527-new1 title="Updated string parsing to allow hex escapes"}
+{: #e6527-new1 title="Updated string ABNF to allow hex escapes"
+sourcecode-name="cddl-new-sesc.abnf"}
 
 (Notes:
 In ABNF, strings such as `"A"`, `"B"` etc. are case-insensitive, as is
@@ -157,6 +160,7 @@ bytes = [bsqual] %x27 *BCHAR %x27
 BCHAR = %x20-26 / %x28-5B / %x5D-10FFFD / SESC / CRLF
 bsqual = "h" / "b64"
 ~~~
+{: #e6527-old2 title="Old ABNF for BCHAR"}
 
 In BCHAR, the updated version explicitly allows `\'`, which is no
 longer allowed in the updated SESC:
@@ -165,7 +169,8 @@ longer allowed in the updated SESC:
 ; new rule for BCHAR:
 BCHAR = %x20-26 / %x28-5B / %x5D-10FFFD / SESC / "\'" / CRLF
 ~~~
-{: #e6527-new2 title="Updated rule for BCHAR"}
+{: #e6527-new2 title="Updated ABNF for BCHAR"
+sourcecode-name="cddl-new-bchar.abnf"}
 
 ## Err6543 (byte string literals)
 
@@ -178,6 +183,7 @@ in base16 (hex) or base64 (but see also updated BCHAR production above):
 bytes = [bsqual] %x27 *BCHAR %x27
 BCHAR = %x20-26 / %x28-5B / %x5D-10FFFD / SESC / CRLF
 ~~~
+{: #e6527-old2a title="Old ABNF for BCHAR"}
 
 ### Change proposed by Errata Report 6543
 {:unnumbered}
@@ -206,7 +212,7 @@ COMMENT = ";" *PCHAR CRLF
 PCHAR = %x20-7E / %x80-10FFFD
 CRLF = %x0A / %x0D.0A
 ~~~
-{: #e6543-2 title="Definition of WS from RFC 8610"}
+{: #e6543-2 title="ABNF definition of WS from RFC 8610"}
 
 This allows any non-C0 character in a comment, so this fragment
 becomes possible:
@@ -270,6 +276,7 @@ Empty data models {#empty}
 ; RFC 8610 ABNF:
 cddl = S 1*(rule S)
 ~~~
+{: #empty-old title="Old ABNF for top-level rule cddl"}
 
 
 This makes sense when the file has to stand alone, as a CDDL data
@@ -282,15 +289,17 @@ ultimately make up the module created by the file.
 Any other rule content in the file has to be available for directive
 processing, making the requirement for at least one rule cumbersome.
 
-Therefore, we extend the grammar as follows:
+Therefore, we extend the grammar as in {{empty-new}}
+and make the existence of at least one rule a semantic constraint, to
+be fulfilled after processing of all directives.
 
 ~~~ abnf
 ; new top-level rule:
 cddl = S *(rule S)
 ~~~
+{: #empty-new title="Updated ABNF for top-level rule cddl"
+sourcecode-name="cddl-new-cddl.abnf"}
 
-and make the existence of at least one rule a semantic constraint, to
-be fulfilled after processing of all directives.
 
 
 Non-literal Tag Numbers {#tagnum}
@@ -306,6 +315,7 @@ The CDDL 1.0 syntax for expressing tags in CDDL is (ABNF as in {{-abnf}}):
 ; extracted from RFC 8610 ABNF:
 type2 /= "#" "6" ["." uint] "(" S type S ")"
 ~~~
+{: #tag-old title="Old ABNF for tag syntax"}
 
 This means tag numbers can only be given as literal numbers (uints).
 Some specifications operate on ranges of tag numbers, e.g., {{?RFC9277}}
@@ -320,6 +330,8 @@ CDDL 2.0 extends this to:
 type2 /= "#" "6" ["." tag-number] "(" S type S ")"
 tag-number = uint / ("<" type ">")
 ~~~
+{: #tag-new title="Updated ABNF for tag syntax"
+sourcecode-name="cddl-new-tag.abnf"}
 
 So the above range can be expressed in a CDDL fragment such as:
 
@@ -357,10 +369,11 @@ This document has no IANA actions.
 This appendix provides the full ABNF from {{-cddl}} with the updates
 applied in the present document.
 
-~~~ cddl
+~~~ abnf
 {::include cddl-1-1-update.abnf}
 ~~~
-{: #collected-abnf title="ABNF for CDDL as updated"}
+{: #collected-abnf title="ABNF for CDDL as updated"
+sourcecode-name="cddl-updated-complete.abnf"}
 
 # Acknowledgments
 {:numbered="false"}
