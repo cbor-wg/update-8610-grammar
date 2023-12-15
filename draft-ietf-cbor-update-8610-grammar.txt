@@ -4,9 +4,9 @@
 
 CBOR                                                          C. Bormann
 Internet-Draft                                    Universität Bremen TZI
-Updates: 8610 (if approved)                                 17 June 2023
+Updates: 8610 (if approved)                             15 December 2023
 Intended status: Standards Track                                        
-Expires: 19 December 2023
+Expires: 17 June 2024
 
 
                 Updates to the CDDL grammar of RFC 8610
@@ -14,23 +14,13 @@ Expires: 19 December 2023
 
 Abstract
 
-   At the time of writing, the Concise Data Definition Language (CDDL)
-   is defined by RFC 8610 and RFC 9165.  The latter has used the
-   extension point provided in RFC 8610, the _control operator_.
+   The Concise Data Definition Language (CDDL), as defined in RFC 8610
+   and RFC 9165, provides an easy and unambiguous way to express
+   structures for protocol messages and data formats that are
+   represented in CBOR or JSON.
 
-   As CDDL is being used in larger projects, the need for corrections
-   and additional features has become known that cannot be easily mapped
-   into this single extension point.  Hence, there is a need for
-   evolution of the base CDDL specification itself.
-
-   The present document updates errata and makes other small fixes for
-   the ABNF grammar defined for CDDL in RFC 8610.
-
-
-   // Previous versions of the changes in this document were part of
-   // draft-bormann-cbor-cddl-2-draft and previously draft-bormann-cbor-
-   // cddl-freezer.  This submission extracts out those grammar changes
-   // that are ready for publication.
+   The present document updates RFC 8610 by addressing errata and making
+   other small fixes for the ABNF grammar defined for CDDL there.
 
 About This Document
 
@@ -64,7 +54,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 19 December 2023.
+   This Internet-Draft will expire on 17 June 2024.
 
 Copyright Notice
 
@@ -88,7 +78,8 @@ Table of Contents
      2.1.  Err6527 (text string literals)
      2.2.  Err6543 (byte string literals)
        Change proposed by Errata Report 6543
-       No change needed after Section 2.1
+       No change needed after addressing Err6527 (text string
+           literals) (Section 2.1)
    3.  Small Enabling Grammar Changes
      3.1.  Empty data models
      3.2.  Non-literal Tag Numbers
@@ -103,54 +94,22 @@ Table of Contents
 
 1.  Introduction
 
-   At the time of writing, the Concise Data Definition Language (CDDL)
-   is defined by RFC 8610 and RFC 9165.  The latter has used the
-   extension point provided in RFC 8610, the _control operator_.
+   The Concise Data Definition Language (CDDL), as defined in [RFC8610]
+   and [RFC9165], provides an easy and unambiguous way to express
+   structures for protocol messages and data formats that are
+   represented in CBOR or JSON.
 
-   As CDDL is being used in larger projects, the need for corrections
-   and additional features has become known that cannot be easily mapped
-   into this single extension point.  Hence, there is a need for
-   evolution of the base CDDL specification itself.
-
-   The present document updates errata and makes other small fixes for
-   the ABNF grammar defined for CDDL in RFC 8610.
-
-
-   // Previous versions of the changes in this document were part of
-   // draft-bormann-cbor-cddl-2-draft and previously draft-bormann-cbor-
-   // cddl-freezer.  This submission extracts out those grammar changes
-   // that are ready for publication.
-
-
-   // Proposals for grammar and other changes that need more work can be
-   // found in [I-D.bormann-cbor-cddl-2-draft].  Proposals for other
-   // additions to the CDDL specification base are in
-   // [I-D.draft-bormann-cbor-cddl-freezer].
-
-   Note that the existing extension point "control operator"
-   (Section 3.8 of [RFC8610]) can be exercised for new features in
-   parallel to the work described here; one set of such proposals is in
-   [I-D.ietf-cbor-cddl-more-control].
-
-   The present document, in conjunction with [RFC8610] as well as
-   [RFC9165] and [I-D.ietf-cbor-cddl-more-control], is intended to be
-   the specification base of what has colloquially been called CDDL 1.1.
-   Additional documents describe further work on CDDL.
+   The present document updates [RFC8610] by addressing errata and
+   making other small fixes for the ABNF grammar defined for CDDL there.
 
 1.1.  Conventions and Definitions
 
    The Terminology from [RFC8610] applies.  The grammar in [RFC8610] is
    based on ABNF, which is defined in [RFC5234] and [RFC7405].
 
-   The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
-   "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
-   "OPTIONAL" in this document are to be interpreted as described in
-   BCP 14 [RFC2119] [RFC8174] when, and only when, they appear in all
-   capitals, as shown here.
-
 2.  Clarifications and Changes based on Errata Reports
 
-   _Compatibility_:  errata fix (targets 1.0 and 2.0)
+   _Compatibility_:  errata fix
 
    A number of errata reports have been made around some details of text
    string and byte string literal syntax: [Err6527] and [Err6543].
@@ -169,11 +128,19 @@ Table of Contents
    SCHAR = %x20-21 / %x23-5B / %x5D-7E / %x80-10FFFD / SESC
    SESC = "\" (%x20-7E / %x80-10FFFD)
 
+     Figure 1: Old ABNF for strings with permissive ABNF for SESC, but
+                          not allowing hex escapes
+
    This allows almost any non-C0 character to be escaped by a backslash,
    but critically misses out on the \uXXXX and \uHHHH\uLLLL forms that
    JSON allows to specify characters in hex (which should be applying
-   here according to Bullet 6 of Section 3.1 of [RFC8610]).  Both can be
-   solved by updating the SESC production to:
+   here according to Bullet 6 of Section 3.1 of [RFC8610]).  (Note that
+   we import from JSON the unwieldy \uHHHH\uLLLL syntax, which
+   represents Unicode code points beyond U-FFFF by making them look like
+   UTF-16 surrogate pairs; CDDL text strings are not using UTF-16 or
+   surrogates.)
+
+   Both can be solved by updating the SESC production to:
 
    ; new rules collectively defining SESC:
    SESC = "\" ( %x22 / "/" / "\" /                 ; \" \/ \\
@@ -185,7 +152,7 @@ Table of Contents
    high-surrogate = "D" ("8"/"9"/"A"/"B") 2HEXDIG
    low-surrogate = "D" ("C"/"D"/"E"/"F") 2HEXDIG
 
-           Figure 1: Updated string parsing to allow hex escapes
+             Figure 2: Updated string ABNF to allow hex escapes
 
    (Notes: In ABNF, strings such as "A", "B" etc. are case-insensitive,
    as is intended here.  We could have written %x62 as %s"b", but
@@ -200,13 +167,15 @@ Table of Contents
    BCHAR = %x20-26 / %x28-5B / %x5D-10FFFD / SESC / CRLF
    bsqual = "h" / "b64"
 
+                        Figure 3: Old ABNF for BCHAR
+
    In BCHAR, the updated version explicitly allows \', which is no
    longer allowed in the updated SESC:
 
    ; new rule for BCHAR:
    BCHAR = %x20-26 / %x28-5B / %x5D-10FFFD / SESC / "\'" / CRLF
 
-                      Figure 2: Updated rule for BCHAR
+                      Figure 4: Updated ABNF for BCHAR
 
 2.2.  Err6543 (byte string literals)
 
@@ -218,6 +187,8 @@ Table of Contents
    ; RFC 8610 ABNF:
    bytes = [bsqual] %x27 *BCHAR %x27
    BCHAR = %x20-26 / %x28-5B / %x5D-10FFFD / SESC / CRLF
+
+                        Figure 5: Old ABNF for BCHAR
 
 Change proposed by Errata Report 6543
 
@@ -231,7 +202,7 @@ Change proposed by Errata Report 6543
    BCHAR = %x20-26 / %x28-5B / %x5D-10FFFD / SESC / CRLF
    QCHAR = DIGIT / ALPHA / "+" / "/" / "-" / "_" / "=" / WS
 
-    Figure 3: Errata Report 8653 Proposal to Split the Byte String Rules
+    Figure 6: Errata Report 8653 Proposal to Split the Byte String Rules
 
    This potentially causes a subtle change, which is hidden in the WS
    production:
@@ -244,7 +215,7 @@ Change proposed by Errata Report 6543
    PCHAR = %x20-7E / %x80-10FFFD
    CRLF = %x0A / %x0D.0A
 
-                  Figure 4: Definition of WS from RFC 8610
+               Figure 7: ABNF definition of WS from RFC 8610
 
    This allows any non-C0 character in a comment, so this fragment
    becomes possible:
@@ -264,14 +235,21 @@ Change proposed by Errata Report 6543
 
    ... which would be supported by the existing ABNF in [RFC8610].
 
-No change needed after Section 2.1
+No change needed after addressing Err6527 (text string literals)
+(Section 2.1)
+
+
+   // note that the HTML rendering of the heading is butchered by
+   // xml2rfc, as noted in https://github.com/ietf-tools/xml2rfc/
+   // issues/683; we except this to have been fixed before this document
+   // is published
 
    This document takes the simpler approach of leaving the processing of
    the content of the byte string literal to a semantic step after
-   processing the syntax of the bytes/BCHAR rules as updated by Figure 1
-   and Figure 2.
+   processing the syntax of the bytes/BCHAR rules as updated by Figure 2
+   and Figure 4.
 
-   The rules in Figure 4 are therefore applied to the result of this
+   The rules in Figure 7 are therefore applied to the result of this
    processing where bsqual is given as h or b64.
 
    Note that this approach also works well with the use of byte strings
@@ -280,9 +258,9 @@ No change needed after Section 2.1
    may also hide as apostrophes in comments); these need to be escaped
    or possibly replaced by %x27.
 
-   Finally, our approach may leave the door open wider to extending
-   bsqual as proposed in Appendix A.1 of
-   [I-D.bormann-cbor-cddl-2-draft].
+   Finally, our approach would lend support to extending bsqual in CDDL
+   similar to the way this is done for CBOR diagnostic notation in
+   [I-D.ietf-cbor-edn-literals].
 
 3.  Small Enabling Grammar Changes
 
@@ -298,33 +276,37 @@ No change needed after Section 2.1
    ; RFC 8610 ABNF:
    cddl = S 1*(rule S)
 
+                 Figure 8: Old ABNF for top-level rule cddl
+
    This makes sense when the file has to stand alone, as a CDDL data
    model needs to have at least one rule to provide an entry point
    (start rule).
 
-   With CDDL 2.0, CDDL files can also include directives, and these
-   might be the source of all the rules that ultimately make up the
-   module created by the file.  Any other rule content in the file has
-   to be available for directive processing, making the requirement for
-   at least one rule cumbersome.
+   With CDDL modules [I-D.ietf-cbor-cddl-modules], CDDL files can also
+   include directives, and these might be the source of all the rules
+   that ultimately make up the module created by the file.  Any other
+   rule content in the file has to be available for directive
+   processing, making the requirement for at least one rule cumbersome.
 
-   Therefore, we extend the grammar as follows:
+   Therefore, we extend the grammar as in Figure 9 and make the
+   existence of at least one rule a semantic constraint, to be fulfilled
+   after processing of all directives.
 
    ; new top-level rule:
    cddl = S *(rule S)
 
-   and make the existence of at least one rule a semantic constraint, to
-   be fulfilled after processing of all directives.
+               Figure 9: Updated ABNF for top-level rule cddl
 
 3.2.  Non-literal Tag Numbers
 
    _Compatibility_:  backward (not forward)
 
-   The CDDL 1.0 syntax for expressing tags in CDDL is (ABNF as in
-   [RFC5234]):
+   The existing ABNF syntax for expressing tags in CDDL is:
 
    ; extracted from RFC 8610 ABNF:
    type2 /= "#" "6" ["." uint] "(" S type S ")"
+
+                     Figure 10: Old ABNF for tag syntax
 
    This means tag numbers can only be given as literal numbers (uints).
    Some specifications operate on ranges of tag numbers, e.g., [RFC9277]
@@ -332,11 +314,13 @@ No change needed after Section 2.1
    (0x6374FFFF) to tag specific content formats.  This can currently not
    be expressed in CDDL.
 
-   CDDL 2.0 extends this to:
+   This update extends this to:
 
    ; new rules collectively defining the tagged case:
    type2 /= "#" "6" ["." tag-number] "(" S type S ")"
    tag-number = uint / ("<" type ">")
+
+                   Figure 11: Updated ABNF for tag syntax
 
    So the above range can be expressed in a CDDL fragment such as:
 
@@ -367,25 +351,16 @@ No change needed after Section 2.1
 
 6.1.  Normative References
 
-   [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
-              Requirement Levels", BCP 14, RFC 2119,
-              DOI 10.17487/RFC2119, March 1997,
-              <https://www.rfc-editor.org/rfc/rfc2119>.
-
-   [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
-              2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
-              May 2017, <https://www.rfc-editor.org/rfc/rfc8174>.
+   [RFC5234]  Crocker, D., Ed. and P. Overell, "Augmented BNF for Syntax
+              Specifications: ABNF", STD 68, RFC 5234,
+              DOI 10.17487/RFC5234, January 2008,
+              <https://www.rfc-editor.org/rfc/rfc5234>.
 
    [RFC8610]  Birkholz, H., Vigano, C., and C. Bormann, "Concise Data
               Definition Language (CDDL): A Notational Convention to
               Express Concise Binary Object Representation (CBOR) and
               JSON Data Structures", RFC 8610, DOI 10.17487/RFC8610,
               June 2019, <https://www.rfc-editor.org/rfc/rfc8610>.
-
-   [RFC9165]  Bormann, C., "Additional Control Operators for the Concise
-              Data Definition Language (CDDL)", RFC 9165,
-              DOI 10.17487/RFC9165, December 2021,
-              <https://www.rfc-editor.org/rfc/rfc9165>.
 
 6.2.  Informative References
 
@@ -398,34 +373,28 @@ No change needed after Section 2.1
    [Err6543]  "Errata Report 6543", RFC 8610,
               <https://www.rfc-editor.org/errata/eid6543>.
 
-   [I-D.bormann-cbor-cddl-2-draft]
-              Bormann, C., "CDDL 2.0 -- a draft plan", Work in Progress,
-              Internet-Draft, draft-bormann-cbor-cddl-2-draft-02, 10
-              March 2023, <https://datatracker.ietf.org/doc/html/draft-
-              bormann-cbor-cddl-2-draft-02>.
+   [I-D.ietf-cbor-cddl-modules]
+              Bormann, C., "CDDL Module Structure", Work in Progress,
+              Internet-Draft, draft-ietf-cbor-cddl-modules-00, 17 June
+              2023, <https://datatracker.ietf.org/doc/html/draft-ietf-
+              cbor-cddl-modules-00>.
 
-   [I-D.draft-bormann-cbor-cddl-freezer]
-              Bormann, C., "A feature freezer for the Concise Data
-              Definition Language (CDDL)", Work in Progress, Internet-
-              Draft, draft-bormann-cbor-cddl-freezer-11, 11 March 2023,
-              <https://datatracker.ietf.org/doc/html/draft-bormann-cbor-
-              cddl-freezer-11>.
-
-   [I-D.ietf-cbor-cddl-more-control]
-              Bormann, C., "More Control Operators for CDDL", Work in
-              Progress, Internet-Draft, draft-ietf-cbor-cddl-more-
-              control-00, 14 June 2023,
+   [I-D.ietf-cbor-edn-literals]
+              Bormann, C., "CBOR Extended Diagnostic Notation (EDN):
+              Application-Oriented Literals, ABNF, and Media Type", Work
+              in Progress, Internet-Draft, draft-ietf-cbor-edn-literals-
+              06, 20 November 2023,
               <https://datatracker.ietf.org/doc/html/draft-ietf-cbor-
-              cddl-more-control-00>.
-
-   [RFC5234]  Crocker, D., Ed. and P. Overell, "Augmented BNF for Syntax
-              Specifications: ABNF", STD 68, RFC 5234,
-              DOI 10.17487/RFC5234, January 2008,
-              <https://www.rfc-editor.org/rfc/rfc5234>.
+              edn-literals-06>.
 
    [RFC7405]  Kyzivat, P., "Case-Sensitive String Support in ABNF",
               RFC 7405, DOI 10.17487/RFC7405, December 2014,
               <https://www.rfc-editor.org/rfc/rfc7405>.
+
+   [RFC9165]  Bormann, C., "Additional Control Operators for the Concise
+              Data Definition Language (CDDL)", RFC 9165,
+              DOI 10.17487/RFC9165, December 2021,
+              <https://www.rfc-editor.org/rfc/rfc9165>.
 
    [RFC9277]  Richardson, M. and C. Bormann, "On Stable Storage for
               Items in Concise Binary Object Representation (CBOR)",
@@ -542,7 +511,7 @@ Appendix A.  Updated Collected ABNF for CDDL
    PCHAR = %x20-7E / %x80-10FFFD
    CRLF = %x0A / %x0D.0A
 
-                     Figure 5: ABNF for CDDL as updated
+                    Figure 12: ABNF for CDDL as updated
 
 Acknowledgments
 

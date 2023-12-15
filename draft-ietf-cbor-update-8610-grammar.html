@@ -7,42 +7,32 @@
 <title>Updates to the CDDL grammar of RFC 8610</title>
 <meta content="Carsten Bormann" name="author">
 <meta content="
-       At the time of writing,
-the Concise Data Definition Language (CDDL) is defined by
-RFC 8610 and RFC 9165.
-The latter has used the extension point provided in RFC 8610,
-the  control operator . 
-       As CDDL is being used in larger projects, the need for corrections
-and additional features has become known that cannot be easily
-mapped into this single extension point.
-Hence, there is a need for evolution of the base CDDL
-specification itself. 
-       The present document updates errata and makes other small fixes for
-the ABNF grammar defined for CDDL in RFC 8610. 
-       Previous versions of the changes in this document were part
-of draft-bormann-cbor-cddl-2-draft and previously
-draft-bormann-cbor-cddl-freezer.
-This submission extracts out those grammar changes that are ready
-for publication. 
+       The Concise Data Definition Language (CDDL), as defined in
+RFC 8610 and RFC 9165,
+provides an easy and unambiguous way to express structures for
+protocol messages and data formats that are represented in CBOR or
+JSON. 
+       The present document updates RFC 8610 by addressing errata and making
+other small fixes for the ABNF grammar defined for CDDL there. 
     " name="description">
-<meta content="xml2rfc 3.17.3" name="generator">
+<meta content="xml2rfc 3.18.2" name="generator">
 <meta content="Concise Data Definition Language" name="keyword">
 <meta content="draft-ietf-cbor-update-8610-grammar-latest" name="ietf.draft">
 <!-- Generator version information:
-  xml2rfc 3.17.3
-    Python 3.11.3
-    appdirs 1.4.4
-    ConfigArgParse 1.5.3
-    google-i18n-address 3.0.0
+  xml2rfc 3.18.2
+    Python 3.11.6
+    ConfigArgParse 1.7
+    google-i18n-address 3.1.0
     intervaltree 3.1.0
     Jinja2 3.1.2
-    lxml 4.9.2
+    lxml 4.9.3
+    platformdirs 4.1.0
     pycountry 22.3.5
-    PyYAML 6.0
+    PyYAML 6.0.1
     requests 2.31.0
-    setuptools 67.7.2
+    setuptools 68.2.2
     six 1.16.0
-    wcwidth 0.2.6
+    wcwidth 0.2.12
 -->
 <link href="draft-ietf-cbor-update-8610-grammar.xml" rel="alternate" type="application/rfc+xml">
 <link href="#copyright" rel="license">
@@ -665,7 +655,7 @@ sub, sup {
 }
 #toc nav li {
   line-height: 1.3em;
-  margin: 0.75em 0;
+  margin: 2px 0;
   padding-left: 1.2em;
   text-indent: -1.2em;
 }
@@ -758,7 +748,7 @@ hr.addr {
     z-index: 2;
     top: 0;
     right: 0;
-    padding: 0;
+    padding: 1px 0 0 0;
     margin: 0;
     border-bottom: 1px solid #ccc;
     opacity: 0.6;
@@ -882,16 +872,13 @@ hr.addr {
     border-top: none;
     padding-top: 0;
   }
-  figure, pre {
+  figure, pre, .vcard {
     page-break-inside: avoid;
-  }
-  figure {
-    overflow: scroll;
   }
   h1, h2, h3, h4, h5, h6 {
     page-break-after: avoid;
   }
-  h2+*, h3+*, h4+*, h5+*, h6+* {
+  :is(h2, h3, h4, h5, h6)+*, dd {
     page-break-before: avoid;
   }
   pre {
@@ -904,6 +891,9 @@ hr.addr {
   }
   td {
     border-top: 1px solid #ddd;
+  }
+  .toplink {
+    display: none;
   }
 }
 
@@ -1005,28 +995,6 @@ address div.right {
   text-align: right;
 }
 
-/* Give the table caption label the same styling as the figcaption */
-
-@media print {
-  .toplink {
-    display: none;
-  }
-
-  /* avoid overwriting the top border line with the ToC header */
-  #toc {
-    padding-top: 1px;
-  }
-
-  /* Avoid page breaks inside dl and author address entries */
-  dd {
-    page-break-before: avoid;
-  }
-  .vcard {
-    page-break-inside: avoid;
-  }
-
-}
-
 /* Dark mode. */
 @media (prefers-color-scheme: dark) {
 :root {
@@ -1063,11 +1031,11 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">CDDL grammar updates</td>
-<td class="right">June 2023</td>
+<td class="right">December 2023</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">Bormann</td>
-<td class="center">Expires 19 December 2023</td>
+<td class="center">Expires 17 June 2024</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1083,12 +1051,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <a href="https://www.rfc-editor.org/rfc/rfc8610" class="eref">8610</a> (if approved)</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2023-06-17" class="published">17 June 2023</time>
+<time datetime="2023-12-15" class="published">15 December 2023</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2023-12-19">19 December 2023</time></dd>
+<dd class="expires"><time datetime="2024-06-17">17 June 2024</time></dd>
 <dt class="label-authors">Author:</dt>
 <dd class="authors">
 <div class="author">
@@ -1101,23 +1069,13 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <h1 id="title">Updates to the CDDL grammar of RFC 8610</h1>
 <section id="section-abstract">
       <h2 id="abstract"><a href="#abstract" class="selfRef">Abstract</a></h2>
-<p id="section-abstract-1">At the time of writing,
-the Concise Data Definition Language (CDDL) is defined by
-RFC 8610 and RFC 9165.
-The latter has used the extension point provided in RFC 8610,
-the <em>control operator</em>.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
-<p id="section-abstract-2">As CDDL is being used in larger projects, the need for corrections
-and additional features has become known that cannot be easily
-mapped into this single extension point.
-Hence, there is a need for evolution of the base CDDL
-specification itself.<a href="#section-abstract-2" class="pilcrow">¶</a></p>
-<p id="section-abstract-3">The present document updates errata and makes other small fixes for
-the ABNF grammar defined for CDDL in RFC 8610.<a href="#section-abstract-3" class="pilcrow">¶</a></p>
-<p id="section-abstract-4"><span class="cref" id="status">Previous versions of the changes in this document were part
-of draft-bormann-cbor-cddl-2-draft and previously
-draft-bormann-cbor-cddl-freezer.
-This submission extracts out those grammar changes that are ready
-for publication.</span><a href="#section-abstract-4" class="pilcrow">¶</a></p>
+<p id="section-abstract-1">The Concise Data Definition Language (CDDL), as defined in
+RFC 8610 and RFC 9165,
+provides an easy and unambiguous way to express structures for
+protocol messages and data formats that are represented in CBOR or
+JSON.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
+<p id="section-abstract-2">The present document updates RFC 8610 by addressing errata and making
+other small fixes for the ABNF grammar defined for CDDL there.<a href="#section-abstract-2" class="pilcrow">¶</a></p>
 </section>
 <section class="note rfcEditorRemove" id="section-note.1">
       <h2 id="name-about-this-document">
@@ -1154,7 +1112,7 @@ for publication.</span><a href="#section-abstract-4" class="pilcrow">¶</a></p>
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 19 December 2023.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 17 June 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1204,7 +1162,7 @@ for publication.</span><a href="#section-abstract-4" class="pilcrow">¶</a></p>
                     <p id="section-toc.1-1.2.2.2.2.1.1"><a href="#section-2.2.1" class="auto internal xref"></a><a href="#name-change-proposed-by-errata-r" class="internal xref">Change proposed by Errata Report 6543</a></p>
 </li>
                   <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.2.2.2">
-                    <p id="section-toc.1-1.2.2.2.2.2.1"><a href="#section-2.2.2" class="auto internal xref"></a><a href="#name-no-change-needed-after" class="internal xref">No change needed after Section 2.1</a></p>
+                    <p id="section-toc.1-1.2.2.2.2.2.1"><a href="#section-2.2.2" class="auto internal xref"></a><a href="#name-no-change-needed-after-addr" class="internal xref">No change needed after addressing Err6527 (text string literals) (Section 2.1)</a></p>
 </li>
                 </ul>
 </li>
@@ -1256,32 +1214,13 @@ for publication.</span><a href="#section-abstract-4" class="pilcrow">¶</a></p>
       <h2 id="name-introduction">
 <a href="#section-1" class="section-number selfRef">1. </a><a href="#name-introduction" class="section-name selfRef">Introduction</a>
       </h2>
-<p id="section-1-1">At the time of writing,
-the Concise Data Definition Language (CDDL) is defined by
-RFC 8610 and RFC 9165.
-The latter has used the extension point provided in RFC 8610,
-the <em>control operator</em>.<a href="#section-1-1" class="pilcrow">¶</a></p>
-<p id="section-1-2">As CDDL is being used in larger projects, the need for corrections
-and additional features has become known that cannot be easily
-mapped into this single extension point.
-Hence, there is a need for evolution of the base CDDL
-specification itself.<a href="#section-1-2" class="pilcrow">¶</a></p>
-<p id="section-1-3">The present document updates errata and makes other small fixes for
-the ABNF grammar defined for CDDL in RFC 8610.<a href="#section-1-3" class="pilcrow">¶</a></p>
-<p id="section-1-4"><span class="cref" id="status_1">Previous versions of the changes in this document were part
-of draft-bormann-cbor-cddl-2-draft and previously
-draft-bormann-cbor-cddl-freezer.
-This submission extracts out those grammar changes that are ready
-for publication.</span><a href="#section-1-4" class="pilcrow">¶</a></p>
-<p id="section-1-5"><span class="cref" id="seealso">Proposals for grammar and other changes that need more
-work can be found in <span>[<a href="#I-D.bormann-cbor-cddl-2-draft" class="cite xref">I-D.bormann-cbor-cddl-2-draft</a>]</span>.  Proposals for other
-additions to the CDDL specification base are in <span>[<a href="#I-D.draft-bormann-cbor-cddl-freezer" class="cite xref">I-D.draft-bormann-cbor-cddl-freezer</a>]</span>.</span><a href="#section-1-5" class="pilcrow">¶</a></p>
-<p id="section-1-6">Note that the existing extension point "control operator" (<span><a href="https://rfc-editor.org/rfc/rfc8610#section-3.8" class="relref">Section 3.8</a> of [<a href="#RFC8610" class="cite xref">RFC8610</a>]</span>) can be exercised for new features in parallel to the
-work described here; one set of such proposals is in <span>[<a href="#I-D.ietf-cbor-cddl-more-control" class="cite xref">I-D.ietf-cbor-cddl-more-control</a>]</span>.<a href="#section-1-6" class="pilcrow">¶</a></p>
-<p id="section-1-7">The present document, in conjunction with <span>[<a href="#RFC8610" class="cite xref">RFC8610</a>]</span> as well as
-<span>[<a href="#RFC9165" class="cite xref">RFC9165</a>]</span> and <span>[<a href="#I-D.ietf-cbor-cddl-more-control" class="cite xref">I-D.ietf-cbor-cddl-more-control</a>]</span>, is intended to be the specification
-base of what has colloquially been called CDDL 1.1.
-Additional documents describe further work on CDDL.<a href="#section-1-7" class="pilcrow">¶</a></p>
+<p id="section-1-1">The Concise Data Definition Language (CDDL), as defined in
+<span>[<a href="#RFC8610" class="cite xref">RFC8610</a>]</span> and <span>[<a href="#RFC9165" class="cite xref">RFC9165</a>]</span>,
+provides an easy and unambiguous way to express structures for
+protocol messages and data formats that are represented in CBOR or
+JSON.<a href="#section-1-1" class="pilcrow">¶</a></p>
+<p id="section-1-2">The present document updates <span>[<a href="#RFC8610" class="cite xref">RFC8610</a>]</span> by addressing errata and making
+other small fixes for the ABNF grammar defined for CDDL there.<a href="#section-1-2" class="pilcrow">¶</a></p>
 <div id="conventions-and-definitions">
 <section id="section-1.1">
         <h3 id="name-conventions-and-definitions">
@@ -1290,10 +1229,6 @@ Additional documents describe further work on CDDL.<a href="#section-1-7" class=
 <p id="section-1.1-1">The Terminology from <span>[<a href="#RFC8610" class="cite xref">RFC8610</a>]</span> applies.
 The grammar in <span>[<a href="#RFC8610" class="cite xref">RFC8610</a>]</span> is based on ABNF, which is defined in <span>[<a href="#RFC5234" class="cite xref">RFC5234</a>]</span>
 and <span>[<a href="#RFC7405" class="cite xref">RFC7405</a>]</span>.<a href="#section-1.1-1" class="pilcrow">¶</a></p>
-<p id="section-1.1-2">The key words "<span class="bcp14">MUST</span>", "<span class="bcp14">MUST NOT</span>", "<span class="bcp14">REQUIRED</span>", "<span class="bcp14">SHALL</span>", "<span class="bcp14">SHALL NOT</span>", "<span class="bcp14">SHOULD</span>", "<span class="bcp14">SHOULD NOT</span>", "<span class="bcp14">RECOMMENDED</span>", "<span class="bcp14">NOT RECOMMENDED</span>",
-"<span class="bcp14">MAY</span>", and "<span class="bcp14">OPTIONAL</span>" in this document are to be interpreted as
-described in BCP 14 <span>[<a href="#RFC2119" class="cite xref">RFC2119</a>]</span> <span>[<a href="#RFC8174" class="cite xref">RFC8174</a>]</span> when, and only when, they
-appear in all capitals, as shown here.<a href="#section-1.1-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -1307,7 +1242,7 @@ appear in all capitals, as shown here.<a href="#section-1.1-2" class="pilcrow">�
         <dt id="section-2-1.1">
 <em>Compatibility</em>:</dt>
         <dd style="margin-left: 1.5em" id="section-2-1.2">
-          <p id="section-2-1.2.1">errata fix (targets 1.0 and 2.0)<a href="#section-2-1.2.1" class="pilcrow">¶</a></p>
+          <p id="section-2-1.2.1">errata fix<a href="#section-2-1.2.1" class="pilcrow">¶</a></p>
 </dd>
       <dd class="break"></dd>
 </dl>
@@ -1324,22 +1259,32 @@ RFC processing in some text explaining backslash escaping).<a href="#section-2-2
         </h3>
 <p id="section-2.1-1">The ABNF used in <span>[<a href="#RFC8610" class="cite xref">RFC8610</a>]</span> for the content of text string literals
 is rather permissive:<a href="#section-2.1-1" class="pilcrow">¶</a></p>
-<div class="lang-abnf sourcecode" id="section-2.1-2">
+<span id="name-old-abnf-for-strings-with-p"></span><div id="e6527-old1">
+<figure id="figure-1">
+          <div class="lang-abnf sourcecode" id="section-2.1-2.1">
 <pre>
 ; RFC 8610 ABNF:
 text = %x22 *SCHAR %x22
 SCHAR = %x20-21 / %x23-5B / %x5D-7E / %x80-10FFFD / SESC
 SESC = "\" (%x20-7E / %x80-10FFFD)
-</pre><a href="#section-2.1-2" class="pilcrow">¶</a>
+</pre>
+</div>
+<figcaption><a href="#figure-1" class="selfRef">Figure 1</a>:
+<a href="#name-old-abnf-for-strings-with-p" class="selfRef">Old ABNF for strings with permissive ABNF for SESC, but not allowing hex escapes</a>
+          </figcaption></figure>
 </div>
 <p id="section-2.1-3">This allows almost any non-C0 character to be escaped by a backslash,
 but critically misses out on the <code>\uXXXX</code> and <code>\uHHHH\uLLLL</code> forms
 that JSON allows to specify characters in hex (which should be
 applying here according to Bullet 6 of <span><a href="https://rfc-editor.org/rfc/rfc8610#section-3.1" class="relref">Section 3.1</a> of [<a href="#RFC8610" class="cite xref">RFC8610</a>]</span>).
-Both can be solved by updating the SESC production to:<a href="#section-2.1-3" class="pilcrow">¶</a></p>
-<span id="name-updated-string-parsing-to-a"></span><div id="e6527-new1">
-<figure id="figure-1">
-          <div class="lang-abnf sourcecode" id="section-2.1-4.1">
+(Note that we import from JSON the unwieldy <code>\uHHHH\uLLLL</code> syntax,
+which represents Unicode code points beyond U-FFFF by making them look
+like UTF-16 surrogate pairs; CDDL text strings are not using UTF-16 or
+surrogates.)<a href="#section-2.1-3" class="pilcrow">¶</a></p>
+<p id="section-2.1-4">Both can be solved by updating the SESC production to:<a href="#section-2.1-4" class="pilcrow">¶</a></p>
+<span id="name-updated-string-abnf-to-allo"></span><div id="e6527-new1">
+<figure id="figure-2">
+          <div class="lang-abnf sourcecode" id="section-2.1-5.1">
 <pre>
 ; new rules collectively defining SESC:
 SESC = "\" ( %x22 / "/" / "\" /                 ; \" \/ \\
@@ -1352,38 +1297,44 @@ high-surrogate = "D" ("8"/"9"/"A"/"B") 2HEXDIG
 low-surrogate = "D" ("C"/"D"/"E"/"F") 2HEXDIG
 </pre>
 </div>
-<figcaption><a href="#figure-1" class="selfRef">Figure 1</a>:
-<a href="#name-updated-string-parsing-to-a" class="selfRef">Updated string parsing to allow hex escapes</a>
+<figcaption><a href="#figure-2" class="selfRef">Figure 2</a>:
+<a href="#name-updated-string-abnf-to-allo" class="selfRef">Updated string ABNF to allow hex escapes</a>
           </figcaption></figure>
 </div>
-<p id="section-2.1-5">(Notes:
+<p id="section-2.1-6">(Notes:
 In ABNF, strings such as <code>"A"</code>, <code>"B"</code> etc. are case-insensitive, as is
 intended here.
 We could have written <code>%x62</code> as <code>%s"b"</code>, but didn't, in order to
-maximize ABNF tool compatibility.)<a href="#section-2.1-5" class="pilcrow">¶</a></p>
-<p id="section-2.1-6">Now that SESC is more restrictively formulated, this also requires an
+maximize ABNF tool compatibility.)<a href="#section-2.1-6" class="pilcrow">¶</a></p>
+<p id="section-2.1-7">Now that SESC is more restrictively formulated, this also requires an
 update to the BCHAR production used in the ABNF syntax for byte string
-literals:<a href="#section-2.1-6" class="pilcrow">¶</a></p>
-<div class="lang-abnf sourcecode" id="section-2.1-7">
+literals:<a href="#section-2.1-7" class="pilcrow">¶</a></p>
+<span id="name-old-abnf-for-bchar"></span><div id="e6527-old2">
+<figure id="figure-3">
+          <div class="lang-abnf sourcecode" id="section-2.1-8.1">
 <pre>
 ; RFC 8610 ABNF:
 bytes = [bsqual] %x27 *BCHAR %x27
 BCHAR = %x20-26 / %x28-5B / %x5D-10FFFD / SESC / CRLF
 bsqual = "h" / "b64"
-</pre><a href="#section-2.1-7" class="pilcrow">¶</a>
+</pre>
 </div>
-<p id="section-2.1-8">In BCHAR, the updated version explicitly allows <code>\'</code>, which is no
-longer allowed in the updated SESC:<a href="#section-2.1-8" class="pilcrow">¶</a></p>
-<span id="name-updated-rule-for-bchar"></span><div id="e6527-new2">
-<figure id="figure-2">
-          <div class="lang-abnf sourcecode" id="section-2.1-9.1">
+<figcaption><a href="#figure-3" class="selfRef">Figure 3</a>:
+<a href="#name-old-abnf-for-bchar" class="selfRef">Old ABNF for BCHAR</a>
+          </figcaption></figure>
+</div>
+<p id="section-2.1-9">In BCHAR, the updated version explicitly allows <code>\'</code>, which is no
+longer allowed in the updated SESC:<a href="#section-2.1-9" class="pilcrow">¶</a></p>
+<span id="name-updated-abnf-for-bchar"></span><div id="e6527-new2">
+<figure id="figure-4">
+          <div class="lang-abnf sourcecode" id="section-2.1-10.1">
 <pre>
 ; new rule for BCHAR:
 BCHAR = %x20-26 / %x28-5B / %x5D-10FFFD / SESC / "\'" / CRLF
 </pre>
 </div>
-<figcaption><a href="#figure-2" class="selfRef">Figure 2</a>:
-<a href="#name-updated-rule-for-bchar" class="selfRef">Updated rule for BCHAR</a>
+<figcaption><a href="#figure-4" class="selfRef">Figure 4</a>:
+<a href="#name-updated-abnf-for-bchar" class="selfRef">Updated ABNF for BCHAR</a>
           </figcaption></figure>
 </div>
 </section>
@@ -1396,12 +1347,18 @@ BCHAR = %x20-26 / %x28-5B / %x5D-10FFFD / SESC / "\'" / CRLF
 <p id="section-2.2-1">The ABNF used in <span>[<a href="#RFC8610" class="cite xref">RFC8610</a>]</span> for the content of byte string literals
 lumps together byte strings notated as text with byte strings notated
 in base16 (hex) or base64 (but see also updated BCHAR production above):<a href="#section-2.2-1" class="pilcrow">¶</a></p>
-<div class="lang-abnf sourcecode" id="section-2.2-2">
+<span id="name-old-abnf-for-bchar-2"></span><div id="e6527-old2a">
+<figure id="figure-5">
+          <div class="lang-abnf sourcecode" id="section-2.2-2.1">
 <pre>
 ; RFC 8610 ABNF:
 bytes = [bsqual] %x27 *BCHAR %x27
 BCHAR = %x20-26 / %x28-5B / %x5D-10FFFD / SESC / CRLF
-</pre><a href="#section-2.2-2" class="pilcrow">¶</a>
+</pre>
+</div>
+<figcaption><a href="#figure-5" class="selfRef">Figure 5</a>:
+<a href="#name-old-abnf-for-bchar-2" class="selfRef">Old ABNF for BCHAR</a>
+          </figcaption></figure>
 </div>
 <div id="change-proposed-by-errata-report-6543">
 <section id="section-2.2.1">
@@ -1412,7 +1369,7 @@ BCHAR = %x20-26 / %x28-5B / %x5D-10FFFD / SESC / CRLF
 productions (where, with an updated SESC, BCHAR obviously needs to be
 updated as above):<a href="#section-2.2.1-1" class="pilcrow">¶</a></p>
 <span id="name-errata-report-8653-proposal"></span><div id="e6543-1">
-<figure id="figure-3">
+<figure id="figure-6">
             <div class="lang-abnf sourcecode" id="section-2.2.1-2.1">
 <pre>
 ; Err6543 proposal:
@@ -1422,13 +1379,13 @@ BCHAR = %x20-26 / %x28-5B / %x5D-10FFFD / SESC / CRLF
 QCHAR = DIGIT / ALPHA / "+" / "/" / "-" / "_" / "=" / WS
 </pre>
 </div>
-<figcaption><a href="#figure-3" class="selfRef">Figure 3</a>:
+<figcaption><a href="#figure-6" class="selfRef">Figure 6</a>:
 <a href="#name-errata-report-8653-proposal" class="selfRef">Errata Report 8653 Proposal to Split the Byte String Rules</a>
             </figcaption></figure>
 </div>
 <p id="section-2.2.1-3">This potentially causes a subtle change, which is hidden in the WS production:<a href="#section-2.2.1-3" class="pilcrow">¶</a></p>
-<span id="name-definition-of-ws-from-rfc-8"></span><div id="e6543-2">
-<figure id="figure-4">
+<span id="name-abnf-definition-of-ws-from-"></span><div id="e6543-2">
+<figure id="figure-7">
             <div class="lang-abnf sourcecode" id="section-2.2.1-4.1">
 <pre>
 ; RFC 8610 ABNF:
@@ -1440,8 +1397,8 @@ PCHAR = %x20-7E / %x80-10FFFD
 CRLF = %x0A / %x0D.0A
 </pre>
 </div>
-<figcaption><a href="#figure-4" class="selfRef">Figure 4</a>:
-<a href="#name-definition-of-ws-from-rfc-8" class="selfRef">Definition of WS from RFC 8610</a>
+<figcaption><a href="#figure-7" class="selfRef">Figure 7</a>:
+<a href="#name-abnf-definition-of-ws-from-" class="selfRef">ABNF definition of WS from RFC 8610</a>
             </figcaption></figure>
 </div>
 <p id="section-2.2.1-5">This allows any non-C0 character in a comment, so this fragment
@@ -1467,24 +1424,28 @@ foo = h'
 <p id="section-2.2.1-9">... which would be supported by the existing ABNF in <span>[<a href="#RFC8610" class="cite xref">RFC8610</a>]</span>.<a href="#section-2.2.1-9" class="pilcrow">¶</a></p>
 </section>
 </div>
-<div id="no-change-needed-after-e6527">
+<div id="no-change-needed-after-addressing-e6527-section-e6527">
 <section id="section-2.2.2">
-          <h4 id="name-no-change-needed-after">
-<a href="#name-no-change-needed-after" class="section-name selfRef">No change needed after <em class="cite xref">[Section 2.1]</em></a>
+          <h4 id="name-no-change-needed-after-addr">
+<a href="#name-no-change-needed-after-addr" class="section-name selfRef">No change needed after addressing <em class="cite xref">[Err6527 (text string literals)]</em> (Section <em class="cite xref">[2.1]</em>)</a>
           </h4>
-<p id="section-2.2.2-1">This document takes the simpler approach of leaving the processing of
+<p id="section-2.2.2-1"><span class="cref" id="headingbug">note that the HTML rendering of the heading is
+butchered by xml2rfc, as noted in
+https://github.com/ietf-tools/xml2rfc/issues/683; we except
+this to have been fixed before this document is published</span><a href="#section-2.2.2-1" class="pilcrow">¶</a></p>
+<p id="section-2.2.2-2">This document takes the simpler approach of leaving the processing of
 the content of the byte string literal to a semantic step after
 processing the syntax of the <code>bytes</code>/<code>BCHAR</code> rules as updated by
-<a href="#e6527-new1" class="auto internal xref">Figure 1</a> and <a href="#e6527-new2" class="auto internal xref">Figure 2</a>.<a href="#section-2.2.2-1" class="pilcrow">¶</a></p>
-<p id="section-2.2.2-2">The rules in <a href="#e6543-2" class="auto internal xref">Figure 4</a> are therefore applied to the result of this
-processing where <code>bsqual</code> is given as <code>h</code> or <code>b64</code>.<a href="#section-2.2.2-2" class="pilcrow">¶</a></p>
-<p id="section-2.2.2-3">Note that this approach also works well with the use of byte strings
+<a href="#e6527-new1" class="auto internal xref">Figure 2</a> and <a href="#e6527-new2" class="auto internal xref">Figure 4</a>.<a href="#section-2.2.2-2" class="pilcrow">¶</a></p>
+<p id="section-2.2.2-3">The rules in <a href="#e6543-2" class="auto internal xref">Figure 7</a> are therefore applied to the result of this
+processing where <code>bsqual</code> is given as <code>h</code> or <code>b64</code>.<a href="#section-2.2.2-3" class="pilcrow">¶</a></p>
+<p id="section-2.2.2-4">Note that this approach also works well with the use of byte strings
 in <span><a href="https://rfc-editor.org/rfc/rfc9165#section-3" class="relref">Section 3</a> of [<a href="#RFC9165" class="cite xref">RFC9165</a>]</span>.
 It does require some care when copy-pasting into CDDL models from ABNF
 that contains single quotes (which may also hide as apostrophes
-in comments); these need to be escaped or possibly replaced by <code>%x27</code>.<a href="#section-2.2.2-3" class="pilcrow">¶</a></p>
-<p id="section-2.2.2-4">Finally, our approach may leave the door open wider to extending
-<code>bsqual</code> as proposed in <span><a href="https://datatracker.ietf.org/doc/html/draft-bormann-cbor-cddl-2-draft-02#appendix-A.1" class="relref">Appendix A.1</a> of [<a href="#I-D.bormann-cbor-cddl-2-draft" class="cite xref">I-D.bormann-cbor-cddl-2-draft</a>]</span>.<a href="#section-2.2.2-4" class="pilcrow">¶</a></p>
+in comments); these need to be escaped or possibly replaced by <code>%x27</code>.<a href="#section-2.2.2-4" class="pilcrow">¶</a></p>
+<p id="section-2.2.2-5">Finally, our approach would lend support to extending <code>bsqual</code> in CDDL
+similar to the way this is done for CBOR diagnostic notation in <span>[<a href="#I-D.ietf-cbor-edn-literals" class="cite xref">I-D.ietf-cbor-edn-literals</a>]</span>.<a href="#section-2.2.2-5" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -1512,28 +1473,41 @@ grammar that are intended to enable certain kinds of specifications.<a href="#se
         <dd class="break"></dd>
 </dl>
 <p id="section-3.1-2"><span>[<a href="#RFC8610" class="cite xref">RFC8610</a>]</span> requires a CDDL file to have at least one rule.<a href="#section-3.1-2" class="pilcrow">¶</a></p>
-<div class="lang-abnf sourcecode" id="section-3.1-3">
+<span id="name-old-abnf-for-top-level-rule"></span><div id="empty-old">
+<figure id="figure-8">
+          <div class="lang-abnf sourcecode" id="section-3.1-3.1">
 <pre>
 ; RFC 8610 ABNF:
 cddl = S 1*(rule S)
-</pre><a href="#section-3.1-3" class="pilcrow">¶</a>
+</pre>
+</div>
+<figcaption><a href="#figure-8" class="selfRef">Figure 8</a>:
+<a href="#name-old-abnf-for-top-level-rule" class="selfRef">Old ABNF for top-level rule cddl</a>
+          </figcaption></figure>
 </div>
 <p id="section-3.1-4">This makes sense when the file has to stand alone, as a CDDL data
 model needs to have at least one rule to provide an entry point (start
 rule).<a href="#section-3.1-4" class="pilcrow">¶</a></p>
-<p id="section-3.1-5">With CDDL 2.0, CDDL files can also include directives, and these might be the source of all the rules that
+<p id="section-3.1-5">With CDDL modules <span>[<a href="#I-D.ietf-cbor-cddl-modules" class="cite xref">I-D.ietf-cbor-cddl-modules</a>]</span>, CDDL files can also include directives,
+and these might be the source of all the rules that
 ultimately make up the module created by the file.
 Any other rule content in the file has to be available for directive
 processing, making the requirement for at least one rule cumbersome.<a href="#section-3.1-5" class="pilcrow">¶</a></p>
-<p id="section-3.1-6">Therefore, we extend the grammar as follows:<a href="#section-3.1-6" class="pilcrow">¶</a></p>
-<div class="lang-abnf sourcecode" id="section-3.1-7">
+<p id="section-3.1-6">Therefore, we extend the grammar as in <a href="#empty-new" class="auto internal xref">Figure 9</a>
+and make the existence of at least one rule a semantic constraint, to
+be fulfilled after processing of all directives.<a href="#section-3.1-6" class="pilcrow">¶</a></p>
+<span id="name-updated-abnf-for-top-level-"></span><div id="empty-new">
+<figure id="figure-9">
+          <div class="lang-abnf sourcecode" id="section-3.1-7.1">
 <pre>
 ; new top-level rule:
 cddl = S *(rule S)
-</pre><a href="#section-3.1-7" class="pilcrow">¶</a>
+</pre>
 </div>
-<p id="section-3.1-8">and make the existence of at least one rule a semantic constraint, to
-be fulfilled after processing of all directives.<a href="#section-3.1-8" class="pilcrow">¶</a></p>
+<figcaption><a href="#figure-9" class="selfRef">Figure 9</a>:
+<a href="#name-updated-abnf-for-top-level-" class="selfRef">Updated ABNF for top-level rule cddl</a>
+          </figcaption></figure>
+</div>
 </section>
 </div>
 <div id="tagnum">
@@ -1549,25 +1523,37 @@ be fulfilled after processing of all directives.<a href="#section-3.1-8" class="
 </dd>
         <dd class="break"></dd>
 </dl>
-<p id="section-3.2-2">The CDDL 1.0 syntax for expressing tags in CDDL is (ABNF as in <span>[<a href="#RFC5234" class="cite xref">RFC5234</a>]</span>):<a href="#section-3.2-2" class="pilcrow">¶</a></p>
-<div class="lang-abnf sourcecode" id="section-3.2-3">
+<p id="section-3.2-2">The existing ABNF syntax for expressing tags in CDDL is:<a href="#section-3.2-2" class="pilcrow">¶</a></p>
+<span id="name-old-abnf-for-tag-syntax"></span><div id="tag-old">
+<figure id="figure-10">
+          <div class="lang-abnf sourcecode" id="section-3.2-3.1">
 <pre>
 ; extracted from RFC 8610 ABNF:
 type2 /= "#" "6" ["." uint] "(" S type S ")"
-</pre><a href="#section-3.2-3" class="pilcrow">¶</a>
+</pre>
+</div>
+<figcaption><a href="#figure-10" class="selfRef">Figure 10</a>:
+<a href="#name-old-abnf-for-tag-syntax" class="selfRef">Old ABNF for tag syntax</a>
+          </figcaption></figure>
 </div>
 <p id="section-3.2-4">This means tag numbers can only be given as literal numbers (uints).
 Some specifications operate on ranges of tag numbers, e.g., <span>[<a href="#RFC9277" class="cite xref">RFC9277</a>]</span>
 has a range of tag numbers 1668546817 (0x63740101) to 1668612095
 (0x6374FFFF) to tag specific content formats.
 This can currently not be expressed in CDDL.<a href="#section-3.2-4" class="pilcrow">¶</a></p>
-<p id="section-3.2-5">CDDL 2.0 extends this to:<a href="#section-3.2-5" class="pilcrow">¶</a></p>
-<div class="lang-abnf sourcecode" id="section-3.2-6">
+<p id="section-3.2-5">This update extends this to:<a href="#section-3.2-5" class="pilcrow">¶</a></p>
+<span id="name-updated-abnf-for-tag-syntax"></span><div id="tag-new">
+<figure id="figure-11">
+          <div class="lang-abnf sourcecode" id="section-3.2-6.1">
 <pre>
 ; new rules collectively defining the tagged case:
 type2 /= "#" "6" ["." tag-number] "(" S type S ")"
 tag-number = uint / ("&lt;" type "&gt;")
-</pre><a href="#section-3.2-6" class="pilcrow">¶</a>
+</pre>
+</div>
+<figcaption><a href="#figure-11" class="selfRef">Figure 11</a>:
+<a href="#name-updated-abnf-for-tag-syntax" class="selfRef">Updated ABNF for tag syntax</a>
+          </figcaption></figure>
 </div>
 <p id="section-3.2-7">So the above range can be expressed in a CDDL fragment such as:<a href="#section-3.2-7" class="pilcrow">¶</a></p>
 <div class="lang-cddl sourcecode" id="section-3.2-8">
@@ -1612,29 +1598,24 @@ been updated and some of which have not been, in particular based on
       <h2 id="name-references">
 <a href="#section-6" class="section-number selfRef">6. </a><a href="#name-references" class="section-name selfRef">References</a>
       </h2>
+<div id="sec-normative-references">
 <section id="section-6.1">
         <h3 id="name-normative-references">
 <a href="#section-6.1" class="section-number selfRef">6.1. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
         </h3>
 <dl class="references">
-<dt id="RFC2119">[RFC2119]</dt>
+<dt id="RFC5234">[RFC5234]</dt>
         <dd>
-<span class="refAuthor">Bradner, S.</span>, <span class="refTitle">"Key words for use in RFCs to Indicate Requirement Levels"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 2119</span>, <span class="seriesInfo">DOI 10.17487/RFC2119</span>, <time datetime="1997-03" class="refDate">March 1997</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc2119">https://www.rfc-editor.org/rfc/rfc2119</a>&gt;</span>. </dd>
-<dd class="break"></dd>
-<dt id="RFC8174">[RFC8174]</dt>
-        <dd>
-<span class="refAuthor">Leiba, B.</span>, <span class="refTitle">"Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 8174</span>, <span class="seriesInfo">DOI 10.17487/RFC8174</span>, <time datetime="2017-05" class="refDate">May 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8174">https://www.rfc-editor.org/rfc/rfc8174</a>&gt;</span>. </dd>
+<span class="refAuthor">Crocker, D., Ed.</span> and <span class="refAuthor">P. Overell</span>, <span class="refTitle">"Augmented BNF for Syntax Specifications: ABNF"</span>, <span class="seriesInfo">STD 68</span>, <span class="seriesInfo">RFC 5234</span>, <span class="seriesInfo">DOI 10.17487/RFC5234</span>, <time datetime="2008-01" class="refDate">January 2008</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc5234">https://www.rfc-editor.org/rfc/rfc5234</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC8610">[RFC8610]</dt>
-        <dd>
-<span class="refAuthor">Birkholz, H.</span>, <span class="refAuthor">Vigano, C.</span>, and <span class="refAuthor">C. Bormann</span>, <span class="refTitle">"Concise Data Definition Language (CDDL): A Notational Convention to Express Concise Binary Object Representation (CBOR) and JSON Data Structures"</span>, <span class="seriesInfo">RFC 8610</span>, <span class="seriesInfo">DOI 10.17487/RFC8610</span>, <time datetime="2019-06" class="refDate">June 2019</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8610">https://www.rfc-editor.org/rfc/rfc8610</a>&gt;</span>. </dd>
-<dd class="break"></dd>
-<dt id="RFC9165">[RFC9165]</dt>
       <dd>
-<span class="refAuthor">Bormann, C.</span>, <span class="refTitle">"Additional Control Operators for the Concise Data Definition Language (CDDL)"</span>, <span class="seriesInfo">RFC 9165</span>, <span class="seriesInfo">DOI 10.17487/RFC9165</span>, <time datetime="2021-12" class="refDate">December 2021</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9165">https://www.rfc-editor.org/rfc/rfc9165</a>&gt;</span>. </dd>
+<span class="refAuthor">Birkholz, H.</span>, <span class="refAuthor">Vigano, C.</span>, and <span class="refAuthor">C. Bormann</span>, <span class="refTitle">"Concise Data Definition Language (CDDL): A Notational Convention to Express Concise Binary Object Representation (CBOR) and JSON Data Structures"</span>, <span class="seriesInfo">RFC 8610</span>, <span class="seriesInfo">DOI 10.17487/RFC8610</span>, <time datetime="2019-06" class="refDate">June 2019</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8610">https://www.rfc-editor.org/rfc/rfc8610</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 </dl>
 </section>
+</div>
+<div id="sec-informative-references">
 <section id="section-6.2">
         <h3 id="name-informative-references">
 <a href="#section-6.2" class="section-number selfRef">6.2. </a><a href="#name-informative-references" class="section-name selfRef">Informative References</a>
@@ -1652,25 +1633,21 @@ been updated and some of which have not been, in particular based on
         <dd>
 <span class="refTitle">"Errata Report 6543"</span>, <span class="seriesInfo">RFC 8610</span>, <span>&lt;<a href="https://www.rfc-editor.org/errata/eid6543">https://www.rfc-editor.org/errata/eid6543</a>&gt;</span>. </dd>
 <dd class="break"></dd>
-<dt id="I-D.bormann-cbor-cddl-2-draft">[I-D.bormann-cbor-cddl-2-draft]</dt>
+<dt id="I-D.ietf-cbor-cddl-modules">[I-D.ietf-cbor-cddl-modules]</dt>
         <dd>
-<span class="refAuthor">Bormann, C.</span>, <span class="refTitle">"CDDL 2.0 -- a draft plan"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-bormann-cbor-cddl-2-draft-02</span>, <time datetime="2023-03-10" class="refDate">10 March 2023</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-bormann-cbor-cddl-2-draft-02">https://datatracker.ietf.org/doc/html/draft-bormann-cbor-cddl-2-draft-02</a>&gt;</span>. </dd>
+<span class="refAuthor">Bormann, C.</span>, <span class="refTitle">"CDDL Module Structure"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-cbor-cddl-modules-00</span>, <time datetime="2023-06-17" class="refDate">17 June 2023</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-cbor-cddl-modules-00">https://datatracker.ietf.org/doc/html/draft-ietf-cbor-cddl-modules-00</a>&gt;</span>. </dd>
 <dd class="break"></dd>
-<dt id="I-D.draft-bormann-cbor-cddl-freezer">[I-D.draft-bormann-cbor-cddl-freezer]</dt>
+<dt id="I-D.ietf-cbor-edn-literals">[I-D.ietf-cbor-edn-literals]</dt>
         <dd>
-<span class="refAuthor">Bormann, C.</span>, <span class="refTitle">"A feature freezer for the Concise Data Definition Language (CDDL)"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-bormann-cbor-cddl-freezer-11</span>, <time datetime="2023-03-11" class="refDate">11 March 2023</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-bormann-cbor-cddl-freezer-11">https://datatracker.ietf.org/doc/html/draft-bormann-cbor-cddl-freezer-11</a>&gt;</span>. </dd>
-<dd class="break"></dd>
-<dt id="I-D.ietf-cbor-cddl-more-control">[I-D.ietf-cbor-cddl-more-control]</dt>
-        <dd>
-<span class="refAuthor">Bormann, C.</span>, <span class="refTitle">"More Control Operators for CDDL"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-cbor-cddl-more-control-00</span>, <time datetime="2023-06-14" class="refDate">14 June 2023</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-cbor-cddl-more-control-00">https://datatracker.ietf.org/doc/html/draft-ietf-cbor-cddl-more-control-00</a>&gt;</span>. </dd>
-<dd class="break"></dd>
-<dt id="RFC5234">[RFC5234]</dt>
-        <dd>
-<span class="refAuthor">Crocker, D., Ed.</span> and <span class="refAuthor">P. Overell</span>, <span class="refTitle">"Augmented BNF for Syntax Specifications: ABNF"</span>, <span class="seriesInfo">STD 68</span>, <span class="seriesInfo">RFC 5234</span>, <span class="seriesInfo">DOI 10.17487/RFC5234</span>, <time datetime="2008-01" class="refDate">January 2008</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc5234">https://www.rfc-editor.org/rfc/rfc5234</a>&gt;</span>. </dd>
+<span class="refAuthor">Bormann, C.</span>, <span class="refTitle">"CBOR Extended Diagnostic Notation (EDN): Application-Oriented Literals, ABNF, and Media Type"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-cbor-edn-literals-06</span>, <time datetime="2023-11-20" class="refDate">20 November 2023</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-cbor-edn-literals-06">https://datatracker.ietf.org/doc/html/draft-ietf-cbor-edn-literals-06</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC7405">[RFC7405]</dt>
         <dd>
 <span class="refAuthor">Kyzivat, P.</span>, <span class="refTitle">"Case-Sensitive String Support in ABNF"</span>, <span class="seriesInfo">RFC 7405</span>, <span class="seriesInfo">DOI 10.17487/RFC7405</span>, <time datetime="2014-12" class="refDate">December 2014</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc7405">https://www.rfc-editor.org/rfc/rfc7405</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC9165">[RFC9165]</dt>
+        <dd>
+<span class="refAuthor">Bormann, C.</span>, <span class="refTitle">"Additional Control Operators for the Concise Data Definition Language (CDDL)"</span>, <span class="seriesInfo">RFC 9165</span>, <span class="seriesInfo">DOI 10.17487/RFC9165</span>, <time datetime="2021-12" class="refDate">December 2021</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9165">https://www.rfc-editor.org/rfc/rfc9165</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC9277">[RFC9277]</dt>
       <dd>
@@ -1678,6 +1655,7 @@ been updated and some of which have not been, in particular based on
 <dd class="break"></dd>
 </dl>
 </section>
+</div>
 </section>
 <div id="updated-collected-abnf-for-cddl">
 <section id="appendix-A">
@@ -1687,8 +1665,8 @@ been updated and some of which have not been, in particular based on
 <p id="appendix-A-1">This appendix provides the full ABNF from <span>[<a href="#RFC8610" class="cite xref">RFC8610</a>]</span> with the updates
 applied in the present document.<a href="#appendix-A-1" class="pilcrow">¶</a></p>
 <span id="name-abnf-for-cddl-as-updated"></span><div id="collected-abnf">
-<figure id="figure-5">
-        <div class="breakable lang-cddl sourcecode" id="appendix-A-2.1">
+<figure id="figure-12">
+        <div class="breakable lang-abnf sourcecode" id="appendix-A-2.1">
 <pre>
 cddl = S *(rule S)
 rule = typename [genericparm] S assignt S type
@@ -1796,7 +1774,7 @@ PCHAR = %x20-7E / %x80-10FFFD
 CRLF = %x0A / %x0D.0A
 </pre>
 </div>
-<figcaption><a href="#figure-5" class="selfRef">Figure 5</a>:
+<figcaption><a href="#figure-12" class="selfRef">Figure 12</a>:
 <a href="#name-abnf-for-cddl-as-updated" class="selfRef">ABNF for CDDL as updated</a>
         </figcaption></figure>
 </div>
