@@ -69,6 +69,12 @@ informative:
     seriesinfo:
       RFC: 8610
     date: false
+  Err6575:
+    target: "https://www.rfc-editor.org/errata/eid6575"
+    title: Errata Report 6575
+    seriesinfo:
+      RFC: 8610
+    date: false
 
 
 --- abstract
@@ -378,11 +384,22 @@ ct-tag-number = 1668546817..1668612095
 ; or use 0x63740101..0x6374FFFF
 ~~~
 
-Note that this syntax reuses the angle bracket syntax for generics;
+Notes:
+
+1. This syntax reuses the angle bracket syntax for generics;
 this reuse is innocuous as a generic parameter/argument only ever
 occurs after a rule name (`id`), while it occurs after `.` here.
 (Whether there is potential for human confusion can be debated; the
 above example deliberately uses generics as well.)
+
+2. The updated ABNF grammar makes it a bit more explicit that the
+   number given after the optional dot is special, not giving the CBOR
+   "additional information" as it is with other uses of `#` in CDDL.
+   (Adding this observation to {{Section 2.2.3 of -cddl}} is the subject
+   of {{Err6575}}; it is correctly noted in {{Section 3.6 of -cddl}}.)
+   In hindsight, maybe a different character than the dot should have
+   been chosen for this special case, however changing the grammar
+   now would have been too disruptive.
 
 # Security Considerations
 
