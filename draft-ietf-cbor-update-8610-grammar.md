@@ -127,7 +127,7 @@ but critically misses out on the `\uXXXX` and `\uHHHH\uLLLL` forms
 that JSON allows to specify characters in hex (which should be
 applying here according to Bullet 6 of {{Section 3.1 of -cddl}}).
 (Note that we import from JSON the unwieldy `\uHHHH\uLLLL` syntax,
-which represents Unicode code points beyond U-FFFF by making them look
+which represents Unicode code points beyond U+FFFF by making them look
 like UTF-16 surrogate pairs; CDDL text strings are not using UTF-16 or
 surrogates.)
 
