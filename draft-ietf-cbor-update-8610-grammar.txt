@@ -105,7 +105,7 @@ Table of Contents
 1.1.  Conventions and Definitions
 
    The Terminology from [RFC8610] applies.  The grammar in [RFC8610] is
-   based on ABNF, which is defined in [RFC5234] and [RFC7405].
+   based on ABNF, which is defined in [STD68] and [RFC7405].
 
 2.  Clarifications and Changes based on Errata Reports
 
@@ -351,16 +351,14 @@ No change needed after addressing Err6527 (text string literals)
 
 6.1.  Normative References
 
-   [RFC5234]  Crocker, D., Ed. and P. Overell, "Augmented BNF for Syntax
-              Specifications: ABNF", STD 68, RFC 5234,
-              DOI 10.17487/RFC5234, January 2008,
-              <https://www.rfc-editor.org/rfc/rfc5234>.
-
    [RFC8610]  Birkholz, H., Vigano, C., and C. Bormann, "Concise Data
               Definition Language (CDDL): A Notational Convention to
               Express Concise Binary Object Representation (CBOR) and
               JSON Data Structures", RFC 8610, DOI 10.17487/RFC8610,
               June 2019, <https://www.rfc-editor.org/rfc/rfc8610>.
+
+   [STD68]    Crocker, D., Ed. and P. Overell, "Augmented BNF for Syntax
+              Specifications: ABNF", STD 68, RFC 5234, January 2008.
 
 6.2.  Informative References
 
