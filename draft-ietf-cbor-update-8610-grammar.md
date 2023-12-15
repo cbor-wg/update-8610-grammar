@@ -34,7 +34,7 @@ author:
 
 normative:
   RFC8610: cddl
-  RFC5234: abnf
+  STD68: abnf
 
 informative:
   RFC7405: abnf-case
