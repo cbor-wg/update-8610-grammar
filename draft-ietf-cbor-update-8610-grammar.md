@@ -34,14 +34,14 @@ author:
 
 normative:
   RFC8610: cddl
-  RFC9165: control1
+  RFC5234: abnf
 
 informative:
-  RFC5234: abnf
   RFC7405: abnf-case
-  I-D.ietf-cbor-cddl-more-control: more-control
-  I-D.draft-bormann-cbor-cddl-freezer: freezer
-  I-D.bormann-cbor-cddl-2-draft: cddl-2-draft
+  RFC9165: control1
+  I-D.ietf-cbor-cddl-modules: modules
+  I-D.ietf-cbor-edn-literals: edn
+#  I-D.ietf-cbor-cddl-more-control: more-control
 #  useful:
 #    target: https://github.com/cbor-wg/cddl/wiki/Useful-CDDL
 #    title: Useful CDDL
@@ -67,54 +67,27 @@ informative:
 
 --- abstract
 
-[^abs1-]
+The Concise Data Definition Language (CDDL), as defined in
+RFC 8610 and RFC 9165,
+provides an easy and unambiguous way to express structures for
+protocol messages and data formats that are represented in CBOR or
+JSON.
 
-[^abs1-]:
-    At the time of writing,
-    the Concise Data Definition Language (CDDL) is defined by
-    RFC 8610 and RFC 9165.
-    The latter has used the extension point provided in RFC 8610,
-    the _control operator_.
-
-    As CDDL is being used in larger projects, the need for corrections
-    and additional features has become known that cannot be easily
-    mapped into this single extension point.
-    Hence, there is a need for evolution of the base CDDL
-    specification itself.
-
-    The present document updates errata and makes other small fixes for
-    the ABNF grammar defined for CDDL in RFC 8610.
-
-[^status]
-
-[^status]: Previous versions of the changes in this document were part
-    of draft-bormann-cbor-cddl-2-draft and previously
-    draft-bormann-cbor-cddl-freezer.
-    This submission extracts out those grammar changes that are ready
-    for publication.
+The present document updates RFC 8610 by addressing errata and making
+other small fixes for the ABNF grammar defined for CDDL there.
 
 --- middle
 
 # Introduction
 
-[^abs1-]
+The Concise Data Definition Language (CDDL), as defined in
+{{-cddl}} and {{-control1}},
+provides an easy and unambiguous way to express structures for
+protocol messages and data formats that are represented in CBOR or
+JSON.
 
-[^status]
-
-[^seealso]
-
-[^seealso]: Proposals for grammar and other changes that need more
-    work can be found in {{-cddl-2-draft}}.  Proposals for other
-    additions to the CDDL specification base are in {{-freezer}}.
-
-Note that the existing extension point "control operator" ({{Section
-3.8 of -cddl}}) can be exercised for new features in parallel to the
-work described here; one set of such proposals is in {{-more-control}}.
-
-The present document, in conjunction with {{-cddl}} as well as
-{{-control1}} and {{-more-control}}, is intended to be the specification
-base of what has colloquially been called CDDL 1.1.
-Additional documents describe further work on CDDL.
+The present document updates {{-cddl}} by addressing errata and making
+other small fixes for the ABNF grammar defined for CDDL there.
 
 ## Conventions and Definitions
 
@@ -122,13 +95,11 @@ The Terminology from {{-cddl}} applies.
 The grammar in {{-cddl}} is based on ABNF, which is defined in {{-abnf}}
 and {{-abnf-case}}.
 
-{::boilerplate bcp14-tagged}
-
 # Clarifications and Changes based on Errata Reports {#clari}
 
 
 *Compatibility*:
-: errata fix (targets 1.0 and 2.0)
+: errata fix
 
 A number of errata reports have been made around some details of text
 string and byte string literal syntax: {{Err6527}} and {{Err6543}}.
@@ -148,11 +119,18 @@ text = %x22 *SCHAR %x22
 SCHAR = %x20-21 / %x23-5B / %x5D-7E / %x80-10FFFD / SESC
 SESC = "\" (%x20-7E / %x80-10FFFD)
 ~~~
+{: #e6527-old1 title="Old ABNF for strings with permissive ABNF for
+SESC, but not allowing hex escapes"}
 
 This allows almost any non-C0 character to be escaped by a backslash,
 but critically misses out on the `\uXXXX` and `\uHHHH\uLLLL` forms
 that JSON allows to specify characters in hex (which should be
 applying here according to Bullet 6 of {{Section 3.1 of -cddl}}).
+(Note that we import from JSON the unwieldy `\uHHHH\uLLLL` syntax,
+which represents Unicode code points beyond U-FFFF by making them look
+like UTF-16 surrogate pairs; CDDL text strings are not using UTF-16 or
+surrogates.)
+
 Both can be solved by updating the SESC production to:
 
 ~~~ abnf
@@ -166,7 +144,8 @@ non-surrogate = ((DIGIT / "A"/"B"/"C" / "E"/"F") 3HEXDIG) /
 high-surrogate = "D" ("8"/"9"/"A"/"B") 2HEXDIG
 low-surrogate = "D" ("C"/"D"/"E"/"F") 2HEXDIG
 ~~~
-{: #e6527-new1 title="Updated string parsing to allow hex escapes"}
+{: #e6527-new1 title="Updated string ABNF to allow hex escapes"
+sourcecode-name="cddl-new-sesc.abnf"}
 
 (Notes:
 In ABNF, strings such as `"A"`, `"B"` etc. are case-insensitive, as is
@@ -184,6 +163,7 @@ bytes = [bsqual] %x27 *BCHAR %x27
 BCHAR = %x20-26 / %x28-5B / %x5D-10FFFD / SESC / CRLF
 bsqual = "h" / "b64"
 ~~~
+{: #e6527-old2 title="Old ABNF for BCHAR"}
 
 In BCHAR, the updated version explicitly allows `\'`, which is no
 longer allowed in the updated SESC:
@@ -192,7 +172,8 @@ longer allowed in the updated SESC:
 ; new rule for BCHAR:
 BCHAR = %x20-26 / %x28-5B / %x5D-10FFFD / SESC / "\'" / CRLF
 ~~~
-{: #e6527-new2 title="Updated rule for BCHAR"}
+{: #e6527-new2 title="Updated ABNF for BCHAR"
+sourcecode-name="cddl-new-bchar.abnf"}
 
 ## Err6543 (byte string literals)
 
@@ -205,6 +186,7 @@ in base16 (hex) or base64 (but see also updated BCHAR production above):
 bytes = [bsqual] %x27 *BCHAR %x27
 BCHAR = %x20-26 / %x28-5B / %x5D-10FFFD / SESC / CRLF
 ~~~
+{: #e6527-old2a title="Old ABNF for BCHAR"}
 
 ### Change proposed by Errata Report 6543
 {:unnumbered}
@@ -233,7 +215,7 @@ COMMENT = ";" *PCHAR CRLF
 PCHAR = %x20-7E / %x80-10FFFD
 CRLF = %x0A / %x0D.0A
 ~~~
-{: #e6543-2 title="Definition of WS from RFC 8610"}
+{: #e6543-2 title="ABNF definition of WS from RFC 8610"}
 
 This allows any non-C0 character in a comment, so this fragment
 becomes possible:
@@ -257,8 +239,15 @@ foo = h'
 
 ... which would be supported by the existing ABNF in {{-cddl}}.
 
-### No change needed after {{e6527}}
+### No change needed after addressing {{<<e6527}} (Section {{<e6527}})
 {:unnumbered}
+
+[^headingbug]
+
+[^headingbug]: note that the HTML rendering of the heading is
+    butchered by xml2rfc, as noted in
+    https://github.com/ietf-tools/xml2rfc/issues/683; we except
+    this to have been fixed before this document is published
 
 This document takes the simpler approach of leaving the processing of
 the content of the byte string literal to a semantic step after
@@ -274,8 +263,8 @@ It does require some care when copy-pasting into CDDL models from ABNF
 that contains single quotes (which may also hide as apostrophes
 in comments); these need to be escaped or possibly replaced by `%x27`.
 
-Finally, our approach may leave the door open wider to extending
-`bsqual` as proposed in {{Appendix A.1 of -cddl-2-draft}}.
+Finally, our approach would lend support to extending `bsqual` in CDDL
+similar to the way this is done for CBOR diagnostic notation in {{-edn}}.
 
 
 # Small Enabling Grammar Changes
@@ -297,27 +286,30 @@ Empty data models {#empty}
 ; RFC 8610 ABNF:
 cddl = S 1*(rule S)
 ~~~
+{: #empty-old title="Old ABNF for top-level rule cddl"}
 
 
 This makes sense when the file has to stand alone, as a CDDL data
 model needs to have at least one rule to provide an entry point (start
 rule).
 
-With CDDL 2.0, CDDL files can also include directives<!-- (see
-{{directives}}) -->, and these might be the source of all the rules that
+With CDDL modules {{-modules}}, CDDL files can also include directives,
+and these might be the source of all the rules that
 ultimately make up the module created by the file.
 Any other rule content in the file has to be available for directive
 processing, making the requirement for at least one rule cumbersome.
 
-Therefore, we extend the grammar as follows:
+Therefore, we extend the grammar as in {{empty-new}}
+and make the existence of at least one rule a semantic constraint, to
+be fulfilled after processing of all directives.
 
 ~~~ abnf
 ; new top-level rule:
 cddl = S *(rule S)
 ~~~
+{: #empty-new title="Updated ABNF for top-level rule cddl"
+sourcecode-name="cddl-new-cddl.abnf"}
 
-and make the existence of at least one rule a semantic constraint, to
-be fulfilled after processing of all directives.
 
 
 Non-literal Tag Numbers {#tagnum}
@@ -327,12 +319,13 @@ Non-literal Tag Numbers {#tagnum}
 *Compatibility*:
 : backward (not forward)
 
-The CDDL 1.0 syntax for expressing tags in CDDL is (ABNF as in {{-abnf}}):
+The existing ABNF syntax for expressing tags in CDDL is:
 
 ~~~ abnf
 ; extracted from RFC 8610 ABNF:
 type2 /= "#" "6" ["." uint] "(" S type S ")"
 ~~~
+{: #tag-old title="Old ABNF for tag syntax"}
 
 This means tag numbers can only be given as literal numbers (uints).
 Some specifications operate on ranges of tag numbers, e.g., {{?RFC9277}}
@@ -340,13 +333,15 @@ has a range of tag numbers 1668546817 (0x63740101) to 1668612095
 (0x6374FFFF) to tag specific content formats.
 This can currently not be expressed in CDDL.
 
-CDDL 2.0 extends this to:
+This update extends this to:
 
 ~~~ abnf
 ; new rules collectively defining the tagged case:
 type2 /= "#" "6" ["." tag-number] "(" S type S ")"
 tag-number = uint / ("<" type ">")
 ~~~
+{: #tag-new title="Updated ABNF for tag syntax"
+sourcecode-name="cddl-new-tag.abnf"}
 
 So the above range can be expressed in a CDDL fragment such as:
 
@@ -384,10 +379,11 @@ This document has no IANA actions.
 This appendix provides the full ABNF from {{-cddl}} with the updates
 applied in the present document.
 
-~~~ cddl
+~~~ abnf
 {::include cddl-1-1-update.abnf}
 ~~~
-{: #collected-abnf title="ABNF for CDDL as updated"}
+{: #collected-abnf title="ABNF for CDDL as updated"
+sourcecode-name="cddl-updated-complete.abnf"}
 
 # Acknowledgments
 {:numbered="false"}
