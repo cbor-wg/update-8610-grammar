@@ -1278,7 +1278,7 @@ but critically misses out on the <code>\uXXXX</code> and <code>\uHHHH\uLLLL</cod
 that JSON allows to specify characters in hex (which should be
 applying here according to Bullet 6 of <span><a href="https://rfc-editor.org/rfc/rfc8610#section-3.1" class="relref">Section 3.1</a> of [<a href="#RFC8610" class="cite xref">RFC8610</a>]</span>).
 (Note that we import from JSON the unwieldy <code>\uHHHH\uLLLL</code> syntax,
-which represents Unicode code points beyond U-FFFF by making them look
+which represents Unicode code points beyond U+FFFF by making them look
 like UTF-16 surrogate pairs; CDDL text strings are not using UTF-16 or
 surrogates.)<a href="#section-2.1-3" class="pilcrow">¶</a></p>
 <p id="section-2.1-4">Both can be solved by updating the SESC production to:<a href="#section-2.1-4" class="pilcrow">¶</a></p>
@@ -1323,20 +1323,38 @@ bsqual = "h" / "b64"
 <a href="#name-old-abnf-for-bchar" class="selfRef">Old ABNF for BCHAR</a>
           </figcaption></figure>
 </div>
-<p id="section-2.1-9">In BCHAR, the updated version explicitly allows <code>\'</code>, which is no
-longer allowed in the updated SESC:<a href="#section-2.1-9" class="pilcrow">¶</a></p>
-<span id="name-updated-abnf-for-bchar"></span><div id="e6527-new2">
+<p id="section-2.1-9">With the SESC updated as above, <code>\'</code> is no longer allowed in BCHAR;
+this now needs to be explicitly included.<a href="#section-2.1-9" class="pilcrow">¶</a></p>
+<p id="section-2.1-10">Updating BCHAR also provides an opportunity to address <span>[<a href="#Err6278" class="cite xref">Err6278</a>]</span>,
+which points to an inconsistency in treating U+007F (DEL) between SCHAR and
+BCHAR.
+As U+007F is not printable, including it in a byte string literal is
+as confusing as for a text string literal, and it should therefore be
+excluded from BCHAR as it is from SCHAR.
+The same reasoning also applies to the C1 control characters,
+so we actually exclude the entire range from U+007F to U+009F.
+The same reasoning then also applies to text in comments (PCHAR).
+For completeness, all these should also explicitly exclude the code
+points that have been set aside for UTF-16's surrogates.<a href="#section-2.1-10" class="pilcrow">¶</a></p>
+<span id="name-updated-abnf-for-bchar-scha"></span><div id="e6527-new2">
 <figure id="figure-4">
-          <div class="lang-abnf sourcecode" id="section-2.1-10.1">
+          <div class="lang-abnf sourcecode" id="section-2.1-11.1">
 <pre>
-; new rule for BCHAR:
-BCHAR = %x20-26 / %x28-5B / %x5D-10FFFD / SESC / "\'" / CRLF
+; new rules for BCHAR and SCHAR:
+SCHAR = %x20-21 / %x23-5B / %x5D-7E / NONASCII / SESC
+BCHAR = %x20-26 / %x28-5B / %x5D-7E / NONASCII / SESC / "\'" / CRLF
+PCHAR = %x20-7E / NONASCII
+NONASCII = %xA0-D7FF / %xE000-10FFFD
 </pre>
 </div>
 <figcaption><a href="#figure-4" class="selfRef">Figure 4</a>:
-<a href="#name-updated-abnf-for-bchar" class="selfRef">Updated ABNF for BCHAR</a>
+<a href="#name-updated-abnf-for-bchar-scha" class="selfRef">Updated ABNF for BCHAR, SCHAR, and PCHAR</a>
           </figcaption></figure>
 </div>
+<p id="section-2.1-12">(Note that, apart from addressing the inconsistencies, there is no
+attempt to further exclude non-printable characters from the ABNF;
+doing this properly would draw in complexity from the ongoing
+evolution of the Unicode standard that is not needed here.)<a href="#section-2.1-12" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="err6543-byte-string-literals">
@@ -1563,11 +1581,26 @@ ct-tag-number = 1668546817..1668612095
 ; or use 0x63740101..0x6374FFFF
 </pre><a href="#section-3.2-8" class="pilcrow">¶</a>
 </div>
-<p id="section-3.2-9">Note that this syntax reuses the angle bracket syntax for generics;
+<p id="section-3.2-9">Notes:<a href="#section-3.2-9" class="pilcrow">¶</a></p>
+<ol start="1" type="1" class="normal type-1" id="section-3.2-10">
+<li id="section-3.2-10.1">
+            <p id="section-3.2-10.1.1">This syntax reuses the angle bracket syntax for generics;
 this reuse is innocuous as a generic parameter/argument only ever
 occurs after a rule name (<code>id</code>), while it occurs after <code>.</code> here.
 (Whether there is potential for human confusion can be debated; the
-above example deliberately uses generics as well.)<a href="#section-3.2-9" class="pilcrow">¶</a></p>
+above example deliberately uses generics as well.)<a href="#section-3.2-10.1.1" class="pilcrow">¶</a></p>
+</li>
+          <li id="section-3.2-10.2">
+            <p id="section-3.2-10.2.1">The updated ABNF grammar makes it a bit more explicit that the
+number given after the optional dot is special, not giving the CBOR
+"additional information" as it is with other uses of <code>#</code> in CDDL.
+(Adding this observation to <span><a href="https://rfc-editor.org/rfc/rfc8610#section-2.2.3" class="relref">Section 2.2.3</a> of [<a href="#RFC8610" class="cite xref">RFC8610</a>]</span> is the subject
+of <span>[<a href="#Err6575" class="cite xref">Err6575</a>]</span>; it is correctly noted in <span><a href="https://rfc-editor.org/rfc/rfc8610#section-3.6" class="relref">Section 3.6</a> of [<a href="#RFC8610" class="cite xref">RFC8610</a>]</span>.)
+In hindsight, maybe a different character than the dot should have
+been chosen for this special case, however changing the grammar
+now would have been too disruptive.<a href="#section-3.2-10.2.1" class="pilcrow">¶</a></p>
+</li>
+        </ol>
 </section>
 </div>
 </section>
@@ -1623,6 +1656,10 @@ been updated and some of which have not been, in particular based on
 <a href="#section-6.2" class="section-number selfRef">6.2. </a><a href="#name-informative-references" class="section-name selfRef">Informative References</a>
         </h3>
 <dl class="references">
+<dt id="Err6278">[Err6278]</dt>
+        <dd>
+<span class="refTitle">"Errata Report 6278"</span>, <span class="seriesInfo">RFC 8610</span>, <span>&lt;<a href="https://www.rfc-editor.org/errata/eid6278">https://www.rfc-editor.org/errata/eid6278</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="Err6526">[Err6526]</dt>
         <dd>
 <span class="refTitle">"Errata Report 6526"</span>, <span class="seriesInfo">RFC 8610</span>, <span>&lt;<a href="https://www.rfc-editor.org/errata/eid6526">https://www.rfc-editor.org/errata/eid6526</a>&gt;</span>. </dd>
@@ -1634,6 +1671,10 @@ been updated and some of which have not been, in particular based on
 <dt id="Err6543">[Err6543]</dt>
         <dd>
 <span class="refTitle">"Errata Report 6543"</span>, <span class="seriesInfo">RFC 8610</span>, <span>&lt;<a href="https://www.rfc-editor.org/errata/eid6543">https://www.rfc-editor.org/errata/eid6543</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="Err6575">[Err6575]</dt>
+        <dd>
+<span class="refTitle">"Errata Report 6575"</span>, <span class="seriesInfo">RFC 8610</span>, <span>&lt;<a href="https://www.rfc-editor.org/errata/eid6575">https://www.rfc-editor.org/errata/eid6575</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="I-D.ietf-cbor-cddl-modules">[I-D.ietf-cbor-cddl-modules]</dt>
         <dd>
@@ -1744,7 +1785,7 @@ fraction = 1*DIGIT
 exponent = ["+"/"-"] 1*DIGIT
 
 text = %x22 *SCHAR %x22
-SCHAR = %x20-21 / %x23-5B / %x5D-7E / %x80-10FFFD / SESC
+SCHAR = %x20-21 / %x23-5B / %x5D-7E / NONASCII / SESC
 
 SESC = "\" ( %x22 / "/" / "\" /                 ; \" \/ \\
              %x62 / %x66 / %x6E / %x72 / %x74 / ; \b \f \n \r \t
@@ -1756,7 +1797,7 @@ high-surrogate = "D" ("8"/"9"/"A"/"B") 2HEXDIG
 low-surrogate = "D" ("C"/"D"/"E"/"F") 2HEXDIG
 
 bytes = [bsqual] %x27 *BCHAR %x27
-BCHAR = %x20-26 / %x28-5B / %x5D-10FFFD / SESC / "\'" / CRLF
+BCHAR = %x20-26 / %x28-5B / %x5D-7E / NONASCII / SESC / "\'" / CRLF
 bsqual = "h" / "b64"
 
 id = EALPHA *(*("-" / ".") (EALPHA / DIGIT))
@@ -1772,7 +1813,8 @@ WS = SP / NL
 SP = %x20
 NL = COMMENT / CRLF
 COMMENT = ";" *PCHAR CRLF
-PCHAR = %x20-7E / %x80-10FFFD
+PCHAR = %x20-7E / NONASCII
+NONASCII = %xA0-D7FF / %xE000-10FFFD
 CRLF = %x0A / %x0D.0A
 </pre>
 </div>
@@ -1788,6 +1830,10 @@ CRLF = %x0A / %x0D.0A
 <a href="#name-acknowledgments" class="section-name selfRef">Acknowledgments</a>
       </h2>
 <p id="appendix-B-1">TODO acknowledge.<a href="#appendix-B-1" class="pilcrow">¶</a></p>
+<p id="appendix-B-2">Many thanks go to the submitters of the errata reports addressed in
+this document.
+In one of the ensuing discussions, Doug Ewell proposed to define an
+ABNF rule NONASCII, of which we have included the essence.<a href="#appendix-B-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="authors-addresses">
