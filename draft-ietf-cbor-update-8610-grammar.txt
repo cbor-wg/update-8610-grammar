@@ -49,6 +49,15 @@ Status of This Memo
    working documents as Internet-Drafts.  The list of current Internet-
    Drafts is at https://datatracker.ietf.org/drafts/current/.
 
+
+
+
+
+Bormann                   Expires 17 June 2024                  [Page 1]
+
+Internet-Draft            CDDL grammar updates             December 2023
+
+
    Internet-Drafts are draft documents valid for a maximum of six months
    and may be updated, replaced, or obsoleted by other documents at any
    time.  It is inappropriate to use Internet-Drafts as reference
@@ -72,25 +81,38 @@ Copyright Notice
 
 Table of Contents
 
-   1.  Introduction
-     1.1.  Conventions and Definitions
-   2.  Clarifications and Changes based on Errata Reports
-     2.1.  Err6527 (text string literals)
-     2.2.  Err6543 (byte string literals)
-       Change proposed by Errata Report 6543
+   1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   3
+     1.1.  Conventions and Definitions . . . . . . . . . . . . . . .   3
+   2.  Clarifications and Changes based on Errata Reports  . . . . .   3
+     2.1.  Err6527 (text string literals)  . . . . . . . . . . . . .   3
+     2.2.  Err6543 (byte string literals)  . . . . . . . . . . . . .   5
+       Change proposed by Errata Report 6543 . . . . . . . . . . . .   5
        No change needed after addressing Err6527 (text string
-           literals) (Section 2.1)
-   3.  Small Enabling Grammar Changes
-     3.1.  Empty data models
-     3.2.  Non-literal Tag Numbers
-   4.  Security Considerations
-   5.  IANA Considerations
-   6.  References
-     6.1.  Normative References
-     6.2.  Informative References
-   Appendix A.  Updated Collected ABNF for CDDL
-   Acknowledgments
-   Author's Address
+           literals) (Section 2.1) . . . . . . . . . . . . . . . . .   6
+   3.  Small Enabling Grammar Changes  . . . . . . . . . . . . . . .   7
+     3.1.  Empty data models . . . . . . . . . . . . . . . . . . . .   7
+     3.2.  Non-literal Tag Numbers . . . . . . . . . . . . . . . . .   7
+   4.  Security Considerations . . . . . . . . . . . . . . . . . . .   8
+   5.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   9
+   6.  References  . . . . . . . . . . . . . . . . . . . . . . . . .   9
+     6.1.  Normative References  . . . . . . . . . . . . . . . . . .   9
+     6.2.  Informative References  . . . . . . . . . . . . . . . . .   9
+   Appendix A.  Updated Collected ABNF for CDDL  . . . . . . . . . .  10
+   Acknowledgments . . . . . . . . . . . . . . . . . . . . . . . . .  12
+   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .  12
+
+
+
+
+
+
+
+
+
+Bormann                   Expires 17 June 2024                  [Page 2]
+
+Internet-Draft            CDDL grammar updates             December 2023
+
 
 1.  Introduction
 
@@ -139,6 +161,14 @@ Table of Contents
    represents Unicode code points beyond U+FFFF by making them look like
    UTF-16 surrogate pairs; CDDL text strings are not using UTF-16 or
    surrogates.)
+
+
+
+
+Bormann                   Expires 17 June 2024                  [Page 3]
+
+Internet-Draft            CDDL grammar updates             December 2023
+
 
    Both can be solved by updating the SESC production to:
 
@@ -189,6 +219,13 @@ Table of Contents
    PCHAR = %x20-7E / NONASCII
    NONASCII = %xA0-D7FF / %xE000-10FFFD
 
+
+
+Bormann                   Expires 17 June 2024                  [Page 4]
+
+Internet-Draft            CDDL grammar updates             December 2023
+
+
              Figure 4: Updated ABNF for BCHAR, SCHAR, and PCHAR
 
    (Note that, apart from addressing the inconsistencies, there is no
@@ -236,6 +273,15 @@ Change proposed by Errata Report 6543
 
                Figure 7: ABNF definition of WS from RFC 8610
 
+
+
+
+
+Bormann                   Expires 17 June 2024                  [Page 5]
+
+Internet-Draft            CDDL grammar updates             December 2023
+
+
    This allows any non-C0 character in a comment, so this fragment
    becomes possible:
 
@@ -280,6 +326,17 @@ No change needed after addressing Err6527 (text string literals)
    Finally, our approach would lend support to extending bsqual in CDDL
    similar to the way this is done for CBOR diagnostic notation in
    [I-D.ietf-cbor-edn-literals].
+
+
+
+
+
+
+
+Bormann                   Expires 17 June 2024                  [Page 6]
+
+Internet-Draft            CDDL grammar updates             December 2023
+
 
 3.  Small Enabling Grammar Changes
 
@@ -327,6 +384,16 @@ No change needed after addressing Err6527 (text string literals)
 
                      Figure 10: Old ABNF for tag syntax
 
+
+
+
+
+
+Bormann                   Expires 17 June 2024                  [Page 7]
+
+Internet-Draft            CDDL grammar updates             December 2023
+
+
    This means tag numbers can only be given as literal numbers (uints).
    Some specifications operate on ranges of tag numbers, e.g., [RFC9277]
    has a range of tag numbers 1668546817 (0x63740101) to 1668612095
@@ -372,6 +439,16 @@ No change needed after addressing Err6527 (text string literals)
    the potential for confusion is increased in an environment that uses
    a combination of CDDL tools some of which have been updated and some
    of which have not been, in particular based on Section 2.
+
+
+
+
+
+
+Bormann                   Expires 17 June 2024                  [Page 8]
+
+Internet-Draft            CDDL grammar updates             December 2023
+
 
 5.  IANA Considerations
 
@@ -421,6 +498,14 @@ No change needed after addressing Err6527 (text string literals)
               <https://datatracker.ietf.org/doc/html/draft-ietf-cbor-
               edn-literals-06>.
 
+
+
+
+Bormann                   Expires 17 June 2024                  [Page 9]
+
+Internet-Draft            CDDL grammar updates             December 2023
+
+
    [RFC7405]  Kyzivat, P., "Case-Sensitive String Support in ABNF",
               RFC 7405, DOI 10.17487/RFC7405, December 2014,
               <https://www.rfc-editor.org/rfc/rfc7405>.
@@ -469,6 +554,14 @@ Appendix A.  Updated Collected ABNF for CDDL
          / "#" "6" ["." tag-number] "(" S type S ")"
          / "#" DIGIT ["." uint]                ; major/ai
          / "#"                                 ; any
+
+
+
+Bormann                   Expires 17 June 2024                 [Page 10]
+
+Internet-Draft            CDDL grammar updates             December 2023
+
+
    tag-number = uint / ("<" type ">")
 
 
@@ -517,6 +610,14 @@ Appendix A.  Updated Collected ABNF for CDDL
    SCHAR = %x20-21 / %x23-5B / %x5D-7E / NONASCII / SESC
 
    SESC = "\" ( %x22 / "/" / "\" /                 ; \" \/ \\
+
+
+
+Bormann                   Expires 17 June 2024                 [Page 11]
+
+Internet-Draft            CDDL grammar updates             December 2023
+
+
                 %x62 / %x66 / %x6E / %x72 / %x74 / ; \b \f \n \r \t
                 (%x75 hexchar) )                   ; \uXXXX
    hexchar = non-surrogate / (high-surrogate "\" %x75 low-surrogate)
@@ -565,4 +666,63 @@ Author's Address
    D-28359 Bremen
    Germany
    Phone: +49-421-218-63921
+
+
+
+Bormann                   Expires 17 June 2024                 [Page 12]
+
+Internet-Draft            CDDL grammar updates             December 2023
+
+
    Email: cabo@tzi.org
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Bormann                   Expires 17 June 2024                 [Page 13]
