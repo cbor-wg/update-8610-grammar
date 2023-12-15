@@ -304,7 +304,7 @@ No change needed after addressing Err6527 (text string literals)
    The existing ABNF syntax for expressing tags in CDDL is:
 
    ; extracted from RFC 8610 ABNF:
-   type2 /= "#" "6" ["." uint] "(" S type S ")"
+   type2 =/ "#" "6" ["." uint] "(" S type S ")"
 
                      Figure 10: Old ABNF for tag syntax
 
@@ -317,7 +317,7 @@ No change needed after addressing Err6527 (text string literals)
    This update extends this to:
 
    ; new rules collectively defining the tagged case:
-   type2 /= "#" "6" ["." tag-number] "(" S type S ")"
+   type2 =/ "#" "6" ["." tag-number] "(" S type S ")"
    tag-number = uint / ("<" type ">")
 
                    Figure 11: Updated ABNF for tag syntax

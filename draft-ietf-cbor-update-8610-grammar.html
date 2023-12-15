@@ -1529,7 +1529,7 @@ cddl = S *(rule S)
           <div class="lang-abnf sourcecode" id="section-3.2-3.1">
 <pre>
 ; extracted from RFC 8610 ABNF:
-type2 /= "#" "6" ["." uint] "(" S type S ")"
+type2 =/ "#" "6" ["." uint] "(" S type S ")"
 </pre>
 </div>
 <figcaption><a href="#figure-10" class="selfRef">Figure 10</a>:
@@ -1547,7 +1547,7 @@ This can currently not be expressed in CDDL.<a href="#section-3.2-4" class="pilc
           <div class="lang-abnf sourcecode" id="section-3.2-6.1">
 <pre>
 ; new rules collectively defining the tagged case:
-type2 /= "#" "6" ["." tag-number] "(" S type S ")"
+type2 =/ "#" "6" ["." tag-number] "(" S type S ")"
 tag-number = uint / ("&lt;" type "&gt;")
 </pre>
 </div>
