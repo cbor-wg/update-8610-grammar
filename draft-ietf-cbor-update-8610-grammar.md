@@ -323,7 +323,7 @@ The existing ABNF syntax for expressing tags in CDDL is:
 
 ~~~ abnf
 ; extracted from RFC 8610 ABNF:
-type2 /= "#" "6" ["." uint] "(" S type S ")"
+type2 =/ "#" "6" ["." uint] "(" S type S ")"
 ~~~
 {: #tag-old title="Old ABNF for tag syntax"}
 
@@ -337,7 +337,7 @@ This update extends this to:
 
 ~~~ abnf
 ; new rules collectively defining the tagged case:
-type2 /= "#" "6" ["." tag-number] "(" S type S ")"
+type2 =/ "#" "6" ["." tag-number] "(" S type S ")"
 tag-number = uint / ("<" type ">")
 ~~~
 {: #tag-new title="Updated ABNF for tag syntax"
