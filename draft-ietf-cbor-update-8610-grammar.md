@@ -45,6 +45,12 @@ informative:
 #  useful:
 #    target: https://github.com/cbor-wg/cddl/wiki/Useful-CDDL
 #    title: Useful CDDL
+  Err6278:
+    target: "https://www.rfc-editor.org/errata/eid6278"
+    title: Errata Report 6278
+    seriesinfo:
+      RFC: 8610
+    date: false
   Err6526:
     target: "https://www.rfc-editor.org/errata/eid6526"
     title: Errata Report 6526
@@ -60,6 +66,12 @@ informative:
   Err6543:
     target: "https://www.rfc-editor.org/errata/eid6543"
     title: Errata Report 6543
+    seriesinfo:
+      RFC: 8610
+    date: false
+  Err6575:
+    target: "https://www.rfc-editor.org/errata/eid6575"
+    title: Errata Report 6575
     seriesinfo:
       RFC: 8610
     date: false
@@ -127,7 +139,7 @@ but critically misses out on the `\uXXXX` and `\uHHHH\uLLLL` forms
 that JSON allows to specify characters in hex (which should be
 applying here according to Bullet 6 of {{Section 3.1 of -cddl}}).
 (Note that we import from JSON the unwieldy `\uHHHH\uLLLL` syntax,
-which represents Unicode code points beyond U-FFFF by making them look
+which represents Unicode code points beyond U+FFFF by making them look
 like UTF-16 surrogate pairs; CDDL text strings are not using UTF-16 or
 surrogates.)
 
@@ -165,15 +177,36 @@ bsqual = "h" / "b64"
 ~~~
 {: #e6527-old2 title="Old ABNF for BCHAR"}
 
-In BCHAR, the updated version explicitly allows `\'`, which is no
-longer allowed in the updated SESC:
+With the SESC updated as above, `\'` is no longer allowed in BCHAR;
+this now needs to be explicitly included.
+
+Updating BCHAR also provides an opportunity to address {{Err6278}},
+which points to an inconsistency in treating U+007F (DEL) between SCHAR and
+BCHAR.
+As U+007F is not printable, including it in a byte string literal is
+as confusing as for a text string literal, and it should therefore be
+excluded from BCHAR as it is from SCHAR.
+The same reasoning also applies to the C1 control characters,
+so we actually exclude the entire range from U+007F to U+009F.
+The same reasoning then also applies to text in comments (PCHAR).
+For completeness, all these should also explicitly exclude the code
+points that have been set aside for UTF-16's surrogates.
 
 ~~~ abnf
-; new rule for BCHAR:
-BCHAR = %x20-26 / %x28-5B / %x5D-10FFFD / SESC / "\'" / CRLF
+; new rules for BCHAR and SCHAR:
+SCHAR = %x20-21 / %x23-5B / %x5D-7E / NONASCII / SESC
+BCHAR = %x20-26 / %x28-5B / %x5D-7E / NONASCII / SESC / "\'" / CRLF
+PCHAR = %x20-7E / NONASCII
+NONASCII = %xA0-D7FF / %xE000-10FFFD
 ~~~
-{: #e6527-new2 title="Updated ABNF for BCHAR"
+{: #e6527-new2 title="Updated ABNF for BCHAR, SCHAR, and PCHAR"
 sourcecode-name="cddl-new-bchar.abnf"}
+
+(Note that, apart from addressing the inconsistencies, there is no
+attempt to further exclude non-printable characters from the ABNF;
+doing this properly would draw in complexity from the ongoing
+evolution of the Unicode standard that is not needed here.)
+
 
 ## Err6543 (byte string literals)
 
@@ -351,11 +384,22 @@ ct-tag-number = 1668546817..1668612095
 ; or use 0x63740101..0x6374FFFF
 ~~~
 
-Note that this syntax reuses the angle bracket syntax for generics;
+Notes:
+
+1. This syntax reuses the angle bracket syntax for generics;
 this reuse is innocuous as a generic parameter/argument only ever
 occurs after a rule name (`id`), while it occurs after `.` here.
 (Whether there is potential for human confusion can be debated; the
 above example deliberately uses generics as well.)
+
+2. The updated ABNF grammar makes it a bit more explicit that the
+   number given after the optional dot is special, not giving the CBOR
+   "additional information" as it is with other uses of `#` in CDDL.
+   (Adding this observation to {{Section 2.2.3 of -cddl}} is the subject
+   of {{Err6575}}; it is correctly noted in {{Section 3.6 of -cddl}}.)
+   In hindsight, maybe a different character than the dot should have
+   been chosen for this special case, however changing the grammar
+   now would have been too disruptive.
 
 # Security Considerations
 
@@ -389,3 +433,8 @@ sourcecode-name="cddl-updated-complete.abnf"}
 {:numbered="false"}
 
 TODO acknowledge.
+
+Many thanks go to the submitters of the errata reports addressed in
+this document.
+In one of the ensuing discussions, Doug Ewell proposed to define an
+ABNF rule NONASCII, of which we have included the essence.
