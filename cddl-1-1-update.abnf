@@ -29,7 +29,6 @@ type2 = value
       / "#"                                 ; any
 tag-number = uint / ("<" type ">")
 
-
 rangeop = "..." / ".."
 
 ctlop = "." id
