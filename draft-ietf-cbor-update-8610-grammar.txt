@@ -4,9 +4,9 @@
 
 CBOR                                                          C. Bormann
 Internet-Draft                                    Universität Bremen TZI
-Updates: 8610 (if approved)                             15 December 2023
+Updates: 8610 (if approved)                             18 December 2023
 Intended status: Standards Track                                        
-Expires: 17 June 2024
+Expires: 20 June 2024
 
 
                 Updates to the CDDL grammar of RFC 8610
@@ -53,7 +53,7 @@ Status of This Memo
 
 
 
-Bormann                   Expires 17 June 2024                  [Page 1]
+Bormann                   Expires 20 June 2024                  [Page 1]
 
 Internet-Draft            CDDL grammar updates             December 2023
 
@@ -63,7 +63,7 @@ Internet-Draft            CDDL grammar updates             December 2023
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 17 June 2024.
+   This Internet-Draft will expire on 20 June 2024.
 
 Copyright Notice
 
@@ -89,13 +89,13 @@ Table of Contents
        Change proposed by Errata Report 6543 . . . . . . . . . . . .   5
        No change needed after addressing Err6527 (text string
            literals) (Section 2.1) . . . . . . . . . . . . . . . . .   6
-   3.  Small Enabling Grammar Changes  . . . . . . . . . . . . . . .   7
-     3.1.  Empty data models . . . . . . . . . . . . . . . . . . . .   7
+   3.  Small Enabling Grammar Changes  . . . . . . . . . . . . . . .   6
+     3.1.  Empty data models . . . . . . . . . . . . . . . . . . . .   6
      3.2.  Non-literal Tag Numbers . . . . . . . . . . . . . . . . .   7
    4.  Security Considerations . . . . . . . . . . . . . . . . . . .   8
-   5.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   9
-   6.  References  . . . . . . . . . . . . . . . . . . . . . . . . .   9
-     6.1.  Normative References  . . . . . . . . . . . . . . . . . .   9
+   5.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   8
+   6.  References  . . . . . . . . . . . . . . . . . . . . . . . . .   8
+     6.1.  Normative References  . . . . . . . . . . . . . . . . . .   8
      6.2.  Informative References  . . . . . . . . . . . . . . . . .   9
    Appendix A.  Updated Collected ABNF for CDDL  . . . . . . . . . .  10
    Acknowledgments . . . . . . . . . . . . . . . . . . . . . . . . .  12
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Bormann                   Expires 17 June 2024                  [Page 2]
+Bormann                   Expires 20 June 2024                  [Page 2]
 
 Internet-Draft            CDDL grammar updates             December 2023
 
@@ -165,7 +165,7 @@ Internet-Draft            CDDL grammar updates             December 2023
 
 
 
-Bormann                   Expires 17 June 2024                  [Page 3]
+Bormann                   Expires 20 June 2024                  [Page 3]
 
 Internet-Draft            CDDL grammar updates             December 2023
 
@@ -221,7 +221,7 @@ Internet-Draft            CDDL grammar updates             December 2023
 
 
 
-Bormann                   Expires 17 June 2024                  [Page 4]
+Bormann                   Expires 20 June 2024                  [Page 4]
 
 Internet-Draft            CDDL grammar updates             December 2023
 
@@ -277,7 +277,7 @@ Change proposed by Errata Report 6543
 
 
 
-Bormann                   Expires 17 June 2024                  [Page 5]
+Bormann                   Expires 20 June 2024                  [Page 5]
 
 Internet-Draft            CDDL grammar updates             December 2023
 
@@ -303,12 +303,6 @@ Internet-Draft            CDDL grammar updates             December 2023
 No change needed after addressing Err6527 (text string literals)
 (Section 2.1)
 
-
-   // note that the HTML rendering of the heading is butchered by
-   // xml2rfc, as noted in https://github.com/ietf-tools/xml2rfc/
-   // issues/683; we except this to have been fixed before this document
-   // is published
-
    This document takes the simpler approach of leaving the processing of
    the content of the byte string literal to a semantic step after
    processing the syntax of the bytes/BCHAR rules as updated by Figure 2
@@ -327,17 +321,6 @@ No change needed after addressing Err6527 (text string literals)
    similar to the way this is done for CBOR diagnostic notation in
    [I-D.ietf-cbor-edn-literals].
 
-
-
-
-
-
-
-Bormann                   Expires 17 June 2024                  [Page 6]
-
-Internet-Draft            CDDL grammar updates             December 2023
-
-
 3.  Small Enabling Grammar Changes
 
    The two subsections in this section specify two small changes to the
@@ -346,6 +329,14 @@ Internet-Draft            CDDL grammar updates             December 2023
 3.1.  Empty data models
 
    _Compatibility_:  backward (not forward)
+
+
+
+
+Bormann                   Expires 20 June 2024                  [Page 6]
+
+Internet-Draft            CDDL grammar updates             December 2023
+
 
    [RFC8610] requires a CDDL file to have at least one rule.
 
@@ -384,16 +375,6 @@ Internet-Draft            CDDL grammar updates             December 2023
 
                      Figure 10: Old ABNF for tag syntax
 
-
-
-
-
-
-Bormann                   Expires 17 June 2024                  [Page 7]
-
-Internet-Draft            CDDL grammar updates             December 2023
-
-
    This means tag numbers can only be given as literal numbers (uints).
    Some specifications operate on ranges of tag numbers, e.g., [RFC9277]
    has a range of tag numbers 1668546817 (0x63740101) to 1668612095
@@ -405,6 +386,13 @@ Internet-Draft            CDDL grammar updates             December 2023
    ; new rules collectively defining the tagged case:
    type2 =/ "#" "6" ["." tag-number] "(" S type S ")"
    tag-number = uint / ("<" type ">")
+
+
+
+Bormann                   Expires 20 June 2024                  [Page 7]
+
+Internet-Draft            CDDL grammar updates             December 2023
+
 
                    Figure 11: Updated ABNF for tag syntax
 
@@ -440,16 +428,6 @@ Internet-Draft            CDDL grammar updates             December 2023
    a combination of CDDL tools some of which have been updated and some
    of which have not been, in particular based on Section 2.
 
-
-
-
-
-
-Bormann                   Expires 17 June 2024                  [Page 8]
-
-Internet-Draft            CDDL grammar updates             December 2023
-
-
 5.  IANA Considerations
 
    This document has no IANA actions.
@@ -463,6 +441,14 @@ Internet-Draft            CDDL grammar updates             December 2023
               Express Concise Binary Object Representation (CBOR) and
               JSON Data Structures", RFC 8610, DOI 10.17487/RFC8610,
               June 2019, <https://www.rfc-editor.org/rfc/rfc8610>.
+
+
+
+
+Bormann                   Expires 20 June 2024                  [Page 8]
+
+Internet-Draft            CDDL grammar updates             December 2023
+
 
    [STD68]    Crocker, D., Ed. and P. Overell, "Augmented BNF for Syntax
               Specifications: ABNF", STD 68, RFC 5234, January 2008.
@@ -498,14 +484,6 @@ Internet-Draft            CDDL grammar updates             December 2023
               <https://datatracker.ietf.org/doc/html/draft-ietf-cbor-
               edn-literals-06>.
 
-
-
-
-Bormann                   Expires 17 June 2024                  [Page 9]
-
-Internet-Draft            CDDL grammar updates             December 2023
-
-
    [RFC7405]  Kyzivat, P., "Case-Sensitive String Support in ABNF",
               RFC 7405, DOI 10.17487/RFC7405, December 2014,
               <https://www.rfc-editor.org/rfc/rfc7405>.
@@ -519,6 +497,14 @@ Internet-Draft            CDDL grammar updates             December 2023
               Items in Concise Binary Object Representation (CBOR)",
               RFC 9277, DOI 10.17487/RFC9277, August 2022,
               <https://www.rfc-editor.org/rfc/rfc9277>.
+
+
+
+
+Bormann                   Expires 20 June 2024                  [Page 9]
+
+Internet-Draft            CDDL grammar updates             December 2023
+
 
 Appendix A.  Updated Collected ABNF for CDDL
 
@@ -554,16 +540,7 @@ Appendix A.  Updated Collected ABNF for CDDL
          / "#" "6" ["." tag-number] "(" S type S ")"
          / "#" DIGIT ["." uint]                ; major/ai
          / "#"                                 ; any
-
-
-
-Bormann                   Expires 17 June 2024                 [Page 10]
-
-Internet-Draft            CDDL grammar updates             December 2023
-
-
    tag-number = uint / ("<" type ">")
-
 
    rangeop = "..." / ".."
 
@@ -576,6 +553,14 @@ Internet-Draft            CDDL grammar updates             December 2023
    grpent = [occur S] [memberkey S] type
           / [occur S] groupname [genericarg]  ; preempted by above
           / [occur S] "(" S group S ")"
+
+
+
+
+Bormann                   Expires 20 June 2024                 [Page 10]
+
+Internet-Draft            CDDL grammar updates             December 2023
+
 
    memberkey = type1 S ["^" S] "=>"
              / bareword S ":"
@@ -610,14 +595,6 @@ Internet-Draft            CDDL grammar updates             December 2023
    SCHAR = %x20-21 / %x23-5B / %x5D-7E / NONASCII / SESC
 
    SESC = "\" ( %x22 / "/" / "\" /                 ; \" \/ \\
-
-
-
-Bormann                   Expires 17 June 2024                 [Page 11]
-
-Internet-Draft            CDDL grammar updates             December 2023
-
-
                 %x62 / %x66 / %x6E / %x72 / %x74 / ; \b \f \n \r \t
                 (%x75 hexchar) )                   ; \uXXXX
    hexchar = non-surrogate / (high-surrogate "\" %x75 low-surrogate)
@@ -633,6 +610,14 @@ Internet-Draft            CDDL grammar updates             December 2023
    id = EALPHA *(*("-" / ".") (EALPHA / DIGIT))
    ALPHA = %x41-5A / %x61-7A
    EALPHA = ALPHA / "@" / "_" / "$"
+
+
+
+Bormann                   Expires 20 June 2024                 [Page 11]
+
+Internet-Draft            CDDL grammar updates             December 2023
+
+
    DIGIT = %x30-39
    DIGIT1 = %x31-39
    HEXDIG = DIGIT / "A" / "B" / "C" / "D" / "E" / "F"
@@ -666,14 +651,6 @@ Author's Address
    D-28359 Bremen
    Germany
    Phone: +49-421-218-63921
-
-
-
-Bormann                   Expires 17 June 2024                 [Page 12]
-
-Internet-Draft            CDDL grammar updates             December 2023
-
-
    Email: cabo@tzi.org
 
 
@@ -692,37 +669,4 @@ Internet-Draft            CDDL grammar updates             December 2023
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Bormann                   Expires 17 June 2024                 [Page 13]
+Bormann                   Expires 20 June 2024                 [Page 12]
