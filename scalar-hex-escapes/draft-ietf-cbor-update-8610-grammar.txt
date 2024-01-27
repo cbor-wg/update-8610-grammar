@@ -4,9 +4,9 @@
 
 CBOR                                                          C. Bormann
 Internet-Draft                                    Universität Bremen TZI
-Updates: 8610 (if approved)                             14 December 2023
+Updates: 8610 (if approved)                              27 January 2024
 Intended status: Standards Track                                        
-Expires: 16 June 2024
+Expires: 30 July 2024
 
 
                 Updates to the CDDL grammar of RFC 8610
@@ -49,16 +49,25 @@ Status of This Memo
    working documents as Internet-Drafts.  The list of current Internet-
    Drafts is at https://datatracker.ietf.org/drafts/current/.
 
+
+
+
+
+Bormann                   Expires 30 July 2024                  [Page 1]
+
+Internet-Draft            CDDL grammar updates              January 2024
+
+
    Internet-Drafts are draft documents valid for a maximum of six months
    and may be updated, replaced, or obsoleted by other documents at any
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 16 June 2024.
+   This Internet-Draft will expire on 30 July 2024.
 
 Copyright Notice
 
-   Copyright (c) 2023 IETF Trust and the persons identified as the
+   Copyright (c) 2024 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -72,25 +81,38 @@ Copyright Notice
 
 Table of Contents
 
-   1.  Introduction
-     1.1.  Conventions and Definitions
-   2.  Clarifications and Changes based on Errata Reports
-     2.1.  Err6527 (text string literals)
-     2.2.  Err6543 (byte string literals)
-       Change proposed by Errata Report 6543
+   1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   3
+     1.1.  Conventions and Definitions . . . . . . . . . . . . . . .   3
+   2.  Clarifications and Changes based on Errata Reports  . . . . .   3
+     2.1.  Err6527 (text string literals)  . . . . . . . . . . . . .   3
+     2.2.  Err6543 (byte string literals)  . . . . . . . . . . . . .   5
+       Change proposed by Errata Report 6543 . . . . . . . . . . . .   5
        No change needed after addressing Err6527 (text string
-           literals) (Section 2.1)
-   3.  Small Enabling Grammar Changes
-     3.1.  Empty data models
-     3.2.  Non-literal Tag Numbers
-   4.  Security Considerations
-   5.  IANA Considerations
-   6.  References
-     6.1.  Normative References
-     6.2.  Informative References
-   Appendix A.  Updated Collected ABNF for CDDL
-   Acknowledgments
-   Author's Address
+           literals) (Section 2.1) . . . . . . . . . . . . . . . . .   6
+   3.  Small Enabling Grammar Changes  . . . . . . . . . . . . . . .   7
+     3.1.  Empty data models . . . . . . . . . . . . . . . . . . . .   7
+     3.2.  Non-literal Tag Numbers . . . . . . . . . . . . . . . . .   8
+   4.  Security Considerations . . . . . . . . . . . . . . . . . . .   9
+   5.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   9
+   6.  References  . . . . . . . . . . . . . . . . . . . . . . . . .   9
+     6.1.  Normative References  . . . . . . . . . . . . . . . . . .   9
+     6.2.  Informative References  . . . . . . . . . . . . . . . . .   9
+   Appendix A.  Updated Collected ABNF for CDDL  . . . . . . . . . .  10
+   Acknowledgments . . . . . . . . . . . . . . . . . . . . . . . . .  13
+   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .  13
+
+
+
+
+
+
+
+
+
+Bormann                   Expires 30 July 2024                  [Page 2]
+
+Internet-Draft            CDDL grammar updates              January 2024
+
 
 1.  Introduction
 
@@ -105,7 +127,7 @@ Table of Contents
 1.1.  Conventions and Definitions
 
    The Terminology from [RFC8610] applies.  The grammar in [RFC8610] is
-   based on ABNF, which is defined in [RFC5234] and [RFC7405].
+   based on ABNF, which is defined in [STD68] and [RFC7405].
 
 2.  Clarifications and Changes based on Errata Reports
 
@@ -136,21 +158,36 @@ Table of Contents
    JSON allows to specify characters in hex (which should be applying
    here according to Bullet 6 of Section 3.1 of [RFC8610]).  (Note that
    we import from JSON the unwieldy \uHHHH\uLLLL syntax, which
-   represents Unicode code points beyond U-FFFF by making them look like
+   represents Unicode code points beyond U+FFFF by making them look like
    UTF-16 surrogate pairs; CDDL text strings are not using UTF-16 or
    surrogates.)
 
-   Both can be solved by updating the SESC production to:
+
+
+
+Bormann                   Expires 30 July 2024                  [Page 3]
+
+Internet-Draft            CDDL grammar updates              January 2024
+
+
+   Both can be solved by updating the SESC production.  We use the
+   opportunity to add a popular form of directly specifying characters
+   in strings using hexadecimal escape sequences of the form \u{hex},
+   where hex is the hexadecimal representation of the Unicode scalar
+   value.  The result is the new set of rules defining SESC in Figure 2:
 
    ; new rules collectively defining SESC:
    SESC = "\" ( %x22 / "/" / "\" /                 ; \" \/ \\
                 %x62 / %x66 / %x6E / %x72 / %x74 / ; \b \f \n \r \t
                 (%x75 hexchar) )                   ; \uXXXX
-   hexchar = non-surrogate / (high-surrogate "\" %x75 low-surrogate)
+   hexchar = "{" (1*"0" [ hexscalar ] / hexscalar) "}" /
+             non-surrogate / (high-surrogate "\" %x75 low-surrogate)
    non-surrogate = ((DIGIT / "A"/"B"/"C" / "E"/"F") 3HEXDIG) /
                    ("D" %x30-37 2HEXDIG )
    high-surrogate = "D" ("8"/"9"/"A"/"B") 2HEXDIG
    low-surrogate = "D" ("C"/"D"/"E"/"F") 2HEXDIG
+   hexscalar = "10" 4HEXDIG / HEXDIG1 4HEXDIG / non-surrogate / 1*3HEXDIG
+   HEXDIG1 = DIGIT1 / "A" / "B" / "C" / "D" / "E" / "F"
 
              Figure 2: Updated string ABNF to allow hex escapes
 
@@ -169,13 +206,49 @@ Table of Contents
 
                         Figure 3: Old ABNF for BCHAR
 
-   In BCHAR, the updated version explicitly allows \', which is no
-   longer allowed in the updated SESC:
+   With the SESC updated as above, \' is no longer allowed in BCHAR;
+   this now needs to be explicitly included.
 
-   ; new rule for BCHAR:
-   BCHAR = %x20-26 / %x28-5B / %x5D-10FFFD / SESC / "\'" / CRLF
 
-                      Figure 4: Updated ABNF for BCHAR
+
+
+
+
+
+
+
+
+
+
+
+Bormann                   Expires 30 July 2024                  [Page 4]
+
+Internet-Draft            CDDL grammar updates              January 2024
+
+
+   Updating BCHAR also provides an opportunity to address [Err6278],
+   which points to an inconsistency in treating U+007F (DEL) between
+   SCHAR and BCHAR.  As U+007F is not printable, including it in a byte
+   string literal is as confusing as for a text string literal, and it
+   should therefore be excluded from BCHAR as it is from SCHAR.  The
+   same reasoning also applies to the C1 control characters, so we
+   actually exclude the entire range from U+007F to U+009F.  The same
+   reasoning then also applies to text in comments (PCHAR).  For
+   completeness, all these should also explicitly exclude the code
+   points that have been set aside for UTF-16's surrogates.
+
+   ; new rules for BCHAR and SCHAR:
+   SCHAR = %x20-21 / %x23-5B / %x5D-7E / NONASCII / SESC
+   BCHAR = %x20-26 / %x28-5B / %x5D-7E / NONASCII / SESC / "\'" / CRLF
+   PCHAR = %x20-7E / NONASCII
+   NONASCII = %xA0-D7FF / %xE000-10FFFD
+
+             Figure 4: Updated ABNF for BCHAR, SCHAR, and PCHAR
+
+   (Note that, apart from addressing the inconsistencies, there is no
+   attempt to further exclude non-printable characters from the ABNF;
+   doing this properly would draw in complexity from the ongoing
+   evolution of the Unicode standard that is not needed here.)
 
 2.2.  Err6543 (byte string literals)
 
@@ -201,6 +274,13 @@ Change proposed by Errata Report 6543
          / bsqual %x27 *QCHAR %x27
    BCHAR = %x20-26 / %x28-5B / %x5D-10FFFD / SESC / CRLF
    QCHAR = DIGIT / ALPHA / "+" / "/" / "-" / "_" / "=" / WS
+
+
+
+Bormann                   Expires 30 July 2024                  [Page 5]
+
+Internet-Draft            CDDL grammar updates              January 2024
+
 
     Figure 6: Errata Report 8653 Proposal to Split the Byte String Rules
 
@@ -238,12 +318,6 @@ Change proposed by Errata Report 6543
 No change needed after addressing Err6527 (text string literals)
 (Section 2.1)
 
-
-   // note that the HTML rendering of the heading is butchered by
-   // xml2rfc, as noted in https://github.com/ietf-tools/xml2rfc/
-   // issues/683; we except this to have been fixed before this document
-   // is published
-
    This document takes the simpler approach of leaving the processing of
    the content of the byte string literal to a semantic step after
    processing the syntax of the bytes/BCHAR rules as updated by Figure 2
@@ -251,6 +325,18 @@ No change needed after addressing Err6527 (text string literals)
 
    The rules in Figure 7 are therefore applied to the result of this
    processing where bsqual is given as h or b64.
+
+
+
+
+
+
+
+
+Bormann                   Expires 30 July 2024                  [Page 6]
+
+Internet-Draft            CDDL grammar updates              January 2024
+
 
    Note that this approach also works well with the use of byte strings
    in Section 3 of [RFC9165].  It does require some care when copy-
@@ -297,6 +383,17 @@ No change needed after addressing Err6527 (text string literals)
 
                Figure 9: Updated ABNF for top-level rule cddl
 
+
+
+
+
+
+
+Bormann                   Expires 30 July 2024                  [Page 7]
+
+Internet-Draft            CDDL grammar updates              January 2024
+
+
 3.2.  Non-literal Tag Numbers
 
    _Compatibility_:  backward (not forward)
@@ -304,7 +401,7 @@ No change needed after addressing Err6527 (text string literals)
    The existing ABNF syntax for expressing tags in CDDL is:
 
    ; extracted from RFC 8610 ABNF:
-   type2 /= "#" "6" ["." uint] "(" S type S ")"
+   type2 =/ "#" "6" ["." uint] "(" S type S ")"
 
                      Figure 10: Old ABNF for tag syntax
 
@@ -317,7 +414,7 @@ No change needed after addressing Err6527 (text string literals)
    This update extends this to:
 
    ; new rules collectively defining the tagged case:
-   type2 /= "#" "6" ["." tag-number] "(" S type S ")"
+   type2 =/ "#" "6" ["." tag-number] "(" S type S ")"
    tag-number = uint / ("<" type ">")
 
                    Figure 11: Updated ABNF for tag syntax
@@ -328,11 +425,30 @@ No change needed after addressing Err6527 (text string literals)
    ct-tag-number = 1668546817..1668612095
    ; or use 0x63740101..0x6374FFFF
 
-   Note that this syntax reuses the angle bracket syntax for generics;
-   this reuse is innocuous as a generic parameter/argument only ever
-   occurs after a rule name (id), while it occurs after . here.
-   (Whether there is potential for human confusion can be debated; the
-   above example deliberately uses generics as well.)
+   Notes:
+
+   1.  This syntax reuses the angle bracket syntax for generics; this
+       reuse is innocuous as a generic parameter/argument only ever
+       occurs after a rule name (id), while it occurs after . here.
+       (Whether there is potential for human confusion can be debated;
+       the above example deliberately uses generics as well.)
+
+   2.  The updated ABNF grammar makes it a bit more explicit that the
+       number given after the optional dot is special, not giving the
+       CBOR "additional information" as it is with other uses of # in
+       CDDL.  (Adding this observation to Section 2.2.3 of [RFC8610] is
+       the subject of [Err6575]; it is correctly noted in Section 3.6 of
+       [RFC8610].)  In hindsight, maybe a different character than the
+       dot should have been chosen for this special case, however
+       changing the grammar now would have been too disruptive.
+
+
+
+
+Bormann                   Expires 30 July 2024                  [Page 8]
+
+Internet-Draft            CDDL grammar updates              January 2024
+
 
 4.  Security Considerations
 
@@ -351,18 +467,21 @@ No change needed after addressing Err6527 (text string literals)
 
 6.1.  Normative References
 
-   [RFC5234]  Crocker, D., Ed. and P. Overell, "Augmented BNF for Syntax
-              Specifications: ABNF", STD 68, RFC 5234,
-              DOI 10.17487/RFC5234, January 2008,
-              <https://www.rfc-editor.org/rfc/rfc5234>.
-
    [RFC8610]  Birkholz, H., Vigano, C., and C. Bormann, "Concise Data
               Definition Language (CDDL): A Notational Convention to
               Express Concise Binary Object Representation (CBOR) and
               JSON Data Structures", RFC 8610, DOI 10.17487/RFC8610,
               June 2019, <https://www.rfc-editor.org/rfc/rfc8610>.
 
+   [STD68]    Crocker, D., Ed. and P. Overell, "Augmented BNF for Syntax
+              Specifications: ABNF", STD 68, RFC 5234, January 2008.
+
+              <https://www.rfc-editor.org/info/std68>
+
 6.2.  Informative References
+
+   [Err6278]  "Errata Report 6278", RFC 8610,
+              <https://www.rfc-editor.org/errata/eid6278>.
 
    [Err6526]  "Errata Report 6526", RFC 8610,
               <https://www.rfc-editor.org/errata/eid6526>.
@@ -373,19 +492,33 @@ No change needed after addressing Err6527 (text string literals)
    [Err6543]  "Errata Report 6543", RFC 8610,
               <https://www.rfc-editor.org/errata/eid6543>.
 
+   [Err6575]  "Errata Report 6575", RFC 8610,
+              <https://www.rfc-editor.org/errata/eid6575>.
+
+
+
+
+
+
+
+Bormann                   Expires 30 July 2024                  [Page 9]
+
+Internet-Draft            CDDL grammar updates              January 2024
+
+
    [I-D.ietf-cbor-cddl-modules]
               Bormann, C., "CDDL Module Structure", Work in Progress,
-              Internet-Draft, draft-ietf-cbor-cddl-modules-00, 17 June
-              2023, <https://datatracker.ietf.org/doc/html/draft-ietf-
-              cbor-cddl-modules-00>.
+              Internet-Draft, draft-ietf-cbor-cddl-modules-01, 18
+              December 2023, <https://datatracker.ietf.org/doc/html/
+              draft-ietf-cbor-cddl-modules-01>.
 
    [I-D.ietf-cbor-edn-literals]
               Bormann, C., "CBOR Extended Diagnostic Notation (EDN):
               Application-Oriented Literals, ABNF, and Media Type", Work
               in Progress, Internet-Draft, draft-ietf-cbor-edn-literals-
-              06, 20 November 2023,
+              07, 21 December 2023,
               <https://datatracker.ietf.org/doc/html/draft-ietf-cbor-
-              edn-literals-06>.
+              edn-literals-07>.
 
    [RFC7405]  Kyzivat, P., "Case-Sensitive String Support in ABNF",
               RFC 7405, DOI 10.17487/RFC7405, December 2014,
@@ -421,6 +554,14 @@ Appendix A.  Updated Collected ABNF for CDDL
 
    type = type1 *(S "/" S type1)
 
+
+
+
+Bormann                   Expires 30 July 2024                 [Page 10]
+
+Internet-Draft            CDDL grammar updates              January 2024
+
+
    type1 = type2 [S (rangeop / ctlop) S type2]
    ; space may be needed before the operator if type2 ends in a name
 
@@ -436,7 +577,6 @@ Appendix A.  Updated Collected ABNF for CDDL
          / "#" DIGIT ["." uint]                ; major/ai
          / "#"                                 ; any
    tag-number = uint / ("<" type ">")
-
 
    rangeop = "..." / ".."
 
@@ -471,6 +611,13 @@ Appendix A.  Updated Collected ABNF for CDDL
          / text
          / bytes
 
+
+
+Bormann                   Expires 30 July 2024                 [Page 11]
+
+Internet-Draft            CDDL grammar updates              January 2024
+
+
    int = ["-"] uint
 
    ; This is a float if it has fraction or exponent; int otherwise
@@ -480,19 +627,22 @@ Appendix A.  Updated Collected ABNF for CDDL
    exponent = ["+"/"-"] 1*DIGIT
 
    text = %x22 *SCHAR %x22
-   SCHAR = %x20-21 / %x23-5B / %x5D-7E / %x80-10FFFD / SESC
+   SCHAR = %x20-21 / %x23-5B / %x5D-7E / NONASCII / SESC
 
    SESC = "\" ( %x22 / "/" / "\" /                 ; \" \/ \\
                 %x62 / %x66 / %x6E / %x72 / %x74 / ; \b \f \n \r \t
                 (%x75 hexchar) )                   ; \uXXXX
-   hexchar = non-surrogate / (high-surrogate "\" %x75 low-surrogate)
+
+   hexchar = "{" (1*"0" [ hexscalar ] / hexscalar) "}" /
+             non-surrogate / (high-surrogate "\" %x75 low-surrogate)
    non-surrogate = ((DIGIT / "A"/"B"/"C" / "E"/"F") 3HEXDIG) /
                    ("D" %x30-37 2HEXDIG )
    high-surrogate = "D" ("8"/"9"/"A"/"B") 2HEXDIG
    low-surrogate = "D" ("C"/"D"/"E"/"F") 2HEXDIG
+   hexscalar = "10" 4HEXDIG / HEXDIG1 4HEXDIG / non-surrogate / 1*3HEXDIG
 
    bytes = [bsqual] %x27 *BCHAR %x27
-   BCHAR = %x20-26 / %x28-5B / %x5D-10FFFD / SESC / "\'" / CRLF
+   BCHAR = %x20-26 / %x28-5B / %x5D-7E / NONASCII / SESC / "\'" / CRLF
    bsqual = "h" / "b64"
 
    id = EALPHA *(*("-" / ".") (EALPHA / DIGIT))
@@ -501,6 +651,7 @@ Appendix A.  Updated Collected ABNF for CDDL
    DIGIT = %x30-39
    DIGIT1 = %x31-39
    HEXDIG = DIGIT / "A" / "B" / "C" / "D" / "E" / "F"
+   HEXDIG1 = DIGIT1 / "A" / "B" / "C" / "D" / "E" / "F"
    BINDIG = %x30-31
 
    S = *WS
@@ -508,14 +659,29 @@ Appendix A.  Updated Collected ABNF for CDDL
    SP = %x20
    NL = COMMENT / CRLF
    COMMENT = ";" *PCHAR CRLF
-   PCHAR = %x20-7E / %x80-10FFFD
+   PCHAR = %x20-7E / NONASCII
+   NONASCII = %xA0-D7FF / %xE000-10FFFD
    CRLF = %x0A / %x0D.0A
 
                     Figure 12: ABNF for CDDL as updated
 
+
+
+
+
+Bormann                   Expires 30 July 2024                 [Page 12]
+
+Internet-Draft            CDDL grammar updates              January 2024
+
+
 Acknowledgments
 
    TODO acknowledge.
+
+   Many thanks go to the submitters of the errata reports addressed in
+   this document.  In one of the ensuing discussions, Doug Ewell
+   proposed to define an ABNF rule NONASCII, of which we have included
+   the essence.
 
 Author's Address
 
@@ -526,3 +692,37 @@ Author's Address
    Germany
    Phone: +49-421-218-63921
    Email: cabo@tzi.org
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Bormann                   Expires 30 July 2024                 [Page 13]

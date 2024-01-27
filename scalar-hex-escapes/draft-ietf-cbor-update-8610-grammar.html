@@ -15,11 +15,11 @@ JSON.
        The present document updates RFC 8610 by addressing errata and making
 other small fixes for the ABNF grammar defined for CDDL there. 
     " name="description">
-<meta content="xml2rfc 3.18.2" name="generator">
+<meta content="xml2rfc 3.19.1" name="generator">
 <meta content="Concise Data Definition Language" name="keyword">
 <meta content="draft-ietf-cbor-update-8610-grammar-latest" name="ietf.draft">
 <!-- Generator version information:
-  xml2rfc 3.18.2
+  xml2rfc 3.19.1
     Python 3.11.6
     ConfigArgParse 1.7
     google-i18n-address 3.1.0
@@ -32,7 +32,7 @@ other small fixes for the ABNF grammar defined for CDDL there.
     requests 2.31.0
     setuptools 68.2.2
     six 1.16.0
-    wcwidth 0.2.12
+    wcwidth 0.2.13
 -->
 <link href="draft-ietf-cbor-update-8610-grammar.xml" rel="alternate" type="application/rfc+xml">
 <link href="#copyright" rel="license">
@@ -1031,11 +1031,11 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">CDDL grammar updates</td>
-<td class="right">December 2023</td>
+<td class="right">January 2024</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">Bormann</td>
-<td class="center">Expires 17 June 2024</td>
+<td class="center">Expires 30 July 2024</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1051,12 +1051,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <a href="https://www.rfc-editor.org/rfc/rfc8610" class="eref">8610</a> (if approved)</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2023-12-15" class="published">15 December 2023</time>
+<time datetime="2024-01-27" class="published">27 January 2024</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2024-06-17">17 June 2024</time></dd>
+<dd class="expires"><time datetime="2024-07-30">30 July 2024</time></dd>
 <dt class="label-authors">Author:</dt>
 <dd class="authors">
 <div class="author">
@@ -1112,7 +1112,7 @@ other small fixes for the ABNF grammar defined for CDDL there.<a href="#section-
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 17 June 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 30 July 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1121,7 +1121,7 @@ other small fixes for the ABNF grammar defined for CDDL there.<a href="#section-
 <a href="#name-copyright-notice" class="section-name selfRef">Copyright Notice</a>
         </h2>
 <p id="section-boilerplate.2-1">
-            Copyright (c) 2023 IETF Trust and the persons identified as the
+            Copyright (c) 2024 IETF Trust and the persons identified as the
             document authors. All rights reserved.<a href="#section-boilerplate.2-1" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.2-2">
             This document is subject to BCP 78 and the IETF Trust's Legal
@@ -1281,7 +1281,12 @@ applying here according to Bullet 6 of <span><a href="https://rfc-editor.org/rfc
 which represents Unicode code points beyond U+FFFF by making them look
 like UTF-16 surrogate pairs; CDDL text strings are not using UTF-16 or
 surrogates.)<a href="#section-2.1-3" class="pilcrow">¶</a></p>
-<p id="section-2.1-4">Both can be solved by updating the SESC production to:<a href="#section-2.1-4" class="pilcrow">¶</a></p>
+<p id="section-2.1-4">Both can be solved by updating the SESC production.
+We use the opportunity to add a popular form of directly specifying
+characters in strings using hexadecimal escape sequences of the form
+<code>\u{hex}</code>, where <code>hex</code> is the hexadecimal representation of the
+Unicode scalar value.
+The result is the new set of rules defining SESC in <a href="#e6527-new1" class="auto internal xref">Figure 2</a>:<a href="#section-2.1-4" class="pilcrow">¶</a></p>
 <span id="name-updated-string-abnf-to-allo"></span><div id="e6527-new1">
 <figure id="figure-2">
           <div class="lang-abnf sourcecode" id="section-2.1-5.1">
@@ -1290,11 +1295,14 @@ surrogates.)<a href="#section-2.1-3" class="pilcrow">¶</a></p>
 SESC = "\" ( %x22 / "/" / "\" /                 ; \" \/ \\
              %x62 / %x66 / %x6E / %x72 / %x74 / ; \b \f \n \r \t
              (%x75 hexchar) )                   ; \uXXXX
-hexchar = non-surrogate / (high-surrogate "\" %x75 low-surrogate)
+hexchar = "{" (1*"0" [ hexscalar ] / hexscalar) "}" /
+          non-surrogate / (high-surrogate "\" %x75 low-surrogate)
 non-surrogate = ((DIGIT / "A"/"B"/"C" / "E"/"F") 3HEXDIG) /
                 ("D" %x30-37 2HEXDIG )
 high-surrogate = "D" ("8"/"9"/"A"/"B") 2HEXDIG
 low-surrogate = "D" ("C"/"D"/"E"/"F") 2HEXDIG
+hexscalar = "10" 4HEXDIG / HEXDIG1 4HEXDIG / non-surrogate / 1*3HEXDIG
+HEXDIG1 = DIGIT1 / "A" / "B" / "C" / "D" / "E" / "F"
 </pre>
 </div>
 <figcaption><a href="#figure-2" class="selfRef">Figure 2</a>:
@@ -1445,25 +1453,21 @@ foo = h'
 <div id="no-change-needed-after-addressing-e6527-section-e6527">
 <section id="section-2.2.2">
           <h4 id="name-no-change-needed-after-addr">
-<a href="#name-no-change-needed-after-addr" class="section-name selfRef">No change needed after addressing <em class="cite xref">[Err6527 (text string literals)]</em> (Section <em class="cite xref">[2.1]</em>)</a>
+<a href="#name-no-change-needed-after-addr" class="section-name selfRef">No change needed after addressing <span class="cite xref">Err6527 (text string literals)</span> (Section <span class="cite xref">2.1</span>)</a>
           </h4>
-<p id="section-2.2.2-1"><span class="cref" id="headingbug">note that the HTML rendering of the heading is
-butchered by xml2rfc, as noted in
-https://github.com/ietf-tools/xml2rfc/issues/683; we except
-this to have been fixed before this document is published</span><a href="#section-2.2.2-1" class="pilcrow">¶</a></p>
-<p id="section-2.2.2-2">This document takes the simpler approach of leaving the processing of
+<p id="section-2.2.2-1">This document takes the simpler approach of leaving the processing of
 the content of the byte string literal to a semantic step after
 processing the syntax of the <code>bytes</code>/<code>BCHAR</code> rules as updated by
-<a href="#e6527-new1" class="auto internal xref">Figure 2</a> and <a href="#e6527-new2" class="auto internal xref">Figure 4</a>.<a href="#section-2.2.2-2" class="pilcrow">¶</a></p>
-<p id="section-2.2.2-3">The rules in <a href="#e6543-2" class="auto internal xref">Figure 7</a> are therefore applied to the result of this
-processing where <code>bsqual</code> is given as <code>h</code> or <code>b64</code>.<a href="#section-2.2.2-3" class="pilcrow">¶</a></p>
-<p id="section-2.2.2-4">Note that this approach also works well with the use of byte strings
+<a href="#e6527-new1" class="auto internal xref">Figure 2</a> and <a href="#e6527-new2" class="auto internal xref">Figure 4</a>.<a href="#section-2.2.2-1" class="pilcrow">¶</a></p>
+<p id="section-2.2.2-2">The rules in <a href="#e6543-2" class="auto internal xref">Figure 7</a> are therefore applied to the result of this
+processing where <code>bsqual</code> is given as <code>h</code> or <code>b64</code>.<a href="#section-2.2.2-2" class="pilcrow">¶</a></p>
+<p id="section-2.2.2-3">Note that this approach also works well with the use of byte strings
 in <span><a href="https://rfc-editor.org/rfc/rfc9165#section-3" class="relref">Section 3</a> of [<a href="#RFC9165" class="cite xref">RFC9165</a>]</span>.
 It does require some care when copy-pasting into CDDL models from ABNF
 that contains single quotes (which may also hide as apostrophes
-in comments); these need to be escaped or possibly replaced by <code>%x27</code>.<a href="#section-2.2.2-4" class="pilcrow">¶</a></p>
-<p id="section-2.2.2-5">Finally, our approach would lend support to extending <code>bsqual</code> in CDDL
-similar to the way this is done for CBOR diagnostic notation in <span>[<a href="#I-D.ietf-cbor-edn-literals" class="cite xref">I-D.ietf-cbor-edn-literals</a>]</span>.<a href="#section-2.2.2-5" class="pilcrow">¶</a></p>
+in comments); these need to be escaped or possibly replaced by <code>%x27</code>.<a href="#section-2.2.2-3" class="pilcrow">¶</a></p>
+<p id="section-2.2.2-4">Finally, our approach would lend support to extending <code>bsqual</code> in CDDL
+similar to the way this is done for CBOR diagnostic notation in <span>[<a href="#I-D.ietf-cbor-edn-literals" class="cite xref">I-D.ietf-cbor-edn-literals</a>]</span>.<a href="#section-2.2.2-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -1645,6 +1649,7 @@ been updated and some of which have not been, in particular based on
       <dd>
 <div class="refInstance" id="RFC5234">
             <span class="refAuthor">Crocker, D., Ed.</span> and <span class="refAuthor">P. Overell</span>, <span class="refTitle">"Augmented BNF for Syntax Specifications: ABNF"</span>, <span class="seriesInfo">STD 68</span>, <span class="seriesInfo">RFC 5234</span>, <time datetime="2008-01" class="refDate">January 2008</time>. </div>
+<span>&lt;<a href="https://www.rfc-editor.org/info/std68">https://www.rfc-editor.org/info/std68</a>&gt;</span>
 </dd>
 <dd class="break"></dd>
 </dl>
@@ -1678,11 +1683,11 @@ been updated and some of which have not been, in particular based on
 <dd class="break"></dd>
 <dt id="I-D.ietf-cbor-cddl-modules">[I-D.ietf-cbor-cddl-modules]</dt>
         <dd>
-<span class="refAuthor">Bormann, C.</span>, <span class="refTitle">"CDDL Module Structure"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-cbor-cddl-modules-00</span>, <time datetime="2023-06-17" class="refDate">17 June 2023</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-cbor-cddl-modules-00">https://datatracker.ietf.org/doc/html/draft-ietf-cbor-cddl-modules-00</a>&gt;</span>. </dd>
+<span class="refAuthor">Bormann, C.</span>, <span class="refTitle">"CDDL Module Structure"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-cbor-cddl-modules-01</span>, <time datetime="2023-12-18" class="refDate">18 December 2023</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-cbor-cddl-modules-01">https://datatracker.ietf.org/doc/html/draft-ietf-cbor-cddl-modules-01</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="I-D.ietf-cbor-edn-literals">[I-D.ietf-cbor-edn-literals]</dt>
         <dd>
-<span class="refAuthor">Bormann, C.</span>, <span class="refTitle">"CBOR Extended Diagnostic Notation (EDN): Application-Oriented Literals, ABNF, and Media Type"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-cbor-edn-literals-06</span>, <time datetime="2023-11-20" class="refDate">20 November 2023</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-cbor-edn-literals-06">https://datatracker.ietf.org/doc/html/draft-ietf-cbor-edn-literals-06</a>&gt;</span>. </dd>
+<span class="refAuthor">Bormann, C.</span>, <span class="refTitle">"CBOR Extended Diagnostic Notation (EDN): Application-Oriented Literals, ABNF, and Media Type"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-cbor-edn-literals-07</span>, <time datetime="2023-12-21" class="refDate">21 December 2023</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-cbor-edn-literals-07">https://datatracker.ietf.org/doc/html/draft-ietf-cbor-edn-literals-07</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC7405">[RFC7405]</dt>
         <dd>
@@ -1742,7 +1747,6 @@ type2 = value
       / "#"                                 ; any
 tag-number = uint / ("&lt;" type "&gt;")
 
-
 rangeop = "..." / ".."
 
 ctlop = "." id
@@ -1790,11 +1794,14 @@ SCHAR = %x20-21 / %x23-5B / %x5D-7E / NONASCII / SESC
 SESC = "\" ( %x22 / "/" / "\" /                 ; \" \/ \\
              %x62 / %x66 / %x6E / %x72 / %x74 / ; \b \f \n \r \t
              (%x75 hexchar) )                   ; \uXXXX
-hexchar = non-surrogate / (high-surrogate "\" %x75 low-surrogate)
+
+hexchar = "{" (1*"0" [ hexscalar ] / hexscalar) "}" /
+          non-surrogate / (high-surrogate "\" %x75 low-surrogate)
 non-surrogate = ((DIGIT / "A"/"B"/"C" / "E"/"F") 3HEXDIG) /
                 ("D" %x30-37 2HEXDIG )
 high-surrogate = "D" ("8"/"9"/"A"/"B") 2HEXDIG
 low-surrogate = "D" ("C"/"D"/"E"/"F") 2HEXDIG
+hexscalar = "10" 4HEXDIG / HEXDIG1 4HEXDIG / non-surrogate / 1*3HEXDIG
 
 bytes = [bsqual] %x27 *BCHAR %x27
 BCHAR = %x20-26 / %x28-5B / %x5D-7E / NONASCII / SESC / "\'" / CRLF
@@ -1806,6 +1813,7 @@ EALPHA = ALPHA / "@" / "_" / "$"
 DIGIT = %x30-39
 DIGIT1 = %x31-39
 HEXDIG = DIGIT / "A" / "B" / "C" / "D" / "E" / "F"
+HEXDIG1 = DIGIT1 / "A" / "B" / "C" / "D" / "E" / "F"
 BINDIG = %x30-31
 
 S = *WS
