@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-01-25T01:23:03.113977+00:00",
+  "timestamp": "2024-01-28T01:20:18.093154+00:00",
   "repo": "cbor-wg/update-8610-grammar",
   "labels": [
     {
@@ -282,6 +282,93 @@
           "createdAt": "2023-12-15T14:41:07Z",
           "updatedAt": "2023-12-15T14:41:07Z",
           "comments": []
+        }
+      ]
+    },
+    {
+      "number": 7,
+      "id": "PR_kwDOJHZRCM5lOxOi",
+      "title": "Add Unicode scalar hex escapes (\\u{1F913} for \ud83e\udd13) to SESC syntax",
+      "url": "https://github.com/cbor-wg/update-8610-grammar/pull/7",
+      "state": "OPEN",
+      "author": "cabo",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "As discussed in <https://mailarchive.ietf.org/arch/msg/cbor/O68sk29PRrEOdSEDQBV1y5QZ8wY>\r\n",
+      "createdAt": "2024-01-27T16:36:57Z",
+      "updatedAt": "2024-01-27T17:13:29Z",
+      "baseRepository": "cbor-wg/update-8610-grammar",
+      "baseRefName": "main",
+      "baseRefOid": "92072cc73bba9cadc705cc9e63042691d1ce7b6d",
+      "headRepository": "cbor-wg/update-8610-grammar",
+      "headRefName": "scalar-hex-escapes",
+      "headRefOid": "c6fe792ec3255189cf05d0de12da0e3d02fc8d61",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOJHZRCM5uGQJz",
+          "commit": {
+            "abbreviatedOid": "c6fe792"
+          },
+          "author": "hildjj",
+          "authorAssociation": "NONE",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-01-27T16:59:12Z",
+          "updatedAt": "2024-01-27T16:59:49Z",
+          "comments": [
+            {
+              "originalPosition": 7,
+              "body": "I don't like this backslash syntax, but it looks like it's always been there.",
+              "createdAt": "2024-01-27T16:59:12Z",
+              "updatedAt": "2024-01-27T16:59:49Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOJHZRCM5uGQPT",
+          "commit": {
+            "abbreviatedOid": "c6fe792"
+          },
+          "author": "cabo",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-01-27T17:02:00Z",
+          "updatedAt": "2024-01-27T17:02:00Z",
+          "comments": [
+            {
+              "originalPosition": 7,
+              "body": "We copied that from JSON...\r\n(Not sure what specifically you don't like.)",
+              "createdAt": "2024-01-27T17:02:00Z",
+              "updatedAt": "2024-01-27T17:02:00Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOJHZRCM5uGRfb",
+          "commit": {
+            "abbreviatedOid": "c6fe792"
+          },
+          "author": "hildjj",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-01-27T17:13:29Z",
+          "updatedAt": "2024-01-27T17:13:29Z",
+          "comments": [
+            {
+              "originalPosition": 7,
+              "body": "Sorry, I get it now.  The %75 bit obfuscated it slightly.  It's fine as-is.",
+              "createdAt": "2024-01-27T17:13:29Z",
+              "updatedAt": "2024-01-27T17:13:29Z"
+            }
+          ]
         }
       ]
     }
