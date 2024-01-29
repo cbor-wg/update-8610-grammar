@@ -143,18 +143,27 @@ which represents Unicode code points beyond U+FFFF by making them look
 like UTF-16 surrogate pairs; CDDL text strings are not using UTF-16 or
 surrogates.)
 
-Both can be solved by updating the SESC production to:
+Both can be solved by updating the SESC production.
+We use the opportunity to add a popular form of directly specifying
+characters in strings using hexadecimal escape sequences of the form
+`\u{hex}`, where `hex` is the hexadecimal representation of the
+Unicode scalar value.
+The result is the new set of rules defining SESC in {{e6527-new1}}:
 
 ~~~ abnf
 ; new rules collectively defining SESC:
 SESC = "\" ( %x22 / "/" / "\" /                 ; \" \/ \\
              %x62 / %x66 / %x6E / %x72 / %x74 / ; \b \f \n \r \t
              (%x75 hexchar) )                   ; \uXXXX
-hexchar = non-surrogate / (high-surrogate "\" %x75 low-surrogate)
+hexchar = "{" (1*"0" [ hexscalar ] / hexscalar) "}" /
+          non-surrogate / (high-surrogate "\" %x75 low-surrogate)
 non-surrogate = ((DIGIT / "A"/"B"/"C" / "E"/"F") 3HEXDIG) /
                 ("D" %x30-37 2HEXDIG )
 high-surrogate = "D" ("8"/"9"/"A"/"B") 2HEXDIG
 low-surrogate = "D" ("C"/"D"/"E"/"F") 2HEXDIG
+hexscalar = "10" 4HEXDIG / HEXDIG1 4HEXDIG
+          / non-surrogate / 1*3HEXDIG
+HEXDIG1 = DIGIT1 / "A" / "B" / "C" / "D" / "E" / "F"
 ~~~
 {: #e6527-new1 title="Updated string ABNF to allow hex escapes"
 sourcecode-name="cddl-new-sesc.abnf"}
