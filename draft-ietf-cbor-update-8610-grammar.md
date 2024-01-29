@@ -161,7 +161,8 @@ non-surrogate = ((DIGIT / "A"/"B"/"C" / "E"/"F") 3HEXDIG) /
                 ("D" %x30-37 2HEXDIG )
 high-surrogate = "D" ("8"/"9"/"A"/"B") 2HEXDIG
 low-surrogate = "D" ("C"/"D"/"E"/"F") 2HEXDIG
-hexscalar = "10" 4HEXDIG / HEXDIG1 4HEXDIG / non-surrogate / 1*3HEXDIG
+hexscalar = "10" 4HEXDIG / HEXDIG1 4HEXDIG
+          / non-surrogate / 1*3HEXDIG
 HEXDIG1 = DIGIT1 / "A" / "B" / "C" / "D" / "E" / "F"
 ~~~
 {: #e6527-new1 title="Updated string ABNF to allow hex escapes"
