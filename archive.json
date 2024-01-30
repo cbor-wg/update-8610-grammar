@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-01-28T01:20:18.093154+00:00",
+  "timestamp": "2024-01-30T01:15:20.660630+00:00",
   "repo": "cbor-wg/update-8610-grammar",
   "labels": [
     {
@@ -290,24 +290,26 @@
       "id": "PR_kwDOJHZRCM5lOxOi",
       "title": "Add Unicode scalar hex escapes (\\u{1F913} for \ud83e\udd13) to SESC syntax",
       "url": "https://github.com/cbor-wg/update-8610-grammar/pull/7",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "cabo",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "As discussed in <https://mailarchive.ietf.org/arch/msg/cbor/O68sk29PRrEOdSEDQBV1y5QZ8wY>\r\n",
       "createdAt": "2024-01-27T16:36:57Z",
-      "updatedAt": "2024-01-27T17:13:29Z",
+      "updatedAt": "2024-01-29T17:09:06Z",
       "baseRepository": "cbor-wg/update-8610-grammar",
       "baseRefName": "main",
       "baseRefOid": "92072cc73bba9cadc705cc9e63042691d1ce7b6d",
       "headRepository": "cbor-wg/update-8610-grammar",
       "headRefName": "scalar-hex-escapes",
-      "headRefOid": "c6fe792ec3255189cf05d0de12da0e3d02fc8d61",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "b9b1f6969edff97bb972fc2318591c0f7ac13787",
+      "closedAt": "2024-01-29T17:09:06Z",
+      "mergedAt": "2024-01-29T17:09:06Z",
+      "mergedBy": "cabo",
+      "mergeCommit": {
+        "oid": "3ce5839590c7e616cc132f8491afe84e956b6390"
+      },
       "comments": [],
       "reviews": [
         {
