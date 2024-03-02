@@ -15,18 +15,18 @@ JSON.
        The present document updates RFC 8610 by addressing errata and making
 other small fixes for the ABNF grammar defined for CDDL there. 
     " name="description">
-<meta content="xml2rfc 3.19.1" name="generator">
+<meta content="xml2rfc 3.19.4" name="generator">
 <meta content="Concise Data Definition Language" name="keyword">
 <meta content="draft-ietf-cbor-update-8610-grammar-latest" name="ietf.draft">
 <!-- Generator version information:
-  xml2rfc 3.19.1
+  xml2rfc 3.19.4
     Python 3.11.6
     ConfigArgParse 1.7
     google-i18n-address 3.1.0
     intervaltree 3.1.0
     Jinja2 3.1.2
     lxml 4.9.3
-    platformdirs 4.1.0
+    platformdirs 4.2.0
     pycountry 22.3.5
     PyYAML 6.0.1
     requests 2.31.0
@@ -1031,11 +1031,11 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">CDDL grammar updates</td>
-<td class="right">January 2024</td>
+<td class="right">March 2024</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">Bormann</td>
-<td class="center">Expires 1 August 2024</td>
+<td class="center">Expires 3 September 2024</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1051,12 +1051,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <a href="https://www.rfc-editor.org/rfc/rfc8610" class="eref">8610</a> (if approved)</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2024-01-29" class="published">29 January 2024</time>
+<time datetime="2024-03-02" class="published">2 March 2024</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2024-08-01">1 August 2024</time></dd>
+<dd class="expires"><time datetime="2024-09-03">3 September 2024</time></dd>
 <dt class="label-authors">Author:</dt>
 <dd class="authors">
 <div class="author">
@@ -1112,7 +1112,7 @@ other small fixes for the ABNF grammar defined for CDDL there.<a href="#section-
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 1 August 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 3 September 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1175,7 +1175,7 @@ other small fixes for the ABNF grammar defined for CDDL there.<a href="#section-
                 <p id="section-toc.1-1.3.2.1.1"><a href="#section-3.1" class="auto internal xref">3.1</a>.  <a href="#name-empty-data-models" class="internal xref">Empty data models</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.2">
-                <p id="section-toc.1-1.3.2.2.1"><a href="#section-3.2" class="auto internal xref">3.2</a>.  <a href="#name-non-literal-tag-numbers" class="internal xref">Non-literal Tag Numbers</a></p>
+                <p id="section-toc.1-1.3.2.2.1"><a href="#section-3.2" class="auto internal xref">3.2</a>.  <a href="#name-non-literal-tag-numbers-sim" class="internal xref">Non-literal Tag Numbers, Simple Values</a></p>
 </li>
             </ul>
 </li>
@@ -1535,8 +1535,8 @@ cddl = S *(rule S)
 </div>
 <div id="tagnum">
 <section id="section-3.2">
-        <h3 id="name-non-literal-tag-numbers">
-<a href="#section-3.2" class="section-number selfRef">3.2. </a><a href="#name-non-literal-tag-numbers" class="section-name selfRef">Non-literal Tag Numbers</a>
+        <h3 id="name-non-literal-tag-numbers-sim">
+<a href="#section-3.2" class="section-number selfRef">3.2. </a><a href="#name-non-literal-tag-numbers-sim" class="section-name selfRef">Non-literal Tag Numbers, Simple Values</a>
         </h3>
 <span class="break"></span><dl class="dlCompact dlParallel" id="section-3.2-1">
           <dt id="section-3.2-1.1">
@@ -1563,47 +1563,57 @@ type2 =/ "#" "6" ["." uint] "(" S type S ")"
 Some specifications operate on ranges of tag numbers, e.g., <span>[<a href="#RFC9277" class="cite xref">RFC9277</a>]</span>
 has a range of tag numbers 1668546817 (0x63740101) to 1668612095
 (0x6374FFFF) to tag specific content formats.
-This can currently not be expressed in CDDL.<a href="#section-3.2-4" class="pilcrow">¶</a></p>
-<p id="section-3.2-5">This update extends this to:<a href="#section-3.2-5" class="pilcrow">¶</a></p>
-<span id="name-updated-abnf-for-tag-syntax"></span><div id="tag-new">
+This can currently not be expressed in CDDL.
+Similar considerations apply to simple values (<code>#7.</code>xx).<a href="#section-3.2-4" class="pilcrow">¶</a></p>
+<p id="section-3.2-5">This update extends the syntax to:<a href="#section-3.2-5" class="pilcrow">¶</a></p>
+<span id="name-updated-abnf-for-tag-and-si"></span><div id="tag-new">
 <figure id="figure-11">
           <div class="lang-abnf sourcecode" id="section-3.2-6.1">
 <pre>
 ; new rules collectively defining the tagged case:
-type2 =/ "#" "6" ["." tag-number] "(" S type S ")"
-tag-number = uint / ("&lt;" type "&gt;")
+type2 =/ "#" "6" ["." head-number] "(" S type S ")"
+       / "#" "7" ["." head-number]
+head-number = uint / ("&lt;" type "&gt;")
 </pre>
 </div>
 <figcaption><a href="#figure-11" class="selfRef">Figure 11</a>:
-<a href="#name-updated-abnf-for-tag-syntax" class="selfRef">Updated ABNF for tag syntax</a>
+<a href="#name-updated-abnf-for-tag-and-si" class="selfRef">Updated ABNF for tag and simple value syntaxes</a>
           </figcaption></figure>
 </div>
-<p id="section-3.2-7">So the above range can be expressed in a CDDL fragment such as:<a href="#section-3.2-7" class="pilcrow">¶</a></p>
-<div class="lang-cddl sourcecode" id="section-3.2-8">
+<p id="section-3.2-7">For <code>#6</code>, the <code>head-number</code> stands for the tag number.
+For <code>#7</code>, the <code>head-number</code> stands for the simple value if it is in
+the ranges 0..23 or 32..255 (as per Section <a href="https://rfc-editor.org/rfc/rfc8949#section-3.3" class="relref">3.3</a> of RFC 8949 <span>[<a href="#STD94" class="cite xref">STD94</a>]</span>
+the simple values 24..31 are not used).
+For 24..31, the <code>head-number</code> stands for the "additional
+information", e.g., <code>#7.25</code> or <code>#7.&lt;25&gt;</code> is a float16, etc.
+(All ranges mentioned here are inclusive.)<a href="#section-3.2-7" class="pilcrow">¶</a></p>
+<p id="section-3.2-8">So the above range can be expressed in a CDDL fragment such as:<a href="#section-3.2-8" class="pilcrow">¶</a></p>
+<div class="lang-cddl sourcecode" id="section-3.2-9">
 <pre>
 ct-tag&lt;content&gt; = #6.&lt;ct-tag-number&gt;(content)
 ct-tag-number = 1668546817..1668612095
 ; or use 0x63740101..0x6374FFFF
-</pre><a href="#section-3.2-8" class="pilcrow">¶</a>
+</pre><a href="#section-3.2-9" class="pilcrow">¶</a>
 </div>
-<p id="section-3.2-9">Notes:<a href="#section-3.2-9" class="pilcrow">¶</a></p>
-<ol start="1" type="1" class="normal type-1" id="section-3.2-10">
-<li id="section-3.2-10.1">
-            <p id="section-3.2-10.1.1">This syntax reuses the angle bracket syntax for generics;
+<p id="section-3.2-10">Notes:<a href="#section-3.2-10" class="pilcrow">¶</a></p>
+<ol start="1" type="1" class="normal type-1" id="section-3.2-11">
+<li id="section-3.2-11.1">
+            <p id="section-3.2-11.1.1">This syntax reuses the angle bracket syntax for generics;
 this reuse is innocuous as a generic parameter/argument only ever
 occurs after a rule name (<code>id</code>), while it occurs after <code>.</code> here.
 (Whether there is potential for human confusion can be debated; the
-above example deliberately uses generics as well.)<a href="#section-3.2-10.1.1" class="pilcrow">¶</a></p>
+above example deliberately uses generics as well.)<a href="#section-3.2-11.1.1" class="pilcrow">¶</a></p>
 </li>
-          <li id="section-3.2-10.2">
-            <p id="section-3.2-10.2.1">The updated ABNF grammar makes it a bit more explicit that the
+          <li id="section-3.2-11.2">
+            <p id="section-3.2-11.2.1">The updated ABNF grammar makes it a bit more explicit that the
 number given after the optional dot is special, not giving the CBOR
-"additional information" as it is with other uses of <code>#</code> in CDDL.
+"additional information" for tags and simple values as it is with
+other uses of <code>#</code> in CDDL.
 (Adding this observation to <span><a href="https://rfc-editor.org/rfc/rfc8610#section-2.2.3" class="relref">Section 2.2.3</a> of [<a href="#RFC8610" class="cite xref">RFC8610</a>]</span> is the subject
 of <span>[<a href="#Err6575" class="cite xref">Err6575</a>]</span>; it is correctly noted in <span><a href="https://rfc-editor.org/rfc/rfc8610#section-3.6" class="relref">Section 3.6</a> of [<a href="#RFC8610" class="cite xref">RFC8610</a>]</span>.)
 In hindsight, maybe a different character than the dot should have
 been chosen for this special case, however changing the grammar
-now would have been too disruptive.<a href="#section-3.2-10.2.1" class="pilcrow">¶</a></p>
+now would have been too disruptive.<a href="#section-3.2-11.2.1" class="pilcrow">¶</a></p>
 </li>
         </ol>
 </section>
@@ -1647,10 +1657,17 @@ been updated and some of which have not been, in particular based on
 <span class="refAuthor">Birkholz, H.</span>, <span class="refAuthor">Vigano, C.</span>, and <span class="refAuthor">C. Bormann</span>, <span class="refTitle">"Concise Data Definition Language (CDDL): A Notational Convention to Express Concise Binary Object Representation (CBOR) and JSON Data Structures"</span>, <span class="seriesInfo">RFC 8610</span>, <span class="seriesInfo">DOI 10.17487/RFC8610</span>, <time datetime="2019-06" class="refDate">June 2019</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8610">https://www.rfc-editor.org/rfc/rfc8610</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="STD68">[STD68]</dt>
-      <dd>
+        <dd>
 <div class="refInstance" id="RFC5234">
             <span class="refAuthor">Crocker, D., Ed.</span> and <span class="refAuthor">P. Overell</span>, <span class="refTitle">"Augmented BNF for Syntax Specifications: ABNF"</span>, <span class="seriesInfo">STD 68</span>, <span class="seriesInfo">RFC 5234</span>, <time datetime="2008-01" class="refDate">January 2008</time>. </div>
 <span>&lt;<a href="https://www.rfc-editor.org/info/std68">https://www.rfc-editor.org/info/std68</a>&gt;</span>
+</dd>
+<dd class="break"></dd>
+<dt id="STD94">[STD94]</dt>
+      <dd>
+<div class="refInstance" id="RFC8949">
+            <span class="refAuthor">Bormann, C.</span> and <span class="refAuthor">P. Hoffman</span>, <span class="refTitle">"Concise Binary Object Representation (CBOR)"</span>, <span class="seriesInfo">STD 94</span>, <span class="seriesInfo">RFC 8949</span>, <time datetime="2020-12" class="refDate">December 2020</time>. </div>
+<span>&lt;<a href="https://www.rfc-editor.org/info/std94">https://www.rfc-editor.org/info/std94</a>&gt;</span>
 </dd>
 <dd class="break"></dd>
 </dl>
@@ -1688,7 +1705,7 @@ been updated and some of which have not been, in particular based on
 <dd class="break"></dd>
 <dt id="I-D.ietf-cbor-edn-literals">[I-D.ietf-cbor-edn-literals]</dt>
         <dd>
-<span class="refAuthor">Bormann, C.</span>, <span class="refTitle">"CBOR Extended Diagnostic Notation (EDN): Application-Oriented Literals, ABNF, and Media Type"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-cbor-edn-literals-07</span>, <time datetime="2023-12-21" class="refDate">21 December 2023</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-cbor-edn-literals-07">https://datatracker.ietf.org/doc/html/draft-ietf-cbor-edn-literals-07</a>&gt;</span>. </dd>
+<span class="refAuthor">Bormann, C.</span>, <span class="refTitle">"CBOR Extended Diagnostic Notation (EDN): Application-Oriented Literals, ABNF, and Media Type"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-cbor-edn-literals-08</span>, <time datetime="2024-02-01" class="refDate">1 February 2024</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-cbor-edn-literals-08">https://datatracker.ietf.org/doc/html/draft-ietf-cbor-edn-literals-08</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC7405">[RFC7405]</dt>
         <dd>
@@ -1743,10 +1760,11 @@ type2 = value
       / "~" S typename [genericarg]
       / "&amp;" S "(" S group S ")"
       / "&amp;" S groupname [genericarg]
-      / "#" "6" ["." tag-number] "(" S type S ")"
+      / "#" "6" ["." head-number] "(" S type S ")"
+      / "#" "7" ["." head-number]
       / "#" DIGIT ["." uint]                ; major/ai
       / "#"                                 ; any
-tag-number = uint / ("&lt;" type "&gt;")
+head-number = uint / ("&lt;" type "&gt;")
 
 rangeop = "..." / ".."
 
