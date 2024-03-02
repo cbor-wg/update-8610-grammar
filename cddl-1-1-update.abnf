@@ -24,10 +24,11 @@ type2 = value
       / "~" S typename [genericarg]
       / "&" S "(" S group S ")"
       / "&" S groupname [genericarg]
-      / "#" "6" ["." tag-number] "(" S type S ")"
+      / "#" "6" ["." head-number] "(" S type S ")"
+      / "#" "7" ["." head-number]
       / "#" DIGIT ["." uint]                ; major/ai
       / "#"                                 ; any
-tag-number = uint / ("<" type ">")
+head-number = uint / ("<" type ">")
 
 rangeop = "..." / ".."
 

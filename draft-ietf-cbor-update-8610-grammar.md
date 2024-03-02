@@ -35,6 +35,7 @@ author:
 normative:
   RFC8610: cddl
   STD68: abnf
+  STD94: cbor
 
 informative:
   RFC7405: abnf-case
@@ -347,8 +348,8 @@ sourcecode-name="cddl-new-cddl.abnf"}
 
 
 
-Non-literal Tag Numbers {#tagnum}
------------------------
+Non-literal Tag Numbers, Simple Values {#tagnum}
+--------------------------------------
 
 {:compact}
 *Compatibility*:
@@ -367,16 +368,26 @@ Some specifications operate on ranges of tag numbers, e.g., {{?RFC9277}}
 has a range of tag numbers 1668546817 (0x63740101) to 1668612095
 (0x6374FFFF) to tag specific content formats.
 This can currently not be expressed in CDDL.
+Similar considerations apply to simple values (`#7.`xx).
 
-This update extends this to:
+This update extends the syntax to:
 
 ~~~ abnf
 ; new rules collectively defining the tagged case:
-type2 =/ "#" "6" ["." tag-number] "(" S type S ")"
-tag-number = uint / ("<" type ">")
+type2 =/ "#" "6" ["." head-number] "(" S type S ")"
+       / "#" "7" ["." head-number]
+head-number = uint / ("<" type ">")
 ~~~
-{: #tag-new title="Updated ABNF for tag syntax"
+{: #tag-new title="Updated ABNF for tag and simple value syntaxes"
 sourcecode-name="cddl-new-tag.abnf"}
+
+For `#6`, the `head-number` stands for the tag number.
+For `#7`, the `head-number` stands for the simple value if it is in
+the ranges 0..23 or 32..255 (as per {{Section 3.3 of RFC8949@-cbor}}
+the simple values 24..31 are not used).
+For 24..31, the `head-number` stands for the "additional
+information", e.g., `#7.25` or `#7.<25>` is a float16, etc.
+(All ranges mentioned here are inclusive.)
 
 So the above range can be expressed in a CDDL fragment such as:
 
@@ -396,7 +407,8 @@ above example deliberately uses generics as well.)
 
 2. The updated ABNF grammar makes it a bit more explicit that the
    number given after the optional dot is special, not giving the CBOR
-   "additional information" as it is with other uses of `#` in CDDL.
+   "additional information" for tags and simple values as it is with
+   other uses of `#` in CDDL.
    (Adding this observation to {{Section 2.2.3 of -cddl}} is the subject
    of {{Err6575}}; it is correctly noted in {{Section 3.6 of -cddl}}.)
    In hindsight, maybe a different character than the dot should have
