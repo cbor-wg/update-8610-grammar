@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-02-29T01:14:22.170813+00:00",
+  "timestamp": "2024-03-03T01:18:29.576291+00:00",
   "repo": "cbor-wg/update-8610-grammar",
   "labels": [
     {
@@ -369,6 +369,75 @@
               "body": "Sorry, I get it now.  The %75 bit obfuscated it slightly.  It's fine as-is.",
               "createdAt": "2024-01-27T17:13:29Z",
               "updatedAt": "2024-01-27T17:13:29Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 8,
+      "id": "PR_kwDOJHZRCM5ofEeZ",
+      "title": "Add #7.<x> syntax for simple values.",
+      "url": "https://github.com/cbor-wg/update-8610-grammar/pull/8",
+      "state": "MERGED",
+      "author": "cabo",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "As implemented in the tools cddl (0.11.1) and cddlc (0.3.1),",
+      "createdAt": "2024-03-02T14:51:33Z",
+      "updatedAt": "2024-03-02T15:10:06Z",
+      "baseRepository": "cbor-wg/update-8610-grammar",
+      "baseRefName": "main",
+      "baseRefOid": "3ce5839590c7e616cc132f8491afe84e956b6390",
+      "headRepository": "cbor-wg/update-8610-grammar",
+      "headRefName": "simple-values-head-number",
+      "headRefOid": "2408228b3c6ac71087c9a9596f8c05beeaafdc36",
+      "closedAt": "2024-03-02T15:10:06Z",
+      "mergedAt": "2024-03-02T15:10:06Z",
+      "mergedBy": "cabo",
+      "mergeCommit": {
+        "oid": "d946922cc01a02849710dc502e33a3c56717ef5f"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOJHZRCM5yASA5",
+          "commit": {
+            "abbreviatedOid": "2408228"
+          },
+          "author": "chrysn",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "Nice and simple on the grammar side. LGTM.",
+          "createdAt": "2024-03-02T15:05:07Z",
+          "updatedAt": "2024-03-02T15:05:24Z",
+          "comments": [
+            {
+              "originalPosition": 34,
+              "body": "Does this need to include `uint` even? There is already a line in the type2 that is being extended that says ` / \"#\" DIGIT [\".\" uint]  ; major/ai` -- wouldn't that match first anyway, and thus no uint ever comes \"down\" this far?\r\n\r\n(Not new for `#7`)",
+              "createdAt": "2024-03-02T15:05:07Z",
+              "updatedAt": "2024-03-02T15:05:24Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOJHZRCM5yASLo",
+          "commit": {
+            "abbreviatedOid": "2408228"
+          },
+          "author": "cabo",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-03-02T15:09:53Z",
+          "updatedAt": "2024-03-02T15:09:53Z",
+          "comments": [
+            {
+              "originalPosition": 34,
+              "body": "The sequence in the collected ABNF in Appendix A is\r\n\r\n``` abnf\r\n      / \"#\" \"6\" [\".\" head-number] \"(\" S type S \")\"\r\n      / \"#\" \"7\" [\".\" head-number]\r\n      / \"#\" DIGIT [\".\" uint]                ; major/ai\r\n```\r\n\r\nSo, in a PEG parser, the second line wins over the third line.\r\nIn a traditional parser generator, this might be an ambiguity; ABNF does not require avoiding ambiguities though.",
+              "createdAt": "2024-03-02T15:09:53Z",
+              "updatedAt": "2024-03-02T15:09:54Z"
             }
           ]
         }
