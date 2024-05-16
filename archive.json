@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-05-14T01:20:36.201497+00:00",
+  "timestamp": "2024-05-16T01:21:06.956683+00:00",
   "repo": "cbor-wg/update-8610-grammar",
   "labels": [
     {
@@ -442,6 +442,58 @@
           ]
         }
       ]
+    },
+    {
+      "number": 9,
+      "id": "PR_kwDOJHZRCM5viJh4",
+      "title": "Say that Appendix A is normative.",
+      "url": "https://github.com/cbor-wg/update-8610-grammar/pull/9",
+      "state": "OPEN",
+      "author": "cabo",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2024-05-15T13:28:33Z",
+      "updatedAt": "2024-05-15T13:28:33Z",
+      "baseRepository": "cbor-wg/update-8610-grammar",
+      "baseRefName": "main",
+      "baseRefOid": "d946922cc01a02849710dc502e33a3c56717ef5f",
+      "headRepository": "cbor-wg/update-8610-grammar",
+      "headRefName": "appendix-normative",
+      "headRefOid": "e923d6c33a33cc463eb9083d63e7e3195d8e489e",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 10,
+      "id": "PR_kwDOJHZRCM5vi9wt",
+      "title": "Replace unexplained compatibility notation by explicit explanation",
+      "url": "https://github.com/cbor-wg/update-8610-grammar/pull/10",
+      "state": "OPEN",
+      "author": "cabo",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2024-05-15T14:55:31Z",
+      "updatedAt": "2024-05-15T14:55:31Z",
+      "baseRepository": "cbor-wg/update-8610-grammar",
+      "baseRefName": "main",
+      "baseRefOid": "d946922cc01a02849710dc502e33a3c56717ef5f",
+      "headRepository": "cbor-wg/update-8610-grammar",
+      "headRefName": "explain-compatibility",
+      "headRefOid": "8d47261307bc7914bfc56cc20544b46c30b84473",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
     }
   ]
 }
