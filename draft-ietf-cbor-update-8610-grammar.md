@@ -38,6 +38,7 @@ normative:
   STD94: cbor
 
 informative:
+  STD80: ascii
   RFC7405: abnf-case
   RFC9165: control1
   I-D.ietf-cbor-cddl-modules: modules
@@ -299,9 +300,61 @@ It does require some care when copy-pasting into CDDL models from ABNF
 that contains single quotes (which may also hide as apostrophes
 in comments); these need to be escaped or possibly replaced by `%x27`.
 
-Finally, our approach would lend support to extending `bsqual` in CDDL
+Finally, our approach lends support to extending `bsqual` in CDDL
 similar to the way this is done for CBOR diagnostic notation in {{-edn}}.
+(Note that the processing of string literals now is quite similar between
+CDDL and EDN, except that CDDL has "`;`"-based end-of-line comments, while EDN has
+two comment syntaxes, in-line "`/`"-based and end-of-line "`#`"-based.)
 
+The CDDL example in {{string-examples}} demonstrates various escaping
+techniques.
+Obviously in the literals for `a` and `x`, there is no need to escape
+the second character, an `o`, as `\u{6f}`; this is just for demonstration.
+Similarly, as shown in `c` and `z` there also is no need to escape the
+`🁁` or `⌘`, but escaping them may be convenient in order to limit the character
+repertoire of a CDDL file itself to ASCII {{-ascii}}.
+
+~~~ cddl
+start = [a, b, c, x, y, z]
+
+; "🁁", DOMINO TILE HORIZONTAL-02-02, and
+; "⌘", PLACE OF INTEREST SIGN, in a text string:
+a = "D\u{6f}mino's \u{1F041} + \u{2318}"  ; \u{}-escape 3 chars
+b = "Domino's \uD83C\uDC41 + \u2318"      ; escape JSON-like
+c = "Domino's 🁁 + ⌘"                      ; unescaped
+
+; in a byte string given as text, the ' needs to be escaped:
+x = 'D\u{6f}mino\'s \u{1F041} + \u{2318}' ; \u{}-escape 3 chars
+y = 'Domino\'s \uD83C\uDC41 + \u2318'     ; escape JSON-like
+z = 'Domino\'s 🁁 + ⌘'                     ; unescaped
+~~~
+{: #string-examples title="Example text and byte string literals with various
+escaping techniques"}
+
+In this example, the rules a to c and x to z all produce strings with
+byte-wise identical content, where a to c are text strings, and x to z
+are byte strings.
+{{string-examples-pretty}} illustrates this by showing the output generated from
+the `start` rule in {{string-examples}}, using pretty-printed hexadecimal.
+
+~~~ cbor-pretty
+86                                      # array(6)
+   73                                   # text(19)
+      446f6d696e6f277320f09f8181202b20e28c98 # "Domino's 🁁 + ⌘"
+   73                                   # text(19)
+      446f6d696e6f277320f09f8181202b20e28c98 # "Domino's 🁁 + ⌘"
+   73                                   # text(19)
+      446f6d696e6f277320f09f8181202b20e28c98 # "Domino's 🁁 + ⌘"
+   53                                   # bytes(19)
+      446f6d696e6f277320f09f8181202b20e28c98 # "Domino's 🁁 + ⌘"
+   53                                   # bytes(19)
+      446f6d696e6f277320f09f8181202b20e28c98 # "Domino's 🁁 + ⌘"
+   53                                   # bytes(19)
+      446f6d696e6f277320f09f8181202b20e28c98 # "Domino's 🁁 + ⌘"
+~~~
+{: #string-examples-pretty title="Generated CBOR from CDDL example"}
+
+<!-- cddl sourcecode/cddl/no-change-needed-after-addr.cddl g | diag2pretty.rb | diff - sourcecode/cbor-pretty/no-change-needed-after-addr.cbor-pretty  -->
 
 # Small Enabling Grammar Changes
 
