@@ -4,9 +4,9 @@
 
 CBOR                                                          C. Bormann
 Internet-Draft                                    Universität Bremen TZI
-Updates: 8610 (if approved)                                  16 May 2024
+Updates: 8610 (if approved)                                  17 May 2024
 Intended status: Standards Track                                        
-Expires: 17 November 2024
+Expires: 18 November 2024
 
 
                 Updates to the CDDL grammar of RFC 8610
@@ -53,7 +53,7 @@ Status of This Memo
 
 
 
-Bormann                 Expires 17 November 2024                [Page 1]
+Bormann                 Expires 18 November 2024                [Page 1]
 
 Internet-Draft            CDDL grammar updates                  May 2024
 
@@ -63,7 +63,7 @@ Internet-Draft            CDDL grammar updates                  May 2024
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 17 November 2024.
+   This Internet-Draft will expire on 18 November 2024.
 
 Copyright Notice
 
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Bormann                 Expires 17 November 2024                [Page 2]
+Bormann                 Expires 18 November 2024                [Page 2]
 
 Internet-Draft            CDDL grammar updates                  May 2024
 
@@ -165,7 +165,7 @@ Internet-Draft            CDDL grammar updates                  May 2024
 
 
 
-Bormann                 Expires 17 November 2024                [Page 3]
+Bormann                 Expires 18 November 2024                [Page 3]
 
 Internet-Draft            CDDL grammar updates                  May 2024
 
@@ -221,7 +221,7 @@ Internet-Draft            CDDL grammar updates                  May 2024
 
 
 
-Bormann                 Expires 17 November 2024                [Page 4]
+Bormann                 Expires 18 November 2024                [Page 4]
 
 Internet-Draft            CDDL grammar updates                  May 2024
 
@@ -277,7 +277,7 @@ Change proposed by Errata Report 6543
 
 
 
-Bormann                 Expires 17 November 2024                [Page 5]
+Bormann                 Expires 18 November 2024                [Page 5]
 
 Internet-Draft            CDDL grammar updates                  May 2024
 
@@ -333,7 +333,7 @@ No change needed after addressing Err6527 (text string literals)
 
 
 
-Bormann                 Expires 17 November 2024                [Page 6]
+Bormann                 Expires 18 November 2024                [Page 6]
 
 Internet-Draft            CDDL grammar updates                  May 2024
 
@@ -355,22 +355,22 @@ Internet-Draft            CDDL grammar updates                  May 2024
    techniques.  Obviously in the literals for a and x, there is no need
    to escape the second character, an o, as \u{6f}; this is just for
    demonstration.  Similarly, as shown in c and z there also is no need
-   to escape the 🁁 or ⌘, but escaping them may be convenient in order to
+   to escape the 🁳 or ⌘, but escaping them may be convenient in order to
    limit the character repertoire of a CDDL file itself to ASCII
    [STD80].
 
    start = [a, b, c, x, y, z]
 
-   ; "🁁", DOMINO TILE HORIZONTAL-02-02, and
+   ; "🁳", DOMINO TILE VERTICAL-02-02, and
    ; "⌘", PLACE OF INTEREST SIGN, in a text string:
-   a = "D\u{6f}mino's \u{1F041} + \u{2318}"  ; \u{}-escape 3 chars
-   b = "Domino's \uD83C\uDC41 + \u2318"      ; escape JSON-like
-   c = "Domino's 🁁 + ⌘"                      ; unescaped
+   a = "D\u{6f}mino's \u{1F073} + \u{2318}"      ; \u{}-escape 3 chars
+   b = "Domino's \uD83C\uDC73 + \u2318"          ; escape JSON-like
+   c = "Domino's 🁳 + ⌘"                          ; unescaped
 
    ; in a byte string given as text, the ' needs to be escaped:
-   x = 'D\u{6f}mino\'s \u{1F041} + \u{2318}' ; \u{}-escape 3 chars
-   y = 'Domino\'s \uD83C\uDC41 + \u2318'     ; escape JSON-like
-   z = 'Domino\'s 🁁 + ⌘'                     ; unescaped
+   x = 'D\u{6f}mino\u{27}s \u{1F073} + \u{2318}' ; \u{}-escape 4 chars
+   y = 'Domino\'s \uD83C\uDC73 + \u2318'         ; escape JSON-like
+   z = 'Domino\'s 🁳 + ⌘'                         ; escape ' only
 
    Figure 8: Example text and byte string literals with various escaping
                                  techniques
@@ -389,24 +389,24 @@ Internet-Draft            CDDL grammar updates                  May 2024
 
 
 
-Bormann                 Expires 17 November 2024                [Page 7]
+Bormann                 Expires 18 November 2024                [Page 7]
 
 Internet-Draft            CDDL grammar updates                  May 2024
 
 
    86                                      # array(6)
       73                                   # text(19)
-         446f6d696e6f277320f09f8181202b20e28c98 # "Domino's 🁁 + ⌘"
+         446f6d696e6f277320f09f81b3202b20e28c98 # "Domino's 🁳 + ⌘"
       73                                   # text(19)
-         446f6d696e6f277320f09f8181202b20e28c98 # "Domino's 🁁 + ⌘"
+         446f6d696e6f277320f09f81b3202b20e28c98 # "Domino's 🁳 + ⌘"
       73                                   # text(19)
-         446f6d696e6f277320f09f8181202b20e28c98 # "Domino's 🁁 + ⌘"
+         446f6d696e6f277320f09f81b3202b20e28c98 # "Domino's 🁳 + ⌘"
       53                                   # bytes(19)
-         446f6d696e6f277320f09f8181202b20e28c98 # "Domino's 🁁 + ⌘"
+         446f6d696e6f277320f09f81b3202b20e28c98 # "Domino's 🁳 + ⌘"
       53                                   # bytes(19)
-         446f6d696e6f277320f09f8181202b20e28c98 # "Domino's 🁁 + ⌘"
+         446f6d696e6f277320f09f81b3202b20e28c98 # "Domino's 🁳 + ⌘"
       53                                   # bytes(19)
-         446f6d696e6f277320f09f8181202b20e28c98 # "Domino's 🁁 + ⌘"
+         446f6d696e6f277320f09f81b3202b20e28c98 # "Domino's 🁳 + ⌘"
 
                  Figure 9: Generated CBOR from CDDL example
 
@@ -445,7 +445,7 @@ Internet-Draft            CDDL grammar updates                  May 2024
 
 
 
-Bormann                 Expires 17 November 2024                [Page 8]
+Bormann                 Expires 18 November 2024                [Page 8]
 
 Internet-Draft            CDDL grammar updates                  May 2024
 
@@ -501,7 +501,7 @@ Internet-Draft            CDDL grammar updates                  May 2024
 
 
 
-Bormann                 Expires 17 November 2024                [Page 9]
+Bormann                 Expires 18 November 2024                [Page 9]
 
 Internet-Draft            CDDL grammar updates                  May 2024
 
@@ -557,7 +557,7 @@ Internet-Draft            CDDL grammar updates                  May 2024
 
 
 
-Bormann                 Expires 17 November 2024               [Page 10]
+Bormann                 Expires 18 November 2024               [Page 10]
 
 Internet-Draft            CDDL grammar updates                  May 2024
 
@@ -613,7 +613,7 @@ Internet-Draft            CDDL grammar updates                  May 2024
 
 
 
-Bormann                 Expires 17 November 2024               [Page 11]
+Bormann                 Expires 18 November 2024               [Page 11]
 
 Internet-Draft            CDDL grammar updates                  May 2024
 
@@ -669,7 +669,7 @@ Appendix A.  Updated Collected ABNF for CDDL
 
 
 
-Bormann                 Expires 17 November 2024               [Page 12]
+Bormann                 Expires 18 November 2024               [Page 12]
 
 Internet-Draft            CDDL grammar updates                  May 2024
 
@@ -725,7 +725,7 @@ Internet-Draft            CDDL grammar updates                  May 2024
 
 
 
-Bormann                 Expires 17 November 2024               [Page 13]
+Bormann                 Expires 18 November 2024               [Page 13]
 
 Internet-Draft            CDDL grammar updates                  May 2024
 
@@ -781,7 +781,7 @@ Author's Address
 
 
 
-Bormann                 Expires 17 November 2024               [Page 14]
+Bormann                 Expires 18 November 2024               [Page 14]
 
 Internet-Draft            CDDL grammar updates                  May 2024
 
@@ -837,4 +837,4 @@ Internet-Draft            CDDL grammar updates                  May 2024
 
 
 
-Bormann                 Expires 17 November 2024               [Page 15]
+Bormann                 Expires 18 November 2024               [Page 15]

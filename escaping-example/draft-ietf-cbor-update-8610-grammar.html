@@ -1035,7 +1035,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Bormann</td>
-<td class="center">Expires 17 November 2024</td>
+<td class="center">Expires 18 November 2024</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1051,12 +1051,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <a href="https://www.rfc-editor.org/rfc/rfc8610" class="eref">8610</a> (if approved)</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2024-05-16" class="published">16 May 2024</time>
+<time datetime="2024-05-17" class="published">17 May 2024</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2024-11-17">17 November 2024</time></dd>
+<dd class="expires"><time datetime="2024-11-18">18 November 2024</time></dd>
 <dt class="label-authors">Author:</dt>
 <dd class="authors">
 <div class="author">
@@ -1112,7 +1112,7 @@ other small fixes for the ABNF grammar defined for CDDL there.<a href="#section-
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 17 November 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 18 November 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1477,7 +1477,7 @@ techniques.
 Obviously in the literals for <code>a</code> and <code>x</code>, there is no need to escape
 the second character, an <code>o</code>, as <code>\u{6f}</code>; this is just for demonstration.
 Similarly, as shown in <code>c</code> and <code>z</code> there also is no need to escape the
-<code>🁁</code> or <code>⌘</code>, but escaping them may be convenient in order to limit the character
+<code>🁳</code> or <code>⌘</code>, but escaping them may be convenient in order to limit the character
 repertoire of a CDDL file itself to ASCII <span>[<a href="#STD80" class="cite xref">STD80</a>]</span>.<a href="#section-2.2.2-5" class="pilcrow">¶</a></p>
 <span id="name-example-text-and-byte-strin"></span><div id="string-examples">
 <figure id="figure-8">
@@ -1485,16 +1485,16 @@ repertoire of a CDDL file itself to ASCII <span>[<a href="#STD80" class="cite xr
 <pre>
 start = [a, b, c, x, y, z]
 
-; "🁁", DOMINO TILE HORIZONTAL-02-02, and
+; "🁳", DOMINO TILE VERTICAL-02-02, and
 ; "⌘", PLACE OF INTEREST SIGN, in a text string:
-a = "D\u{6f}mino's \u{1F041} + \u{2318}"  ; \u{}-escape 3 chars
-b = "Domino's \uD83C\uDC41 + \u2318"      ; escape JSON-like
-c = "Domino's 🁁 + ⌘"                      ; unescaped
+a = "D\u{6f}mino's \u{1F073} + \u{2318}"      ; \u{}-escape 3 chars
+b = "Domino's \uD83C\uDC73 + \u2318"          ; escape JSON-like
+c = "Domino's 🁳 + ⌘"                          ; unescaped
 
 ; in a byte string given as text, the ' needs to be escaped:
-x = 'D\u{6f}mino\'s \u{1F041} + \u{2318}' ; \u{}-escape 3 chars
-y = 'Domino\'s \uD83C\uDC41 + \u2318'     ; escape JSON-like
-z = 'Domino\'s 🁁 + ⌘'                     ; unescaped
+x = 'D\u{6f}mino\u{27}s \u{1F073} + \u{2318}' ; \u{}-escape 4 chars
+y = 'Domino\'s \uD83C\uDC73 + \u2318'         ; escape JSON-like
+z = 'Domino\'s 🁳 + ⌘'                         ; escape ' only
 </pre>
 </div>
 <figcaption><a href="#figure-8" class="selfRef">Figure 8</a>:
@@ -1512,17 +1512,17 @@ the <code>start</code> rule in <a href="#string-examples" class="auto internal x
 <pre>
 86                                      # array(6)
    73                                   # text(19)
-      446f6d696e6f277320f09f8181202b20e28c98 # "Domino's 🁁 + ⌘"
+      446f6d696e6f277320f09f81b3202b20e28c98 # "Domino's 🁳 + ⌘"
    73                                   # text(19)
-      446f6d696e6f277320f09f8181202b20e28c98 # "Domino's 🁁 + ⌘"
+      446f6d696e6f277320f09f81b3202b20e28c98 # "Domino's 🁳 + ⌘"
    73                                   # text(19)
-      446f6d696e6f277320f09f8181202b20e28c98 # "Domino's 🁁 + ⌘"
+      446f6d696e6f277320f09f81b3202b20e28c98 # "Domino's 🁳 + ⌘"
    53                                   # bytes(19)
-      446f6d696e6f277320f09f8181202b20e28c98 # "Domino's 🁁 + ⌘"
+      446f6d696e6f277320f09f81b3202b20e28c98 # "Domino's 🁳 + ⌘"
    53                                   # bytes(19)
-      446f6d696e6f277320f09f8181202b20e28c98 # "Domino's 🁁 + ⌘"
+      446f6d696e6f277320f09f81b3202b20e28c98 # "Domino's 🁳 + ⌘"
    53                                   # bytes(19)
-      446f6d696e6f277320f09f8181202b20e28c98 # "Domino's 🁁 + ⌘"
+      446f6d696e6f277320f09f81b3202b20e28c98 # "Domino's 🁳 + ⌘"
 </pre>
 </div>
 <figcaption><a href="#figure-9" class="selfRef">Figure 9</a>:
