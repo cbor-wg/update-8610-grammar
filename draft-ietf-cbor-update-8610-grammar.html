@@ -15,18 +15,18 @@ JSON.
        The present document updates RFC 8610 by addressing errata and making
 other small fixes for the ABNF grammar defined for CDDL there. 
     " name="description">
-<meta content="xml2rfc 3.19.4" name="generator">
+<meta content="xml2rfc 3.21.0" name="generator">
 <meta content="Concise Data Definition Language" name="keyword">
 <meta content="draft-ietf-cbor-update-8610-grammar-latest" name="ietf.draft">
 <!-- Generator version information:
-  xml2rfc 3.19.4
-    Python 3.11.6
+  xml2rfc 3.21.0
+    Python 3.11.9
     ConfigArgParse 1.7
     google-i18n-address 3.1.0
     intervaltree 3.1.0
     Jinja2 3.1.2
     lxml 4.9.3
-    platformdirs 4.2.0
+    platformdirs 4.2.1
     pycountry 22.3.5
     PyYAML 6.0.1
     requests 2.31.0
@@ -1031,11 +1031,11 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">CDDL grammar updates</td>
-<td class="right">March 2024</td>
+<td class="right">May 2024</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">Bormann</td>
-<td class="center">Expires 3 September 2024</td>
+<td class="center">Expires 18 November 2024</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1051,12 +1051,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <a href="https://www.rfc-editor.org/rfc/rfc8610" class="eref">8610</a> (if approved)</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2024-03-02" class="published">2 March 2024</time>
+<time datetime="2024-05-17" class="published">17 May 2024</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2024-09-03">3 September 2024</time></dd>
+<dd class="expires"><time datetime="2024-11-18">18 November 2024</time></dd>
 <dt class="label-authors">Author:</dt>
 <dd class="authors">
 <div class="author">
@@ -1112,7 +1112,7 @@ other small fixes for the ABNF grammar defined for CDDL there.<a href="#section-
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 3 September 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 18 November 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1238,20 +1238,20 @@ and <span>[<a href="#RFC7405" class="cite xref">RFC7405</a>]</span>.<a href="#se
       <h2 id="name-clarifications-and-changes-">
 <a href="#section-2" class="section-number selfRef">2. </a><a href="#name-clarifications-and-changes-" class="section-name selfRef">Clarifications and Changes based on Errata Reports</a>
       </h2>
-<span class="break"></span><dl class="dlParallel" id="section-2-1">
-        <dt id="section-2-1.1">
-<em>Compatibility</em>:</dt>
-        <dd style="margin-left: 1.5em" id="section-2-1.2">
-          <p id="section-2-1.2.1">errata fix<a href="#section-2-1.2.1" class="pilcrow">¶</a></p>
-</dd>
-      <dd class="break"></dd>
-</dl>
-<p id="section-2-2">A number of errata reports have been made around some details of text
+<p id="section-2-1">A number of errata reports have been made around some details of text
 string and byte string literal syntax: <span>[<a href="#Err6527" class="cite xref">Err6527</a>]</span> and <span>[<a href="#Err6543" class="cite xref">Err6543</a>]</span>.
 These are being addressed in this section, updating details of the
 ABNF for these literal syntaxes.
 Also, <span>[<a href="#Err6526" class="cite xref">Err6526</a>]</span> needs to be applied (backslashes have been lost during
-RFC processing in some text explaining backslash escaping).<a href="#section-2-2" class="pilcrow">¶</a></p>
+RFC processing in some text explaining backslash escaping).<a href="#section-2-1" class="pilcrow">¶</a></p>
+<p id="section-2-2">These changes are intended to mirror the way existing implementations
+have dealt with the errata.  They also use the opportunity presented
+by the necessary cleanup of the grammar of string literals for a
+backward compatible addition to the syntax for hexadecimal escapes.
+The latter change is not automatically forward compatible (i.e., CDDL
+specifications that make use of this syntax do not necessarily work
+with existing implementations until these are updated, which this
+specification recommends).<a href="#section-2-2" class="pilcrow">¶</a></p>
 <div id="e6527">
 <section id="section-2.1">
         <h3 id="name-err6527-text-string-literal">
@@ -1481,24 +1481,21 @@ similar to the way this is done for CBOR diagnostic notation in <span>[<a href="
 <a href="#section-3" class="section-number selfRef">3. </a><a href="#name-small-enabling-grammar-chan" class="section-name selfRef">Small Enabling Grammar Changes</a>
       </h2>
 <p id="section-3-1">The two subsections in this section specify two small changes to the
-grammar that are intended to enable certain kinds of specifications.<a href="#section-3-1" class="pilcrow">¶</a></p>
+grammar that are intended to enable certain kinds of specifications.
+These changes are backward compatible, i.e., CDDL files that
+comply to <span>[<a href="#RFC8610" class="cite xref">RFC8610</a>]</span> continue to match the updated grammar, but not
+necessarily forward compatible, i.e., CDDL specifications that make
+use of these changes cannot necessarily be processed by existing <span>[<a href="#RFC8610" class="cite xref">RFC8610</a>]</span>
+implementations.<a href="#section-3-1" class="pilcrow">¶</a></p>
 <div id="empty">
 <section id="section-3.1">
         <h3 id="name-empty-data-models">
 <a href="#section-3.1" class="section-number selfRef">3.1. </a><a href="#name-empty-data-models" class="section-name selfRef">Empty data models</a>
         </h3>
-<span class="break"></span><dl class="dlCompact dlParallel" id="section-3.1-1">
-          <dt id="section-3.1-1.1">
-<em>Compatibility</em>:</dt>
-          <dd style="margin-left: 1.5em" id="section-3.1-1.2">
-            <p id="section-3.1-1.2.1">backward (not forward)<a href="#section-3.1-1.2.1" class="pilcrow">¶</a></p>
-</dd>
-        <dd class="break"></dd>
-</dl>
-<p id="section-3.1-2"><span>[<a href="#RFC8610" class="cite xref">RFC8610</a>]</span> requires a CDDL file to have at least one rule.<a href="#section-3.1-2" class="pilcrow">¶</a></p>
+<p id="section-3.1-1"><span>[<a href="#RFC8610" class="cite xref">RFC8610</a>]</span> requires a CDDL file to have at least one rule.<a href="#section-3.1-1" class="pilcrow">¶</a></p>
 <span id="name-old-abnf-for-top-level-rule"></span><div id="empty-old">
 <figure id="figure-8">
-          <div class="lang-abnf sourcecode" id="section-3.1-3.1">
+          <div class="lang-abnf sourcecode" id="section-3.1-2.1">
 <pre>
 ; RFC 8610 ABNF:
 cddl = S 1*(rule S)
@@ -1508,20 +1505,20 @@ cddl = S 1*(rule S)
 <a href="#name-old-abnf-for-top-level-rule" class="selfRef">Old ABNF for top-level rule cddl</a>
           </figcaption></figure>
 </div>
-<p id="section-3.1-4">This makes sense when the file has to stand alone, as a CDDL data
+<p id="section-3.1-3">This makes sense when the file has to stand alone, as a CDDL data
 model needs to have at least one rule to provide an entry point (start
-rule).<a href="#section-3.1-4" class="pilcrow">¶</a></p>
-<p id="section-3.1-5">With CDDL modules <span>[<a href="#I-D.ietf-cbor-cddl-modules" class="cite xref">I-D.ietf-cbor-cddl-modules</a>]</span>, CDDL files can also include directives,
+rule).<a href="#section-3.1-3" class="pilcrow">¶</a></p>
+<p id="section-3.1-4">With CDDL modules <span>[<a href="#I-D.ietf-cbor-cddl-modules" class="cite xref">I-D.ietf-cbor-cddl-modules</a>]</span>, CDDL files can also include directives,
 and these might be the source of all the rules that
 ultimately make up the module created by the file.
 Any other rule content in the file has to be available for directive
-processing, making the requirement for at least one rule cumbersome.<a href="#section-3.1-5" class="pilcrow">¶</a></p>
-<p id="section-3.1-6">Therefore, we extend the grammar as in <a href="#empty-new" class="auto internal xref">Figure 9</a>
+processing, making the requirement for at least one rule cumbersome.<a href="#section-3.1-4" class="pilcrow">¶</a></p>
+<p id="section-3.1-5">Therefore, we extend the grammar as in <a href="#empty-new" class="auto internal xref">Figure 9</a>
 and make the existence of at least one rule a semantic constraint, to
-be fulfilled after processing of all directives.<a href="#section-3.1-6" class="pilcrow">¶</a></p>
+be fulfilled after processing of all directives.<a href="#section-3.1-5" class="pilcrow">¶</a></p>
 <span id="name-updated-abnf-for-top-level-"></span><div id="empty-new">
 <figure id="figure-9">
-          <div class="lang-abnf sourcecode" id="section-3.1-7.1">
+          <div class="lang-abnf sourcecode" id="section-3.1-6.1">
 <pre>
 ; new top-level rule:
 cddl = S *(rule S)
@@ -1538,18 +1535,10 @@ cddl = S *(rule S)
         <h3 id="name-non-literal-tag-numbers-sim">
 <a href="#section-3.2" class="section-number selfRef">3.2. </a><a href="#name-non-literal-tag-numbers-sim" class="section-name selfRef">Non-literal Tag Numbers, Simple Values</a>
         </h3>
-<span class="break"></span><dl class="dlCompact dlParallel" id="section-3.2-1">
-          <dt id="section-3.2-1.1">
-<em>Compatibility</em>:</dt>
-          <dd style="margin-left: 1.5em" id="section-3.2-1.2">
-            <p id="section-3.2-1.2.1">backward (not forward)<a href="#section-3.2-1.2.1" class="pilcrow">¶</a></p>
-</dd>
-        <dd class="break"></dd>
-</dl>
-<p id="section-3.2-2">The existing ABNF syntax for expressing tags in CDDL is:<a href="#section-3.2-2" class="pilcrow">¶</a></p>
+<p id="section-3.2-1">The existing ABNF syntax for expressing tags in CDDL is:<a href="#section-3.2-1" class="pilcrow">¶</a></p>
 <span id="name-old-abnf-for-tag-syntax"></span><div id="tag-old">
 <figure id="figure-10">
-          <div class="lang-abnf sourcecode" id="section-3.2-3.1">
+          <div class="lang-abnf sourcecode" id="section-3.2-2.1">
 <pre>
 ; extracted from RFC 8610 ABNF:
 type2 =/ "#" "6" ["." uint] "(" S type S ")"
@@ -1559,16 +1548,16 @@ type2 =/ "#" "6" ["." uint] "(" S type S ")"
 <a href="#name-old-abnf-for-tag-syntax" class="selfRef">Old ABNF for tag syntax</a>
           </figcaption></figure>
 </div>
-<p id="section-3.2-4">This means tag numbers can only be given as literal numbers (uints).
+<p id="section-3.2-3">This means tag numbers can only be given as literal numbers (uints).
 Some specifications operate on ranges of tag numbers, e.g., <span>[<a href="#RFC9277" class="cite xref">RFC9277</a>]</span>
 has a range of tag numbers 1668546817 (0x63740101) to 1668612095
 (0x6374FFFF) to tag specific content formats.
 This can currently not be expressed in CDDL.
-Similar considerations apply to simple values (<code>#7.</code>xx).<a href="#section-3.2-4" class="pilcrow">¶</a></p>
-<p id="section-3.2-5">This update extends the syntax to:<a href="#section-3.2-5" class="pilcrow">¶</a></p>
+Similar considerations apply to simple values (<code>#7.</code>xx).<a href="#section-3.2-3" class="pilcrow">¶</a></p>
+<p id="section-3.2-4">This update extends the syntax to:<a href="#section-3.2-4" class="pilcrow">¶</a></p>
 <span id="name-updated-abnf-for-tag-and-si"></span><div id="tag-new">
 <figure id="figure-11">
-          <div class="lang-abnf sourcecode" id="section-3.2-6.1">
+          <div class="lang-abnf sourcecode" id="section-3.2-5.1">
 <pre>
 ; new rules collectively defining the tagged case:
 type2 =/ "#" "6" ["." head-number] "(" S type S ")"
@@ -1580,32 +1569,32 @@ head-number = uint / ("&lt;" type "&gt;")
 <a href="#name-updated-abnf-for-tag-and-si" class="selfRef">Updated ABNF for tag and simple value syntaxes</a>
           </figcaption></figure>
 </div>
-<p id="section-3.2-7">For <code>#6</code>, the <code>head-number</code> stands for the tag number.
+<p id="section-3.2-6">For <code>#6</code>, the <code>head-number</code> stands for the tag number.
 For <code>#7</code>, the <code>head-number</code> stands for the simple value if it is in
 the ranges 0..23 or 32..255 (as per Section <a href="https://rfc-editor.org/rfc/rfc8949#section-3.3" class="relref">3.3</a> of RFC 8949 <span>[<a href="#STD94" class="cite xref">STD94</a>]</span>
 the simple values 24..31 are not used).
 For 24..31, the <code>head-number</code> stands for the "additional
 information", e.g., <code>#7.25</code> or <code>#7.&lt;25&gt;</code> is a float16, etc.
-(All ranges mentioned here are inclusive.)<a href="#section-3.2-7" class="pilcrow">¶</a></p>
-<p id="section-3.2-8">So the above range can be expressed in a CDDL fragment such as:<a href="#section-3.2-8" class="pilcrow">¶</a></p>
-<div class="lang-cddl sourcecode" id="section-3.2-9">
+(All ranges mentioned here are inclusive.)<a href="#section-3.2-6" class="pilcrow">¶</a></p>
+<p id="section-3.2-7">So the above range can be expressed in a CDDL fragment such as:<a href="#section-3.2-7" class="pilcrow">¶</a></p>
+<div class="lang-cddl sourcecode" id="section-3.2-8">
 <pre>
 ct-tag&lt;content&gt; = #6.&lt;ct-tag-number&gt;(content)
 ct-tag-number = 1668546817..1668612095
 ; or use 0x63740101..0x6374FFFF
-</pre><a href="#section-3.2-9" class="pilcrow">¶</a>
+</pre><a href="#section-3.2-8" class="pilcrow">¶</a>
 </div>
-<p id="section-3.2-10">Notes:<a href="#section-3.2-10" class="pilcrow">¶</a></p>
-<ol start="1" type="1" class="normal type-1" id="section-3.2-11">
-<li id="section-3.2-11.1">
-            <p id="section-3.2-11.1.1">This syntax reuses the angle bracket syntax for generics;
+<p id="section-3.2-9">Notes:<a href="#section-3.2-9" class="pilcrow">¶</a></p>
+<ol start="1" type="1" class="normal type-1" id="section-3.2-10">
+<li id="section-3.2-10.1">
+            <p id="section-3.2-10.1.1">This syntax reuses the angle bracket syntax for generics;
 this reuse is innocuous as a generic parameter/argument only ever
 occurs after a rule name (<code>id</code>), while it occurs after <code>.</code> here.
 (Whether there is potential for human confusion can be debated; the
-above example deliberately uses generics as well.)<a href="#section-3.2-11.1.1" class="pilcrow">¶</a></p>
+above example deliberately uses generics as well.)<a href="#section-3.2-10.1.1" class="pilcrow">¶</a></p>
 </li>
-          <li id="section-3.2-11.2">
-            <p id="section-3.2-11.2.1">The updated ABNF grammar makes it a bit more explicit that the
+          <li id="section-3.2-10.2">
+            <p id="section-3.2-10.2.1">The updated ABNF grammar makes it a bit more explicit that the
 number given after the optional dot is special, not giving the CBOR
 "additional information" for tags and simple values as it is with
 other uses of <code>#</code> in CDDL.
@@ -1613,7 +1602,7 @@ other uses of <code>#</code> in CDDL.
 of <span>[<a href="#Err6575" class="cite xref">Err6575</a>]</span>; it is correctly noted in <span><a href="https://rfc-editor.org/rfc/rfc8610#section-3.6" class="relref">Section 3.6</a> of [<a href="#RFC8610" class="cite xref">RFC8610</a>]</span>.)
 In hindsight, maybe a different character than the dot should have
 been chosen for this special case, however changing the grammar
-now would have been too disruptive.<a href="#section-3.2-11.2.1" class="pilcrow">¶</a></p>
+now would have been too disruptive.<a href="#section-3.2-10.2.1" class="pilcrow">¶</a></p>
 </li>
         </ol>
 </section>
@@ -1658,16 +1647,18 @@ been updated and some of which have not been, in particular based on
 <dd class="break"></dd>
 <dt id="STD68">[STD68]</dt>
         <dd>
+<div class="refInstance">Internet Standard 68, <span>&lt;<a href="https://www.rfc-editor.org/info/std68">https://www.rfc-editor.org/info/std68</a>&gt;</span>.<br><span>At the time of writing, this STD comprises the following:</span>
+</div>
 <div class="refInstance" id="RFC5234">
-            <span class="refAuthor">Crocker, D., Ed.</span> and <span class="refAuthor">P. Overell</span>, <span class="refTitle">"Augmented BNF for Syntax Specifications: ABNF"</span>, <span class="seriesInfo">STD 68</span>, <span class="seriesInfo">RFC 5234</span>, <time datetime="2008-01" class="refDate">January 2008</time>. </div>
-<span>&lt;<a href="https://www.rfc-editor.org/info/std68">https://www.rfc-editor.org/info/std68</a>&gt;</span>
+            <span class="refAuthor">Crocker, D., Ed.</span> and <span class="refAuthor">P. Overell</span>, <span class="refTitle">"Augmented BNF for Syntax Specifications: ABNF"</span>, <span class="seriesInfo">STD 68</span>, <span class="seriesInfo">RFC 5234</span>, <span class="seriesInfo">DOI 10.17487/RFC5234</span>, <time datetime="2008-01" class="refDate">January 2008</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc5234">https://www.rfc-editor.org/info/rfc5234</a>&gt;</span>. </div>
 </dd>
 <dd class="break"></dd>
 <dt id="STD94">[STD94]</dt>
       <dd>
+<div class="refInstance">Internet Standard 94, <span>&lt;<a href="https://www.rfc-editor.org/info/std94">https://www.rfc-editor.org/info/std94</a>&gt;</span>.<br><span>At the time of writing, this STD comprises the following:</span>
+</div>
 <div class="refInstance" id="RFC8949">
-            <span class="refAuthor">Bormann, C.</span> and <span class="refAuthor">P. Hoffman</span>, <span class="refTitle">"Concise Binary Object Representation (CBOR)"</span>, <span class="seriesInfo">STD 94</span>, <span class="seriesInfo">RFC 8949</span>, <time datetime="2020-12" class="refDate">December 2020</time>. </div>
-<span>&lt;<a href="https://www.rfc-editor.org/info/std94">https://www.rfc-editor.org/info/std94</a>&gt;</span>
+            <span class="refAuthor">Bormann, C.</span> and <span class="refAuthor">P. Hoffman</span>, <span class="refTitle">"Concise Binary Object Representation (CBOR)"</span>, <span class="seriesInfo">STD 94</span>, <span class="seriesInfo">RFC 8949</span>, <span class="seriesInfo">DOI 10.17487/RFC8949</span>, <time datetime="2020-12" class="refDate">December 2020</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc8949">https://www.rfc-editor.org/info/rfc8949</a>&gt;</span>. </div>
 </dd>
 <dd class="break"></dd>
 </dl>
@@ -1701,7 +1692,7 @@ been updated and some of which have not been, in particular based on
 <dd class="break"></dd>
 <dt id="I-D.ietf-cbor-cddl-modules">[I-D.ietf-cbor-cddl-modules]</dt>
         <dd>
-<span class="refAuthor">Bormann, C.</span>, <span class="refTitle">"CDDL Module Structure"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-cbor-cddl-modules-01</span>, <time datetime="2023-12-18" class="refDate">18 December 2023</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-cbor-cddl-modules-01">https://datatracker.ietf.org/doc/html/draft-ietf-cbor-cddl-modules-01</a>&gt;</span>. </dd>
+<span class="refAuthor">Bormann, C.</span> and <span class="refAuthor">B. Moran</span>, <span class="refTitle">"CDDL Module Structure"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-cbor-cddl-modules-02</span>, <time datetime="2024-03-04" class="refDate">4 March 2024</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-cbor-cddl-modules-02">https://datatracker.ietf.org/doc/html/draft-ietf-cbor-cddl-modules-02</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="I-D.ietf-cbor-edn-literals">[I-D.ietf-cbor-edn-literals]</dt>
         <dd>

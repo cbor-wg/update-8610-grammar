@@ -4,9 +4,9 @@
 
 CBOR                                                          C. Bormann
 Internet-Draft                                    Universität Bremen TZI
-Updates: 8610 (if approved)                                 2 March 2024
+Updates: 8610 (if approved)                                  17 May 2024
 Intended status: Standards Track                                        
-Expires: 3 September 2024
+Expires: 18 November 2024
 
 
                 Updates to the CDDL grammar of RFC 8610
@@ -53,9 +53,9 @@ Status of This Memo
 
 
 
-Bormann                 Expires 3 September 2024                [Page 1]
+Bormann                 Expires 18 November 2024                [Page 1]
 
-Internet-Draft            CDDL grammar updates                March 2024
+Internet-Draft            CDDL grammar updates                  May 2024
 
 
    Internet-Drafts are draft documents valid for a maximum of six months
@@ -63,7 +63,7 @@ Internet-Draft            CDDL grammar updates                March 2024
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 3 September 2024.
+   This Internet-Draft will expire on 18 November 2024.
 
 Copyright Notice
 
@@ -96,8 +96,8 @@ Table of Contents
    5.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   9
    6.  References  . . . . . . . . . . . . . . . . . . . . . . . . .   9
      6.1.  Normative References  . . . . . . . . . . . . . . . . . .   9
-     6.2.  Informative References  . . . . . . . . . . . . . . . . .   9
-   Appendix A.  Updated Collected ABNF for CDDL  . . . . . . . . . .  10
+     6.2.  Informative References  . . . . . . . . . . . . . . . . .  10
+   Appendix A.  Updated Collected ABNF for CDDL  . . . . . . . . . .  11
    Acknowledgments . . . . . . . . . . . . . . . . . . . . . . . . .  13
    Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .  13
 
@@ -109,9 +109,9 @@ Table of Contents
 
 
 
-Bormann                 Expires 3 September 2024                [Page 2]
+Bormann                 Expires 18 November 2024                [Page 2]
 
-Internet-Draft            CDDL grammar updates                March 2024
+Internet-Draft            CDDL grammar updates                  May 2024
 
 
 1.  Introduction
@@ -131,14 +131,21 @@ Internet-Draft            CDDL grammar updates                March 2024
 
 2.  Clarifications and Changes based on Errata Reports
 
-   _Compatibility_:  errata fix
-
    A number of errata reports have been made around some details of text
    string and byte string literal syntax: [Err6527] and [Err6543].
    These are being addressed in this section, updating details of the
    ABNF for these literal syntaxes.  Also, [Err6526] needs to be applied
    (backslashes have been lost during RFC processing in some text
    explaining backslash escaping).
+
+   These changes are intended to mirror the way existing implementations
+   have dealt with the errata.  They also use the opportunity presented
+   by the necessary cleanup of the grammar of string literals for a
+   backward compatible addition to the syntax for hexadecimal escapes.
+   The latter change is not automatically forward compatible (i.e., CDDL
+   specifications that make use of this syntax do not necessarily work
+   with existing implementations until these are updated, which this
+   specification recommends).
 
 2.1.  Err6527 (text string literals)
 
@@ -153,6 +160,16 @@ Internet-Draft            CDDL grammar updates                March 2024
      Figure 1: Old ABNF for strings with permissive ABNF for SESC, but
                           not allowing hex escapes
 
+
+
+
+
+
+Bormann                 Expires 18 November 2024                [Page 3]
+
+Internet-Draft            CDDL grammar updates                  May 2024
+
+
    This allows almost any non-C0 character to be escaped by a backslash,
    but critically misses out on the \uXXXX and \uHHHH\uLLLL forms that
    JSON allows to specify characters in hex (which should be applying
@@ -161,14 +178,6 @@ Internet-Draft            CDDL grammar updates                March 2024
    represents Unicode code points beyond U+FFFF by making them look like
    UTF-16 surrogate pairs; CDDL text strings are not using UTF-16 or
    surrogates.)
-
-
-
-
-Bormann                 Expires 3 September 2024                [Page 3]
-
-Internet-Draft            CDDL grammar updates                March 2024
-
 
    Both can be solved by updating the SESC production.  We use the
    opportunity to add a popular form of directly specifying characters
@@ -212,18 +221,9 @@ Internet-Draft            CDDL grammar updates                March 2024
 
 
 
-
-
-
-
-
-
-
-
-
-Bormann                 Expires 3 September 2024                [Page 4]
+Bormann                 Expires 18 November 2024                [Page 4]
 
-Internet-Draft            CDDL grammar updates                March 2024
+Internet-Draft            CDDL grammar updates                  May 2024
 
 
    Updating BCHAR also provides an opportunity to address [Err6278],
@@ -277,9 +277,9 @@ Change proposed by Errata Report 6543
 
 
 
-Bormann                 Expires 3 September 2024                [Page 5]
+Bormann                 Expires 18 November 2024                [Page 5]
 
-Internet-Draft            CDDL grammar updates                March 2024
+Internet-Draft            CDDL grammar updates                  May 2024
 
 
     Figure 6: Errata Report 8653 Proposal to Split the Byte String Rules
@@ -333,9 +333,9 @@ No change needed after addressing Err6527 (text string literals)
 
 
 
-Bormann                 Expires 3 September 2024                [Page 6]
+Bormann                 Expires 18 November 2024                [Page 6]
 
-Internet-Draft            CDDL grammar updates                March 2024
+Internet-Draft            CDDL grammar updates                  May 2024
 
 
    Note that this approach also works well with the use of byte strings
@@ -352,10 +352,13 @@ Internet-Draft            CDDL grammar updates                March 2024
 
    The two subsections in this section specify two small changes to the
    grammar that are intended to enable certain kinds of specifications.
+   These changes are backward compatible, i.e., CDDL files that comply
+   to [RFC8610] continue to match the updated grammar, but not
+   necessarily forward compatible, i.e., CDDL specifications that make
+   use of these changes cannot necessarily be processed by existing
+   [RFC8610] implementations.
 
 3.1.  Empty data models
-
-   _Compatibility_:  backward (not forward)
 
    [RFC8610] requires a CDDL file to have at least one rule.
 
@@ -386,17 +389,12 @@ Internet-Draft            CDDL grammar updates                March 2024
 
 
 
-
-
-
-Bormann                 Expires 3 September 2024                [Page 7]
+Bormann                 Expires 18 November 2024                [Page 7]
 
-Internet-Draft            CDDL grammar updates                March 2024
+Internet-Draft            CDDL grammar updates                  May 2024
 
 
 3.2.  Non-literal Tag Numbers, Simple Values
-
-   _Compatibility_:  backward (not forward)
 
    The existing ABNF syntax for expressing tags in CDDL is:
 
@@ -445,9 +443,11 @@ Internet-Draft            CDDL grammar updates                March 2024
 
 
 
-Bormann                 Expires 3 September 2024                [Page 8]
+
+
+Bormann                 Expires 18 November 2024                [Page 8]
 
-Internet-Draft            CDDL grammar updates                March 2024
+Internet-Draft            CDDL grammar updates                  May 2024
 
 
    2.  The updated ABNF grammar makes it a bit more explicit that the
@@ -483,28 +483,38 @@ Internet-Draft            CDDL grammar updates                March 2024
               JSON Data Structures", RFC 8610, DOI 10.17487/RFC8610,
               June 2019, <https://www.rfc-editor.org/rfc/rfc8610>.
 
-   [STD68]    Crocker, D., Ed. and P. Overell, "Augmented BNF for Syntax
-              Specifications: ABNF", STD 68, RFC 5234, January 2008.
+   [STD68]    Internet Standard 68,
+              <https://www.rfc-editor.org/info/std68>.
+              At the time of writing, this STD comprises the following:
 
-              <https://www.rfc-editor.org/info/std68>
+              Crocker, D., Ed. and P. Overell, "Augmented BNF for Syntax
+              Specifications: ABNF", STD 68, RFC 5234,
+              DOI 10.17487/RFC5234, January 2008,
+              <https://www.rfc-editor.org/info/rfc5234>.
 
-   [STD94]    Bormann, C. and P. Hoffman, "Concise Binary Object
-              Representation (CBOR)", STD 94, RFC 8949, December 2020.
+   [STD94]    Internet Standard 94,
+              <https://www.rfc-editor.org/info/std94>.
+              At the time of writing, this STD comprises the following:
 
-              <https://www.rfc-editor.org/info/std94>
+
+
+
+
+
+Bormann                 Expires 18 November 2024                [Page 9]
+
+Internet-Draft            CDDL grammar updates                  May 2024
+
+
+              Bormann, C. and P. Hoffman, "Concise Binary Object
+              Representation (CBOR)", STD 94, RFC 8949,
+              DOI 10.17487/RFC8949, December 2020,
+              <https://www.rfc-editor.org/info/rfc8949>.
 
 6.2.  Informative References
 
    [Err6278]  "Errata Report 6278", RFC 8610,
               <https://www.rfc-editor.org/errata/eid6278>.
-
-
-
-
-Bormann                 Expires 3 September 2024                [Page 9]
-
-Internet-Draft            CDDL grammar updates                March 2024
-
 
    [Err6526]  "Errata Report 6526", RFC 8610,
               <https://www.rfc-editor.org/errata/eid6526>.
@@ -519,10 +529,10 @@ Internet-Draft            CDDL grammar updates                March 2024
               <https://www.rfc-editor.org/errata/eid6575>.
 
    [I-D.ietf-cbor-cddl-modules]
-              Bormann, C., "CDDL Module Structure", Work in Progress,
-              Internet-Draft, draft-ietf-cbor-cddl-modules-01, 18
-              December 2023, <https://datatracker.ietf.org/doc/html/
-              draft-ietf-cbor-cddl-modules-01>.
+              Bormann, C. and B. Moran, "CDDL Module Structure", Work in
+              Progress, Internet-Draft, draft-ietf-cbor-cddl-modules-02,
+              4 March 2024, <https://datatracker.ietf.org/doc/html/
+              draft-ietf-cbor-cddl-modules-02>.
 
    [I-D.ietf-cbor-edn-literals]
               Bormann, C., "CBOR Extended Diagnostic Notation (EDN):
@@ -541,6 +551,17 @@ Internet-Draft            CDDL grammar updates                March 2024
               DOI 10.17487/RFC9165, December 2021,
               <https://www.rfc-editor.org/rfc/rfc9165>.
 
+
+
+
+
+
+
+Bormann                 Expires 18 November 2024               [Page 10]
+
+Internet-Draft            CDDL grammar updates                  May 2024
+
+
    [RFC9277]  Richardson, M. and C. Bormann, "On Stable Storage for
               Items in Concise Binary Object Representation (CBOR)",
               RFC 9277, DOI 10.17487/RFC9277, August 2022,
@@ -550,17 +571,6 @@ Appendix A.  Updated Collected ABNF for CDDL
 
    This appendix provides the full ABNF from [RFC8610] with the updates
    applied in the present document.
-
-
-
-
-
-
-
-Bormann                 Expires 3 September 2024               [Page 10]
-
-Internet-Draft            CDDL grammar updates                March 2024
-
 
    cddl = S *(rule S)
    rule = typename [genericparm] S assignt S type
@@ -600,6 +610,14 @@ Internet-Draft            CDDL grammar updates                March 2024
 
    group = grpchoice *(S "//" S grpchoice)
 
+
+
+
+Bormann                 Expires 18 November 2024               [Page 11]
+
+Internet-Draft            CDDL grammar updates                  May 2024
+
+
    grpchoice = *(grpent optcom)
 
    grpent = [occur S] [memberkey S] type
@@ -609,14 +627,6 @@ Internet-Draft            CDDL grammar updates                March 2024
    memberkey = type1 S ["^" S] "=>"
              / bareword S ":"
              / value S ":"
-
-
-
-
-Bormann                 Expires 3 September 2024               [Page 11]
-
-Internet-Draft            CDDL grammar updates                March 2024
-
 
    bareword = id
 
@@ -656,6 +666,14 @@ Internet-Draft            CDDL grammar updates                March 2024
                    ("D" %x30-37 2HEXDIG )
    high-surrogate = "D" ("8"/"9"/"A"/"B") 2HEXDIG
    low-surrogate = "D" ("C"/"D"/"E"/"F") 2HEXDIG
+
+
+
+Bormann                 Expires 18 November 2024               [Page 12]
+
+Internet-Draft            CDDL grammar updates                  May 2024
+
+
    hexscalar = "10" 4HEXDIG / HEXDIG1 4HEXDIG
              / non-surrogate / 1*3HEXDIG
 
@@ -666,14 +684,6 @@ Internet-Draft            CDDL grammar updates                March 2024
    id = EALPHA *(*("-" / ".") (EALPHA / DIGIT))
    ALPHA = %x41-5A / %x61-7A
    EALPHA = ALPHA / "@" / "_" / "$"
-
-
-
-Bormann                 Expires 3 September 2024               [Page 12]
-
-Internet-Draft            CDDL grammar updates                March 2024
-
-
    DIGIT = %x30-39
    DIGIT1 = %x31-39
    HEXDIG = DIGIT / "A" / "B" / "C" / "D" / "E" / "F"
@@ -715,14 +725,4 @@ Author's Address
 
 
 
-
-
-
-
-
-
-
-
-
-
-Bormann                 Expires 3 September 2024               [Page 13]
+Bormann                 Expires 18 November 2024               [Page 13]
