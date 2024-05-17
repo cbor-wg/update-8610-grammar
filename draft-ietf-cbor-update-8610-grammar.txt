@@ -569,8 +569,10 @@ Internet-Draft            CDDL grammar updates                  May 2024
 
 Appendix A.  Updated Collected ABNF for CDDL
 
-   This appendix provides the full ABNF from [RFC8610] with the updates
-   applied in the present document.
+   This appendix is normative.
+
+   It provides the full ABNF from [RFC8610] with the updates applied in
+   the present document.
 
    cddl = S *(rule S)
    rule = typename [genericparm] S assignt S type
@@ -608,8 +610,6 @@ Appendix A.  Updated Collected ABNF for CDDL
 
    ctlop = "." id
 
-   group = grpchoice *(S "//" S grpchoice)
-
 
 
 
@@ -617,6 +617,8 @@ Bormann                 Expires 18 November 2024               [Page 11]
 
 Internet-Draft            CDDL grammar updates                  May 2024
 
+
+   group = grpchoice *(S "//" S grpchoice)
 
    grpchoice = *(grpent optcom)
 
@@ -664,8 +666,6 @@ Internet-Draft            CDDL grammar updates                  May 2024
              non-surrogate / (high-surrogate "\" %x75 low-surrogate)
    non-surrogate = ((DIGIT / "A"/"B"/"C" / "E"/"F") 3HEXDIG) /
                    ("D" %x30-37 2HEXDIG )
-   high-surrogate = "D" ("8"/"9"/"A"/"B") 2HEXDIG
-   low-surrogate = "D" ("C"/"D"/"E"/"F") 2HEXDIG
 
 
 
@@ -674,6 +674,8 @@ Bormann                 Expires 18 November 2024               [Page 12]
 Internet-Draft            CDDL grammar updates                  May 2024
 
 
+   high-surrogate = "D" ("8"/"9"/"A"/"B") 2HEXDIG
+   low-surrogate = "D" ("C"/"D"/"E"/"F") 2HEXDIG
    hexscalar = "10" 4HEXDIG / HEXDIG1 4HEXDIG
              / non-surrogate / 1*3HEXDIG
 
@@ -719,8 +721,6 @@ Author's Address
    Germany
    Phone: +49-421-218-63921
    Email: cabo@tzi.org
-
-
 
 
 
