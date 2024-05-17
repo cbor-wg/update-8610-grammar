@@ -110,16 +110,21 @@ and {{-abnf-case}}.
 
 # Clarifications and Changes based on Errata Reports {#clari}
 
-
-*Compatibility*:
-: errata fix
-
 A number of errata reports have been made around some details of text
 string and byte string literal syntax: {{Err6527}} and {{Err6543}}.
 These are being addressed in this section, updating details of the
 ABNF for these literal syntaxes.
 Also, {{Err6526}} needs to be applied (backslashes have been lost during
 RFC processing in some text explaining backslash escaping).
+
+These changes are intended to mirror the way existing implementations
+have dealt with the errata.  They also use the opportunity presented
+by the necessary cleanup of the grammar of string literals for a
+backward compatible addition to the syntax for hexadecimal escapes.
+The latter change is not automatically forward compatible (i.e., CDDL
+specifications that make use of this syntax do not necessarily work
+with existing implementations until these are updated, which this
+specification recommends).
 
 ## Err6527 (text string literals) {#e6527}
 
@@ -307,13 +312,14 @@ similar to the way this is done for CBOR diagnostic notation in {{-edn}}.
 
 The two subsections in this section specify two small changes to the
 grammar that are intended to enable certain kinds of specifications.
+These changes are backward compatible, i.e., CDDL files that
+comply to {{-cddl}} continue to match the updated grammar, but not
+necessarily forward compatible, i.e., CDDL specifications that make
+use of these changes cannot necessarily be processed by existing {{-cddl}}
+implementations.
 
 Empty data models {#empty}
 -----------------
-
-{:compact}
-*Compatibility*:
-: backward (not forward)
 
 {{-cddl}} requires a CDDL file to have at least one rule.
 
@@ -350,10 +356,6 @@ sourcecode-name="cddl-new-cddl.abnf"}
 
 Non-literal Tag Numbers, Simple Values {#tagnum}
 --------------------------------------
-
-{:compact}
-*Compatibility*:
-: backward (not forward)
 
 The existing ABNF syntax for expressing tags in CDDL is:
 
