@@ -436,7 +436,9 @@ This document has no IANA actions.
 
 # Updated Collected ABNF for CDDL
 
-This appendix provides the full ABNF from {{-cddl}} with the updates
+This appendix is normative.
+
+It provides the full ABNF from {{-cddl}} with the updates
 applied in the present document.
 
 ~~~ abnf
