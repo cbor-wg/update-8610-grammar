@@ -311,22 +311,22 @@ techniques.
 Obviously in the literals for `a` and `x`, there is no need to escape
 the second character, an `o`, as `\u{6f}`; this is just for demonstration.
 Similarly, as shown in `c` and `z` there also is no need to escape the
-`🁁` or `⌘`, but escaping them may be convenient in order to limit the character
+`🁳` or `⌘`, but escaping them may be convenient in order to limit the character
 repertoire of a CDDL file itself to ASCII {{-ascii}}.
 
 ~~~ cddl
 start = [a, b, c, x, y, z]
 
-; "🁁", DOMINO TILE HORIZONTAL-02-02, and
+; "🁳", DOMINO TILE VERTICAL-02-02, and
 ; "⌘", PLACE OF INTEREST SIGN, in a text string:
-a = "D\u{6f}mino's \u{1F041} + \u{2318}"  ; \u{}-escape 3 chars
-b = "Domino's \uD83C\uDC41 + \u2318"      ; escape JSON-like
-c = "Domino's 🁁 + ⌘"                      ; unescaped
+a = "D\u{6f}mino's \u{1F073} + \u{2318}"      ; \u{}-escape 3 chars
+b = "Domino's \uD83C\uDC73 + \u2318"          ; escape JSON-like
+c = "Domino's 🁳 + ⌘"                          ; unescaped
 
 ; in a byte string given as text, the ' needs to be escaped:
-x = 'D\u{6f}mino\'s \u{1F041} + \u{2318}' ; \u{}-escape 3 chars
-y = 'Domino\'s \uD83C\uDC41 + \u2318'     ; escape JSON-like
-z = 'Domino\'s 🁁 + ⌘'                     ; unescaped
+x = 'D\u{6f}mino\u{27}s \u{1F073} + \u{2318}' ; \u{}-escape 4 chars
+y = 'Domino\'s \uD83C\uDC73 + \u2318'         ; escape JSON-like
+z = 'Domino\'s 🁳 + ⌘'                         ; escape ' only
 ~~~
 {: #string-examples title="Example text and byte string literals with various
 escaping techniques"}
@@ -340,17 +340,17 @@ the `start` rule in {{string-examples}}, using pretty-printed hexadecimal.
 ~~~ cbor-pretty
 86                                      # array(6)
    73                                   # text(19)
-      446f6d696e6f277320f09f8181202b20e28c98 # "Domino's 🁁 + ⌘"
+      446f6d696e6f277320f09f81b3202b20e28c98 # "Domino's 🁳 + ⌘"
    73                                   # text(19)
-      446f6d696e6f277320f09f8181202b20e28c98 # "Domino's 🁁 + ⌘"
+      446f6d696e6f277320f09f81b3202b20e28c98 # "Domino's 🁳 + ⌘"
    73                                   # text(19)
-      446f6d696e6f277320f09f8181202b20e28c98 # "Domino's 🁁 + ⌘"
+      446f6d696e6f277320f09f81b3202b20e28c98 # "Domino's 🁳 + ⌘"
    53                                   # bytes(19)
-      446f6d696e6f277320f09f8181202b20e28c98 # "Domino's 🁁 + ⌘"
+      446f6d696e6f277320f09f81b3202b20e28c98 # "Domino's 🁳 + ⌘"
    53                                   # bytes(19)
-      446f6d696e6f277320f09f8181202b20e28c98 # "Domino's 🁁 + ⌘"
+      446f6d696e6f277320f09f81b3202b20e28c98 # "Domino's 🁳 + ⌘"
    53                                   # bytes(19)
-      446f6d696e6f277320f09f8181202b20e28c98 # "Domino's 🁁 + ⌘"
+      446f6d696e6f277320f09f81b3202b20e28c98 # "Domino's 🁳 + ⌘"
 ~~~
 {: #string-examples-pretty title="Generated CBOR from CDDL example"}
 
