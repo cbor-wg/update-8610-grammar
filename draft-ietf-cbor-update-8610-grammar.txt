@@ -89,17 +89,17 @@ Table of Contents
        Change proposed by Errata Report 6543 . . . . . . . . . . . .   5
        No change needed after addressing Err6527 (text string
            literals) (Section 2.1) . . . . . . . . . . . . . . . . .   6
-   3.  Small Enabling Grammar Changes  . . . . . . . . . . . . . . .   7
-     3.1.  Empty data models . . . . . . . . . . . . . . . . . . . .   7
-     3.2.  Non-literal Tag Numbers, Simple Values  . . . . . . . . .   8
-   4.  Security Considerations . . . . . . . . . . . . . . . . . . .   9
-   5.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   9
-   6.  References  . . . . . . . . . . . . . . . . . . . . . . . . .   9
-     6.1.  Normative References  . . . . . . . . . . . . . . . . . .   9
-     6.2.  Informative References  . . . . . . . . . . . . . . . . .  10
-   Appendix A.  Updated Collected ABNF for CDDL  . . . . . . . . . .  11
-   Acknowledgments . . . . . . . . . . . . . . . . . . . . . . . . .  13
-   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .  13
+   3.  Small Enabling Grammar Changes  . . . . . . . . . . . . . . .   8
+     3.1.  Empty data models . . . . . . . . . . . . . . . . . . . .   8
+     3.2.  Non-literal Tag Numbers, Simple Values  . . . . . . . . .   9
+   4.  Security Considerations . . . . . . . . . . . . . . . . . . .  10
+   5.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  10
+   6.  References  . . . . . . . . . . . . . . . . . . . . . . . . .  10
+     6.1.  Normative References  . . . . . . . . . . . . . . . . . .  10
+     6.2.  Informative References  . . . . . . . . . . . . . . . . .  11
+   Appendix A.  Updated Collected ABNF for CDDL  . . . . . . . . . .  12
+   Acknowledgments . . . . . . . . . . . . . . . . . . . . . . . . .  14
+   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .  14
 
 
 
@@ -344,9 +344,71 @@ Internet-Draft            CDDL grammar updates                  May 2024
    may also hide as apostrophes in comments); these need to be escaped
    or possibly replaced by %x27.
 
-   Finally, our approach would lend support to extending bsqual in CDDL
+   Finally, our approach lends support to extending bsqual in CDDL
    similar to the way this is done for CBOR diagnostic notation in
-   [I-D.ietf-cbor-edn-literals].
+   [I-D.ietf-cbor-edn-literals].  (Note that the processing of string
+   literals now is quite similar between CDDL and EDN, except that CDDL
+   has ";"-based end-of-line comments, while EDN has two comment
+   syntaxes, in-line "/"-based and end-of-line "#"-based.)
+
+   The CDDL example in Figure 8 demonstrates various escaping
+   techniques.  Obviously in the literals for a and x, there is no need
+   to escape the second character, an o, as \u{6f}; this is just for
+   demonstration.  Similarly, as shown in c and z there also is no need
+   to escape the 🁳 or ⌘, but escaping them may be convenient in order to
+   limit the character repertoire of a CDDL file itself to ASCII
+   [STD80].
+
+   start = [a, b, c, x, y, z]
+
+   ; "🁳", DOMINO TILE VERTICAL-02-02, and
+   ; "⌘", PLACE OF INTEREST SIGN, in a text string:
+   a = "D\u{6f}mino's \u{1F073} + \u{2318}"      ; \u{}-escape 3 chars
+   b = "Domino's \uD83C\uDC73 + \u2318"          ; escape JSON-like
+   c = "Domino's 🁳 + ⌘"                          ; unescaped
+
+   ; in a byte string given as text, the ' needs to be escaped:
+   x = 'D\u{6f}mino\u{27}s \u{1F073} + \u{2318}' ; \u{}-escape 4 chars
+   y = 'Domino\'s \uD83C\uDC73 + \u2318'         ; escape JSON-like
+   z = 'Domino\'s 🁳 + ⌘'                         ; escape ' only
+
+   Figure 8: Example text and byte string literals with various escaping
+                                 techniques
+
+   In this example, the rules a to c and x to z all produce strings with
+   byte-wise identical content, where a to c are text strings, and x to
+   z are byte strings.  Figure 9 illustrates this by showing the output
+   generated from the start rule in Figure 8, using pretty-printed
+   hexadecimal.
+
+
+
+
+
+
+
+
+
+Bormann                 Expires 18 November 2024                [Page 7]
+
+Internet-Draft            CDDL grammar updates                  May 2024
+
+
+   86                                      # array(6)
+      73                                   # text(19)
+         446f6d696e6f277320f09f81b3202b20e28c98 # "Domino's 🁳 + ⌘"
+      73                                   # text(19)
+         446f6d696e6f277320f09f81b3202b20e28c98 # "Domino's 🁳 + ⌘"
+      73                                   # text(19)
+         446f6d696e6f277320f09f81b3202b20e28c98 # "Domino's 🁳 + ⌘"
+      53                                   # bytes(19)
+         446f6d696e6f277320f09f81b3202b20e28c98 # "Domino's 🁳 + ⌘"
+      53                                   # bytes(19)
+         446f6d696e6f277320f09f81b3202b20e28c98 # "Domino's 🁳 + ⌘"
+      53                                   # bytes(19)
+         446f6d696e6f277320f09f81b3202b20e28c98 # "Domino's 🁳 + ⌘"
+
+                 Figure 9: Generated CBOR from CDDL example
 
 3.  Small Enabling Grammar Changes
 
@@ -365,7 +427,7 @@ Internet-Draft            CDDL grammar updates                  May 2024
    ; RFC 8610 ABNF:
    cddl = S 1*(rule S)
 
-                 Figure 8: Old ABNF for top-level rule cddl
+                Figure 10: Old ABNF for top-level rule cddl
 
    This makes sense when the file has to stand alone, as a CDDL data
    model needs to have at least one rule to provide an entry point
@@ -377,22 +439,21 @@ Internet-Draft            CDDL grammar updates                  May 2024
    rule content in the file has to be available for directive
    processing, making the requirement for at least one rule cumbersome.
 
-   Therefore, we extend the grammar as in Figure 9 and make the
+   Therefore, we extend the grammar as in Figure 11 and make the
    existence of at least one rule a semantic constraint, to be fulfilled
    after processing of all directives.
+
+
+
+Bormann                 Expires 18 November 2024                [Page 8]
+
+Internet-Draft            CDDL grammar updates                  May 2024
+
 
    ; new top-level rule:
    cddl = S *(rule S)
 
-               Figure 9: Updated ABNF for top-level rule cddl
-
-
-
-
-Bormann                 Expires 18 November 2024                [Page 7]
-
-Internet-Draft            CDDL grammar updates                  May 2024
-
+              Figure 11: Updated ABNF for top-level rule cddl
 
 3.2.  Non-literal Tag Numbers, Simple Values
 
@@ -401,7 +462,7 @@ Internet-Draft            CDDL grammar updates                  May 2024
    ; extracted from RFC 8610 ABNF:
    type2 =/ "#" "6" ["." uint] "(" S type S ")"
 
-                     Figure 10: Old ABNF for tag syntax
+                     Figure 12: Old ABNF for tag syntax
 
    This means tag numbers can only be given as literal numbers (uints).
    Some specifications operate on ranges of tag numbers, e.g., [RFC9277]
@@ -417,7 +478,7 @@ Internet-Draft            CDDL grammar updates                  May 2024
           / "#" "7" ["." head-number]
    head-number = uint / ("<" type ">")
 
-         Figure 11: Updated ABNF for tag and simple value syntaxes
+         Figure 13: Updated ABNF for tag and simple value syntaxes
 
    For #6, the head-number stands for the tag number.  For #7, the head-
    number stands for the simple value if it is in the ranges 0..23 or
@@ -434,21 +495,22 @@ Internet-Draft            CDDL grammar updates                  May 2024
 
    Notes:
 
+
+
+
+
+
+
+Bormann                 Expires 18 November 2024                [Page 9]
+
+Internet-Draft            CDDL grammar updates                  May 2024
+
+
    1.  This syntax reuses the angle bracket syntax for generics; this
        reuse is innocuous as a generic parameter/argument only ever
        occurs after a rule name (id), while it occurs after . here.
        (Whether there is potential for human confusion can be debated;
        the above example deliberately uses generics as well.)
-
-
-
-
-
-
-Bormann                 Expires 18 November 2024                [Page 8]
-
-Internet-Draft            CDDL grammar updates                  May 2024
-
 
    2.  The updated ABNF grammar makes it a bit more explicit that the
        number given after the optional dot is special, not giving the
@@ -492,19 +554,17 @@ Internet-Draft            CDDL grammar updates                  May 2024
               DOI 10.17487/RFC5234, January 2008,
               <https://www.rfc-editor.org/info/rfc5234>.
 
-   [STD94]    Internet Standard 94,
-              <https://www.rfc-editor.org/info/std94>.
-              At the time of writing, this STD comprises the following:
 
 
 
-
-
-
-Bormann                 Expires 18 November 2024                [Page 9]
+Bormann                 Expires 18 November 2024               [Page 10]
 
 Internet-Draft            CDDL grammar updates                  May 2024
 
+
+   [STD94]    Internet Standard 94,
+              <https://www.rfc-editor.org/info/std94>.
+              At the time of writing, this STD comprises the following:
 
               Bormann, C. and P. Hoffman, "Concise Binary Object
               Representation (CBOR)", STD 94, RFC 8949,
@@ -553,11 +613,7 @@ Internet-Draft            CDDL grammar updates                  May 2024
 
 
 
-
-
-
-
-Bormann                 Expires 18 November 2024               [Page 10]
+Bormann                 Expires 18 November 2024               [Page 11]
 
 Internet-Draft            CDDL grammar updates                  May 2024
 
@@ -566,6 +622,14 @@ Internet-Draft            CDDL grammar updates                  May 2024
               Items in Concise Binary Object Representation (CBOR)",
               RFC 9277, DOI 10.17487/RFC9277, August 2022,
               <https://www.rfc-editor.org/rfc/rfc9277>.
+
+   [STD80]    Internet Standard 80,
+              <https://www.rfc-editor.org/info/std80>.
+              At the time of writing, this STD comprises the following:
+
+              Cerf, V., "ASCII format for network interchange", STD 80,
+              RFC 20, DOI 10.17487/RFC0020, October 1969,
+              <https://www.rfc-editor.org/info/rfc20>.
 
 Appendix A.  Updated Collected ABNF for CDDL
 
@@ -602,6 +666,14 @@ Appendix A.  Updated Collected ABNF for CDDL
          / "&" S groupname [genericarg]
          / "#" "6" ["." head-number] "(" S type S ")"
          / "#" "7" ["." head-number]
+
+
+
+Bormann                 Expires 18 November 2024               [Page 12]
+
+Internet-Draft            CDDL grammar updates                  May 2024
+
+
          / "#" DIGIT ["." uint]                ; major/ai
          / "#"                                 ; any
    head-number = uint / ("<" type ">")
@@ -609,14 +681,6 @@ Appendix A.  Updated Collected ABNF for CDDL
    rangeop = "..." / ".."
 
    ctlop = "." id
-
-
-
-
-Bormann                 Expires 18 November 2024               [Page 11]
-
-Internet-Draft            CDDL grammar updates                  May 2024
-
 
    group = grpchoice *(S "//" S grpchoice)
 
@@ -658,6 +722,14 @@ Internet-Draft            CDDL grammar updates                  May 2024
    text = %x22 *SCHAR %x22
    SCHAR = %x20-21 / %x23-5B / %x5D-7E / NONASCII / SESC
 
+
+
+
+Bormann                 Expires 18 November 2024               [Page 13]
+
+Internet-Draft            CDDL grammar updates                  May 2024
+
+
    SESC = "\" ( %x22 / "/" / "\" /                 ; \" \/ \\
                 %x62 / %x66 / %x6E / %x72 / %x74 / ; \b \f \n \r \t
                 (%x75 hexchar) )                   ; \uXXXX
@@ -666,14 +738,6 @@ Internet-Draft            CDDL grammar updates                  May 2024
              non-surrogate / (high-surrogate "\" %x75 low-surrogate)
    non-surrogate = ((DIGIT / "A"/"B"/"C" / "E"/"F") 3HEXDIG) /
                    ("D" %x30-37 2HEXDIG )
-
-
-
-Bormann                 Expires 18 November 2024               [Page 12]
-
-Internet-Draft            CDDL grammar updates                  May 2024
-
-
    high-surrogate = "D" ("8"/"9"/"A"/"B") 2HEXDIG
    low-surrogate = "D" ("C"/"D"/"E"/"F") 2HEXDIG
    hexscalar = "10" 4HEXDIG / HEXDIG1 4HEXDIG
@@ -701,7 +765,7 @@ Internet-Draft            CDDL grammar updates                  May 2024
    NONASCII = %xA0-D7FF / %xE000-10FFFD
    CRLF = %x0A / %x0D.0A
 
-                    Figure 12: ABNF for CDDL as updated
+                    Figure 14: ABNF for CDDL as updated
 
 Acknowledgments
 
@@ -714,6 +778,14 @@ Acknowledgments
 
 Author's Address
 
+
+
+
+Bormann                 Expires 18 November 2024               [Page 14]
+
+Internet-Draft            CDDL grammar updates                  May 2024
+
+
    Carsten Bormann
    Universität Bremen TZI
    Postfach 330440
@@ -725,4 +797,44 @@ Author's Address
 
 
 
-Bormann                 Expires 18 November 2024               [Page 13]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Bormann                 Expires 18 November 2024               [Page 15]

@@ -1467,8 +1467,68 @@ in <span><a href="https://rfc-editor.org/rfc/rfc9165#section-3" class="relref">S
 It does require some care when copy-pasting into CDDL models from ABNF
 that contains single quotes (which may also hide as apostrophes
 in comments); these need to be escaped or possibly replaced by <code>%x27</code>.<a href="#section-2.2.2-3" class="pilcrow">¶</a></p>
-<p id="section-2.2.2-4">Finally, our approach would lend support to extending <code>bsqual</code> in CDDL
-similar to the way this is done for CBOR diagnostic notation in <span>[<a href="#I-D.ietf-cbor-edn-literals" class="cite xref">I-D.ietf-cbor-edn-literals</a>]</span>.<a href="#section-2.2.2-4" class="pilcrow">¶</a></p>
+<p id="section-2.2.2-4">Finally, our approach lends support to extending <code>bsqual</code> in CDDL
+similar to the way this is done for CBOR diagnostic notation in <span>[<a href="#I-D.ietf-cbor-edn-literals" class="cite xref">I-D.ietf-cbor-edn-literals</a>]</span>.
+(Note that the processing of string literals now is quite similar between
+CDDL and EDN, except that CDDL has "<code>;</code>"-based end-of-line comments, while EDN has
+two comment syntaxes, in-line "<code>/</code>"-based and end-of-line "<code>#</code>"-based.)<a href="#section-2.2.2-4" class="pilcrow">¶</a></p>
+<p id="section-2.2.2-5">The CDDL example in <a href="#string-examples" class="auto internal xref">Figure 8</a> demonstrates various escaping
+techniques.
+Obviously in the literals for <code>a</code> and <code>x</code>, there is no need to escape
+the second character, an <code>o</code>, as <code>\u{6f}</code>; this is just for demonstration.
+Similarly, as shown in <code>c</code> and <code>z</code> there also is no need to escape the
+<code>🁳</code> or <code>⌘</code>, but escaping them may be convenient in order to limit the character
+repertoire of a CDDL file itself to ASCII <span>[<a href="#STD80" class="cite xref">STD80</a>]</span>.<a href="#section-2.2.2-5" class="pilcrow">¶</a></p>
+<span id="name-example-text-and-byte-strin"></span><div id="string-examples">
+<figure id="figure-8">
+            <div class="lang-cddl sourcecode" id="section-2.2.2-6.1">
+<pre>
+start = [a, b, c, x, y, z]
+
+; "🁳", DOMINO TILE VERTICAL-02-02, and
+; "⌘", PLACE OF INTEREST SIGN, in a text string:
+a = "D\u{6f}mino's \u{1F073} + \u{2318}"      ; \u{}-escape 3 chars
+b = "Domino's \uD83C\uDC73 + \u2318"          ; escape JSON-like
+c = "Domino's 🁳 + ⌘"                          ; unescaped
+
+; in a byte string given as text, the ' needs to be escaped:
+x = 'D\u{6f}mino\u{27}s \u{1F073} + \u{2318}' ; \u{}-escape 4 chars
+y = 'Domino\'s \uD83C\uDC73 + \u2318'         ; escape JSON-like
+z = 'Domino\'s 🁳 + ⌘'                         ; escape ' only
+</pre>
+</div>
+<figcaption><a href="#figure-8" class="selfRef">Figure 8</a>:
+<a href="#name-example-text-and-byte-strin" class="selfRef">Example text and byte string literals with various escaping techniques</a>
+            </figcaption></figure>
+</div>
+<p id="section-2.2.2-7">In this example, the rules a to c and x to z all produce strings with
+byte-wise identical content, where a to c are text strings, and x to z
+are byte strings.
+<a href="#string-examples-pretty" class="auto internal xref">Figure 9</a> illustrates this by showing the output generated from
+the <code>start</code> rule in <a href="#string-examples" class="auto internal xref">Figure 8</a>, using pretty-printed hexadecimal.<a href="#section-2.2.2-7" class="pilcrow">¶</a></p>
+<span id="name-generated-cbor-from-cddl-ex"></span><div id="string-examples-pretty">
+<figure id="figure-9">
+            <div class="lang-cbor-pretty sourcecode" id="section-2.2.2-8.1">
+<pre>
+86                                      # array(6)
+   73                                   # text(19)
+      446f6d696e6f277320f09f81b3202b20e28c98 # "Domino's 🁳 + ⌘"
+   73                                   # text(19)
+      446f6d696e6f277320f09f81b3202b20e28c98 # "Domino's 🁳 + ⌘"
+   73                                   # text(19)
+      446f6d696e6f277320f09f81b3202b20e28c98 # "Domino's 🁳 + ⌘"
+   53                                   # bytes(19)
+      446f6d696e6f277320f09f81b3202b20e28c98 # "Domino's 🁳 + ⌘"
+   53                                   # bytes(19)
+      446f6d696e6f277320f09f81b3202b20e28c98 # "Domino's 🁳 + ⌘"
+   53                                   # bytes(19)
+      446f6d696e6f277320f09f81b3202b20e28c98 # "Domino's 🁳 + ⌘"
+</pre>
+</div>
+<figcaption><a href="#figure-9" class="selfRef">Figure 9</a>:
+<a href="#name-generated-cbor-from-cddl-ex" class="selfRef">Generated CBOR from CDDL example</a>
+            </figcaption></figure>
+</div>
 </section>
 </div>
 </section>
@@ -1494,14 +1554,14 @@ implementations.<a href="#section-3-1" class="pilcrow">¶</a></p>
         </h3>
 <p id="section-3.1-1"><span>[<a href="#RFC8610" class="cite xref">RFC8610</a>]</span> requires a CDDL file to have at least one rule.<a href="#section-3.1-1" class="pilcrow">¶</a></p>
 <span id="name-old-abnf-for-top-level-rule"></span><div id="empty-old">
-<figure id="figure-8">
+<figure id="figure-10">
           <div class="lang-abnf sourcecode" id="section-3.1-2.1">
 <pre>
 ; RFC 8610 ABNF:
 cddl = S 1*(rule S)
 </pre>
 </div>
-<figcaption><a href="#figure-8" class="selfRef">Figure 8</a>:
+<figcaption><a href="#figure-10" class="selfRef">Figure 10</a>:
 <a href="#name-old-abnf-for-top-level-rule" class="selfRef">Old ABNF for top-level rule cddl</a>
           </figcaption></figure>
 </div>
@@ -1513,18 +1573,18 @@ and these might be the source of all the rules that
 ultimately make up the module created by the file.
 Any other rule content in the file has to be available for directive
 processing, making the requirement for at least one rule cumbersome.<a href="#section-3.1-4" class="pilcrow">¶</a></p>
-<p id="section-3.1-5">Therefore, we extend the grammar as in <a href="#empty-new" class="auto internal xref">Figure 9</a>
+<p id="section-3.1-5">Therefore, we extend the grammar as in <a href="#empty-new" class="auto internal xref">Figure 11</a>
 and make the existence of at least one rule a semantic constraint, to
 be fulfilled after processing of all directives.<a href="#section-3.1-5" class="pilcrow">¶</a></p>
 <span id="name-updated-abnf-for-top-level-"></span><div id="empty-new">
-<figure id="figure-9">
+<figure id="figure-11">
           <div class="lang-abnf sourcecode" id="section-3.1-6.1">
 <pre>
 ; new top-level rule:
 cddl = S *(rule S)
 </pre>
 </div>
-<figcaption><a href="#figure-9" class="selfRef">Figure 9</a>:
+<figcaption><a href="#figure-11" class="selfRef">Figure 11</a>:
 <a href="#name-updated-abnf-for-top-level-" class="selfRef">Updated ABNF for top-level rule cddl</a>
           </figcaption></figure>
 </div>
@@ -1537,14 +1597,14 @@ cddl = S *(rule S)
         </h3>
 <p id="section-3.2-1">The existing ABNF syntax for expressing tags in CDDL is:<a href="#section-3.2-1" class="pilcrow">¶</a></p>
 <span id="name-old-abnf-for-tag-syntax"></span><div id="tag-old">
-<figure id="figure-10">
+<figure id="figure-12">
           <div class="lang-abnf sourcecode" id="section-3.2-2.1">
 <pre>
 ; extracted from RFC 8610 ABNF:
 type2 =/ "#" "6" ["." uint] "(" S type S ")"
 </pre>
 </div>
-<figcaption><a href="#figure-10" class="selfRef">Figure 10</a>:
+<figcaption><a href="#figure-12" class="selfRef">Figure 12</a>:
 <a href="#name-old-abnf-for-tag-syntax" class="selfRef">Old ABNF for tag syntax</a>
           </figcaption></figure>
 </div>
@@ -1556,7 +1616,7 @@ This can currently not be expressed in CDDL.
 Similar considerations apply to simple values (<code>#7.</code>xx).<a href="#section-3.2-3" class="pilcrow">¶</a></p>
 <p id="section-3.2-4">This update extends the syntax to:<a href="#section-3.2-4" class="pilcrow">¶</a></p>
 <span id="name-updated-abnf-for-tag-and-si"></span><div id="tag-new">
-<figure id="figure-11">
+<figure id="figure-13">
           <div class="lang-abnf sourcecode" id="section-3.2-5.1">
 <pre>
 ; new rules collectively defining the tagged case:
@@ -1565,7 +1625,7 @@ type2 =/ "#" "6" ["." head-number] "(" S type S ")"
 head-number = uint / ("&lt;" type "&gt;")
 </pre>
 </div>
-<figcaption><a href="#figure-11" class="selfRef">Figure 11</a>:
+<figcaption><a href="#figure-13" class="selfRef">Figure 13</a>:
 <a href="#name-updated-abnf-for-tag-and-si" class="selfRef">Updated ABNF for tag and simple value syntaxes</a>
           </figcaption></figure>
 </div>
@@ -1707,8 +1767,16 @@ been updated and some of which have not been, in particular based on
 <span class="refAuthor">Bormann, C.</span>, <span class="refTitle">"Additional Control Operators for the Concise Data Definition Language (CDDL)"</span>, <span class="seriesInfo">RFC 9165</span>, <span class="seriesInfo">DOI 10.17487/RFC9165</span>, <time datetime="2021-12" class="refDate">December 2021</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9165">https://www.rfc-editor.org/rfc/rfc9165</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC9277">[RFC9277]</dt>
-      <dd>
+        <dd>
 <span class="refAuthor">Richardson, M.</span> and <span class="refAuthor">C. Bormann</span>, <span class="refTitle">"On Stable Storage for Items in Concise Binary Object Representation (CBOR)"</span>, <span class="seriesInfo">RFC 9277</span>, <span class="seriesInfo">DOI 10.17487/RFC9277</span>, <time datetime="2022-08" class="refDate">August 2022</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9277">https://www.rfc-editor.org/rfc/rfc9277</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="STD80">[STD80]</dt>
+      <dd>
+<div class="refInstance">Internet Standard 80, <span>&lt;<a href="https://www.rfc-editor.org/info/std80">https://www.rfc-editor.org/info/std80</a>&gt;</span>.<br><span>At the time of writing, this STD comprises the following:</span>
+</div>
+<div class="refInstance" id="RFC0020">
+            <span class="refAuthor">Cerf, V.</span>, <span class="refTitle">"ASCII format for network interchange"</span>, <span class="seriesInfo">STD 80</span>, <span class="seriesInfo">RFC 20</span>, <span class="seriesInfo">DOI 10.17487/RFC0020</span>, <time datetime="1969-10" class="refDate">October 1969</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc20">https://www.rfc-editor.org/info/rfc20</a>&gt;</span>. </div>
+</dd>
 <dd class="break"></dd>
 </dl>
 </section>
@@ -1723,7 +1791,7 @@ been updated and some of which have not been, in particular based on
 <p id="appendix-A-2">It provides the full ABNF from <span>[<a href="#RFC8610" class="cite xref">RFC8610</a>]</span> with the updates
 applied in the present document.<a href="#appendix-A-2" class="pilcrow">¶</a></p>
 <span id="name-abnf-for-cddl-as-updated"></span><div id="collected-abnf">
-<figure id="figure-12">
+<figure id="figure-14">
         <div class="breakable lang-abnf sourcecode" id="appendix-A-3.1">
 <pre>
 cddl = S *(rule S)
@@ -1838,7 +1906,7 @@ NONASCII = %xA0-D7FF / %xE000-10FFFD
 CRLF = %x0A / %x0D.0A
 </pre>
 </div>
-<figcaption><a href="#figure-12" class="selfRef">Figure 12</a>:
+<figcaption><a href="#figure-14" class="selfRef">Figure 14</a>:
 <a href="#name-abnf-for-cddl-as-updated" class="selfRef">ABNF for CDDL as updated</a>
         </figcaption></figure>
 </div>
