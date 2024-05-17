@@ -503,9 +503,9 @@ sourcecode-name="cddl-updated-complete.abnf"}
 # Acknowledgments
 {:numbered="false"}
 
-TODO acknowledge.
-
 Many thanks go to the submitters of the errata reports addressed in
 this document.
-In one of the ensuing discussions, Doug Ewell proposed to define an
+In one of the ensuing discussions, {{{Doug Ewell}}} proposed to define an
 ABNF rule NONASCII, of which we have included the essence.
+Special thanks to the reviewers {{{Marco Tiloca}}}, {{{Christian
+Amsüss}}} (shepherd review), and {{{Orie Steele}}} (AD review).
