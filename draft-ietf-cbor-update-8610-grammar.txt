@@ -4,9 +4,9 @@
 
 CBOR                                                          C. Bormann
 Internet-Draft                                    Universität Bremen TZI
-Updates: 8610 (if approved)                                  17 May 2024
+Updates: 8610 (if approved)                                 19 June 2024
 Intended status: Standards Track                                        
-Expires: 18 November 2024
+Expires: 21 December 2024
 
 
                 Updates to the CDDL grammar of RFC 8610
@@ -53,9 +53,9 @@ Status of This Memo
 
 
 
-Bormann                 Expires 18 November 2024                [Page 1]
+Bormann                 Expires 21 December 2024                [Page 1]
 
-Internet-Draft            CDDL grammar updates                  May 2024
+Internet-Draft            CDDL grammar updates                 June 2024
 
 
    Internet-Drafts are draft documents valid for a maximum of six months
@@ -63,7 +63,7 @@ Internet-Draft            CDDL grammar updates                  May 2024
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 18 November 2024.
+   This Internet-Draft will expire on 21 December 2024.
 
 Copyright Notice
 
@@ -109,9 +109,9 @@ Table of Contents
 
 
 
-Bormann                 Expires 18 November 2024                [Page 2]
+Bormann                 Expires 21 December 2024                [Page 2]
 
-Internet-Draft            CDDL grammar updates                  May 2024
+Internet-Draft            CDDL grammar updates                 June 2024
 
 
 1.  Introduction
@@ -165,9 +165,9 @@ Internet-Draft            CDDL grammar updates                  May 2024
 
 
 
-Bormann                 Expires 18 November 2024                [Page 3]
+Bormann                 Expires 21 December 2024                [Page 3]
 
-Internet-Draft            CDDL grammar updates                  May 2024
+Internet-Draft            CDDL grammar updates                 June 2024
 
 
    This allows almost any non-C0 character to be escaped by a backslash,
@@ -221,9 +221,9 @@ Internet-Draft            CDDL grammar updates                  May 2024
 
 
 
-Bormann                 Expires 18 November 2024                [Page 4]
+Bormann                 Expires 21 December 2024                [Page 4]
 
-Internet-Draft            CDDL grammar updates                  May 2024
+Internet-Draft            CDDL grammar updates                 June 2024
 
 
    Updating BCHAR also provides an opportunity to address [Err6278],
@@ -277,9 +277,9 @@ Change proposed by Errata Report 6543
 
 
 
-Bormann                 Expires 18 November 2024                [Page 5]
+Bormann                 Expires 21 December 2024                [Page 5]
 
-Internet-Draft            CDDL grammar updates                  May 2024
+Internet-Draft            CDDL grammar updates                 June 2024
 
 
     Figure 6: Errata Report 8653 Proposal to Split the Byte String Rules
@@ -333,9 +333,9 @@ No change needed after addressing Err6527 (text string literals)
 
 
 
-Bormann                 Expires 18 November 2024                [Page 6]
+Bormann                 Expires 21 December 2024                [Page 6]
 
-Internet-Draft            CDDL grammar updates                  May 2024
+Internet-Draft            CDDL grammar updates                 June 2024
 
 
    Note that this approach also works well with the use of byte strings
@@ -389,9 +389,9 @@ Internet-Draft            CDDL grammar updates                  May 2024
 
 
 
-Bormann                 Expires 18 November 2024                [Page 7]
+Bormann                 Expires 21 December 2024                [Page 7]
 
-Internet-Draft            CDDL grammar updates                  May 2024
+Internet-Draft            CDDL grammar updates                 June 2024
 
 
    86                                      # array(6)
@@ -445,9 +445,9 @@ Internet-Draft            CDDL grammar updates                  May 2024
 
 
 
-Bormann                 Expires 18 November 2024                [Page 8]
+Bormann                 Expires 21 December 2024                [Page 8]
 
-Internet-Draft            CDDL grammar updates                  May 2024
+Internet-Draft            CDDL grammar updates                 June 2024
 
 
    ; new top-level rule:
@@ -501,9 +501,9 @@ Internet-Draft            CDDL grammar updates                  May 2024
 
 
 
-Bormann                 Expires 18 November 2024                [Page 9]
+Bormann                 Expires 21 December 2024                [Page 9]
 
-Internet-Draft            CDDL grammar updates                  May 2024
+Internet-Draft            CDDL grammar updates                 June 2024
 
 
    1.  This syntax reuses the angle bracket syntax for generics; this
@@ -557,9 +557,9 @@ Internet-Draft            CDDL grammar updates                  May 2024
 
 
 
-Bormann                 Expires 18 November 2024               [Page 10]
+Bormann                 Expires 21 December 2024               [Page 10]
 
-Internet-Draft            CDDL grammar updates                  May 2024
+Internet-Draft            CDDL grammar updates                 June 2024
 
 
    [STD94]    Internet Standard 94,
@@ -598,9 +598,8 @@ Internet-Draft            CDDL grammar updates                  May 2024
               Bormann, C., "CBOR Extended Diagnostic Notation (EDN):
               Application-Oriented Literals, ABNF, and Media Type", Work
               in Progress, Internet-Draft, draft-ietf-cbor-edn-literals-
-              08, 1 February 2024,
-              <https://datatracker.ietf.org/doc/html/draft-ietf-cbor-
-              edn-literals-08>.
+              09, 18 May 2024, <https://datatracker.ietf.org/doc/html/
+              draft-ietf-cbor-edn-literals-09>.
 
    [RFC7405]  Kyzivat, P., "Case-Sensitive String Support in ABNF",
               RFC 7405, DOI 10.17487/RFC7405, December 2014,
@@ -613,9 +612,10 @@ Internet-Draft            CDDL grammar updates                  May 2024
 
 
 
-Bormann                 Expires 18 November 2024               [Page 11]
+
+Bormann                 Expires 21 December 2024               [Page 11]
 
-Internet-Draft            CDDL grammar updates                  May 2024
+Internet-Draft            CDDL grammar updates                 June 2024
 
 
    [RFC9277]  Richardson, M. and C. Bormann, "On Stable Storage for
@@ -669,9 +669,9 @@ Appendix A.  Updated Collected ABNF for CDDL
 
 
 
-Bormann                 Expires 18 November 2024               [Page 12]
+Bormann                 Expires 21 December 2024               [Page 12]
 
-Internet-Draft            CDDL grammar updates                  May 2024
+Internet-Draft            CDDL grammar updates                 June 2024
 
 
          / "#" DIGIT ["." uint]                ; major/ai
@@ -725,9 +725,9 @@ Internet-Draft            CDDL grammar updates                  May 2024
 
 
 
-Bormann                 Expires 18 November 2024               [Page 13]
+Bormann                 Expires 21 December 2024               [Page 13]
 
-Internet-Draft            CDDL grammar updates                  May 2024
+Internet-Draft            CDDL grammar updates                 June 2024
 
 
    SESC = "\" ( %x22 / "/" / "\" /                 ; \" \/ \\
@@ -769,21 +769,21 @@ Internet-Draft            CDDL grammar updates                  May 2024
 
 Acknowledgments
 
-   TODO acknowledge.
-
    Many thanks go to the submitters of the errata reports addressed in
    this document.  In one of the ensuing discussions, Doug Ewell
    proposed to define an ABNF rule NONASCII, of which we have included
-   the essence.
+   the essence.  Special thanks to the reviewers Marco Tiloca, Christian
+   Amsüss (shepherd review), and Orie Steele (AD review).
 
 Author's Address
 
 
 
 
-Bormann                 Expires 18 November 2024               [Page 14]
+
+Bormann                 Expires 21 December 2024               [Page 14]
 
-Internet-Draft            CDDL grammar updates                  May 2024
+Internet-Draft            CDDL grammar updates                 June 2024
 
 
    Carsten Bormann
@@ -837,4 +837,4 @@ Internet-Draft            CDDL grammar updates                  May 2024
 
 
 
-Bormann                 Expires 18 November 2024               [Page 15]
+Bormann                 Expires 21 December 2024               [Page 15]
