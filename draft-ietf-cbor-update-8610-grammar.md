@@ -150,7 +150,7 @@ which represents Unicode code points beyond U+FFFF by making them look
 like UTF-16 surrogate pairs; CDDL text strings are not using UTF-16 or
 surrogates.)
 
-Both can be solved by updating the SESC production.
+Both can be solved by updating the SESC rule.
 We use the opportunity to add a popular form of directly specifying
 characters in strings using hexadecimal escape sequences of the form
 `\u{hex}`, where `hex` is the hexadecimal representation of the
@@ -182,7 +182,7 @@ We could have written `%x62` as `%s"b"`, but didn't, in order to
 maximize ABNF tool compatibility.)
 
 Now that SESC is more restrictively formulated, this also requires an
-update to the BCHAR production used in the ABNF syntax for byte string
+update to the BCHAR rule used in the ABNF syntax for byte string
 literals:
 
 ~~~ abnf
@@ -228,7 +228,7 @@ evolution of the Unicode standard that is not needed here.)
 
 The ABNF used in {{RFC8610}} for the content of byte string literals
 lumps together byte strings notated as text with byte strings notated
-in base16 (hex) or base64 (but see also updated BCHAR production above):
+in base16 (hex) or base64 (but see also updated BCHAR rule above):
 
 ~~~ abnf
 ; RFC 8610 ABNF:
@@ -241,7 +241,7 @@ BCHAR = %x20-26 / %x28-5B / %x5D-10FFFD / SESC / CRLF
 {:unnumbered}
 
 Errata report 6543 proposes to handle the two cases in separate
-productions (where, with an updated SESC, BCHAR obviously needs to be
+ABNF rules (where, with an updated SESC, BCHAR obviously needs to be
 updated as above):
 
 ~~~ abnf
@@ -253,7 +253,7 @@ QCHAR = DIGIT / ALPHA / "+" / "/" / "-" / "_" / "=" / WS
 ~~~~
 {: #e6543-1 title="Errata Report 8653 Proposal to Split the Byte String Rules"}
 
-This potentially causes a subtle change, which is hidden in the WS production:
+This potentially causes a subtle change, which is hidden in the WS rule:
 
 ~~~ abnf
 ; RFC 8610 ABNF:
