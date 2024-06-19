@@ -102,6 +102,10 @@ JSON.
 
 The present document updates {{-cddl}} by addressing errata and making
 other small fixes for the ABNF grammar defined for CDDL there.
+The body of this document motivates and explains the updates; the
+updated collected ABNF syntax in {{collected-abnf}} in
+{{collected-abnf-appendix}} replaces the collected ABNF syntax in
+{{Appendix B of -cddl}}.
 
 ## Conventions and Definitions
 
@@ -487,7 +491,7 @@ This document has no IANA actions.
 
 --- back
 
-# Updated Collected ABNF for CDDL
+# Updated Collected ABNF for CDDL {#collected-abnf-appendix}
 
 This appendix is normative.
 
