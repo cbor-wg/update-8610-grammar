@@ -127,7 +127,7 @@ specifications that make use of this syntax do not necessarily work
 with existing implementations until these are updated, which this
 specification recommends).
 
-## Err6527 (text string literals) {#e6527}
+## Err6527 (text string literals), Err6278 {#e6527}
 
 The ABNF used in {{RFC8610}} for the content of text string literals
 is rather permissive:
@@ -224,7 +224,17 @@ doing this properly would draw in complexity from the ongoing
 evolution of the Unicode standard that is not needed here.)
 
 
-## Err6543 (byte string literals)
+## Err6526, Err6543
+
+The above changes also cover {{Err6543}} and {{Err6526}}; see
+{{Err6543-covered}} for details.
+Please also consult Figures {{<string-examples}} and
+{{<string-examples-pretty}} for examples that use the updated string
+syntax.
+
+[^x1]: Now move the rest of this section 2.2 to {{Err6543-covered}}.
+
+[^x1]
 
 The ABNF used in {{RFC8610}} for the content of byte string literals
 lumps together byte strings notated as text with byte strings notated
@@ -500,6 +510,12 @@ applied in the present document.
 {: #collected-abnf title="ABNF for CDDL as updated"
 sourcecode-name="cddl-updated-complete.abnf"}
 
+# Details about Covered Errata Reports {#Err6543-covered}
+
+[^x2]: Move most of the content of 2.2 here.
+
+[^x2]
+
 # Acknowledgments
 {:numbered="false"}
 
@@ -508,4 +524,5 @@ this document.
 In one of the ensuing discussions, {{{Doug Ewell}}} proposed to define an
 ABNF rule NONASCII, of which we have included the essence.
 Special thanks to the reviewers {{{Marco Tiloca}}}, {{{Christian
-Amsüss}}} (shepherd review), and {{{Orie Steele}}} (AD review).
+Amsüss}}} (shepherd review), {{{Orie Steele}}} (AD review), and Éric Vyncke
+(detailed IESG review).
