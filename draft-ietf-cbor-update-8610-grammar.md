@@ -495,7 +495,7 @@ and applicability of models they employ.
 At the time of writing, it is expected that the models will generally
 be processed by a software developer, within a software development
 environment.
-Developers are therefore advised in general to treat CDDL models with
+Developers are therefore advised to treat CDDL models with
 the same care as any other source code.
 
 # IANA Considerations
