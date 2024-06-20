@@ -480,6 +480,25 @@ environment that uses a combination of CDDL tools some of which have
 been updated and some of which have not been, in particular based on
 {{clari}}.
 
+Attackers may want to exploit such potential confusion by crafting
+CDDL models that are interpreted differently by different parts of a
+system.
+There will be a period of transition from the details that the
+{{RFC8610}} grammar handled in a less well-defined way, to the updated
+grammar defined in the present document.
+This transition might offer one, but not the only kind of opportunity
+for the kind of attack that relies on differences between
+implementations.
+Implementations that make use of CDDL models operationally already
+need to ascertain the provenance (and thus authenticity and integrity)
+and applicability of models they employ.
+At the time of writing, it is expected that the models will generally
+be processed by a software developer, within a software development
+environment.
+Developers are therefore advised in general to only import CDDL models
+from authoritative sources, as with any other source code they might
+want to integrate.
+
 # IANA Considerations
 
 This document has no IANA actions.
