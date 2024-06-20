@@ -215,7 +215,7 @@ BCHAR = %x20-26 / %x28-5B / %x5D-7E / NONASCII / SESC / "\'" / CRLF
 PCHAR = %x20-7E / NONASCII
 NONASCII = %xA0-D7FF / %xE000-10FFFD
 ~~~
-{: #e6527-new2 title="Update to character-level ABNF in Appendix B of RFC 8610: BCHAR, SCHAR, and PCHAR"
+{: #e6527-new2 title="Update to ABNF in Appendix B of RFC 8610: BCHAR, SCHAR, and PCHAR"
 sourcecode-name="cddl-new-bchar.abnf"}
 
 (Note that, apart from addressing the inconsistencies, there is no
