@@ -178,7 +178,7 @@ sourcecode-name="cddl-new-sesc.abnf"}
 (Notes:
 In ABNF, strings such as `"A"`, `"B"` etc. are case-insensitive, as is
 intended here.
-The rules above could have written `%x62` as `%s"b"` etc., but didn't, in order to
+The rules above could, instead of `%x62`, also have used `%s"b"` etc., but didn't, in order to
 maximize ABNF tool compatibility.)
 
 Now that SESC is more restrictively formulated, this also requires an
