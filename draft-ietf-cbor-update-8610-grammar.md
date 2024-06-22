@@ -219,7 +219,7 @@ For completeness, all these should also explicitly exclude the code
 points that have been set aside for UTF-16's surrogates.
 
 ~~~ abnf
-; new rules for BCHAR and SCHAR:
+; new rules for SCHAR, BCHAR, and PCHAR:
 SCHAR = %x20-21 / %x23-5B / %x5D-7E / NONASCII / SESC
 BCHAR = %x20-26 / %x28-5B / %x5D-7E / NONASCII / SESC / "\'" / CRLF
 PCHAR = %x20-7E / NONASCII
