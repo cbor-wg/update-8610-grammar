@@ -123,6 +123,9 @@ Internet-Draft            CDDL grammar updates                 June 2024
 
    The present document updates [RFC8610] by addressing errata and
    making other small fixes for the ABNF grammar defined for CDDL there.
+   The body of this document motivates and explains the updates; the
+   updated collected ABNF syntax in Figure 14 in Appendix A replaces the
+   collected ABNF syntax in Appendix B of [RFC8610].
 
 1.1.  Conventions and Definitions
 
@@ -159,9 +162,6 @@ Internet-Draft            CDDL grammar updates                 June 2024
 
      Figure 1: Old ABNF for strings with permissive ABNF for SESC, but
                           not allowing hex escapes
-
-
-
 
 
 
