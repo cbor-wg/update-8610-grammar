@@ -131,7 +131,10 @@ specifications that make use of this syntax do not necessarily work
 with existing implementations until these are updated, which this
 specification recommends).
 
-## Err6527 (text string literals), Err6278 {#e6527}
+## Updates to String Literal Grammar {#e6527}
+
+### Err6527 (Text String Literals)
+{: unnumbered}
 
 The ABNF used in {{RFC8610}} for the content of text string literals
 is rather permissive:
@@ -198,7 +201,10 @@ bsqual = "h" / "b64"
 {: #e6527-orig2 title="Original RFC 8610 ABNF for BCHAR"}
 
 With the SESC updated as above, `\'` is no longer allowed in BCHAR;
-this now needs to be explicitly included.
+this now needs to be explicitly included; see below.
+
+### Err6278 (Consistent String Literals) {#e6278}
+{:unnumbered}
 
 Updating BCHAR also provides an opportunity to address {{Err6278}},
 which points to an inconsistency in treating U+007F (DEL) between SCHAR and
