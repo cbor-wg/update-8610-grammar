@@ -234,102 +234,13 @@ doing this properly would draw in complexity from the ongoing
 evolution of the Unicode standard that is not needed here.)
 
 
-## Err6526, Err6543
-
-The above changes also cover {{Err6543}} and {{Err6526}}; see
-{{Err6543-covered}} for details.
-Please also consult Figures {{<string-examples}} and
-{{<string-examples-pretty}} for examples that use the updated string
-syntax.
-
-[^x1]: Now move the rest of this section 2.2 to {{Err6543-covered}}.
-
-[^x1]
-
-The ABNF used in {{RFC8610}} for the content of byte string literals
-lumps together byte strings notated as text with byte strings notated
-in base16 (hex) or base64 (but see also updated BCHAR rule above):
-
-~~~ abnf
-; RFC 8610 ABNF:
-bytes = [bsqual] %x27 *BCHAR %x27
-BCHAR = %x20-26 / %x28-5B / %x5D-10FFFD / SESC / CRLF
-~~~
-{: #e6527-orig2a title="Original RFC 8610 ABNF for BCHAR"}
-
-### Change proposed by Errata Report 6543
+### Addressing Err6526, Err6543
 {:unnumbered}
 
-Errata report 6543 proposes to handle the two cases in separate
-ABNF rules (where, with an updated SESC, BCHAR obviously needs to be
-updated as above):
+The above changes also cover {{Err6543}} (a proposal to split off
+qualified byte string literals from UTF-8 byte string literals) and
+{{Err6526}} (lost backslashes); see {{Err6543-covered}} for details.
 
-~~~ abnf
-; Err6543 proposal:
-bytes = %x27 *BCHAR %x27
-      / bsqual %x27 *QCHAR %x27
-BCHAR = %x20-26 / %x28-5B / %x5D-10FFFD / SESC / CRLF
-QCHAR = DIGIT / ALPHA / "+" / "/" / "-" / "_" / "=" / WS
-~~~~
-{: #e6543-1 title="Errata Report 8653 Proposal to Split the Byte String Rules"}
-
-This potentially causes a subtle change, which is hidden in the WS rule:
-
-~~~ abnf
-; RFC 8610 ABNF:
-WS = SP / NL
-SP = %x20
-NL = COMMENT / CRLF
-COMMENT = ";" *PCHAR CRLF
-PCHAR = %x20-7E / %x80-10FFFD
-CRLF = %x0A / %x0D.0A
-~~~
-{: #e6543-2 title="ABNF definition of WS from RFC 8610"}
-
-This allows any non-C0 character in a comment, so this fragment
-becomes possible:
-
-~~~ cddl
-foo = h'
-   43424F52 ; 'CBOR'
-   0A       ; LF, but don't use CR!
-'
-~~~
-
-The current text is not unambiguously saying whether the three apostrophes
-need to be escaped with a `\` or not, as in:
-
-~~~ cddl
-foo = h'
-   43424F52 ; \'CBOR\'
-   0A       ; LF, but don\'t use CR!
-'
-~~~
-
-... which would be supported by the existing ABNF in {{-cddl}}.
-
-### No change needed after addressing {{<<e6527}} (Section {{<e6527}})
-{:unnumbered}
-
-This document takes the simpler approach of leaving the processing of
-the content of the byte string literal to a semantic step after
-processing the syntax of the `bytes`/`BCHAR` rules as updated by
-{{e6527-new1}} and {{e6527-new2}}.
-
-The rules in {{e6543-2}} are therefore applied to the result of this
-processing where `bsqual` is given as `h` or `b64`.
-
-Note that this approach also works well with the use of byte strings
-in {{Section 3 of -control1}}.
-It does require some care when copy-pasting into CDDL models from ABNF
-that contains single quotes (which may also hide as apostrophes
-in comments); these need to be escaped or possibly replaced by `%x27`.
-
-Finally, our approach lends support to extending `bsqual` in CDDL
-similar to the way this is done for CBOR diagnostic notation in {{-edn}}.
-(Note that the processing of string literals now is quite similar between
-CDDL and EDN, except that CDDL has "`;`"-based end-of-line comments, while EDN has
-two comment syntaxes, in-line "`/`"-based and end-of-line "`#`"-based.)
 ## Examples Demonstrating the Updated String Syntaxes
 
 The CDDL example in {{string-examples}} demonstrates various escaping
@@ -543,9 +454,92 @@ sourcecode-name="cddl-updated-complete.abnf"}
 
 # Details about Covered Errata Reports {#Err6543-covered}
 
-[^x2]: Move most of the content of 2.2 here.
 
-[^x2]
+The ABNF used in {{RFC8610}} for the content of byte string literals
+lumps together byte strings notated as text with byte strings notated
+in base16 (hex) or base64 (but see also updated BCHAR rule above):
+
+~~~ abnf
+; RFC 8610 ABNF:
+bytes = [bsqual] %x27 *BCHAR %x27
+BCHAR = %x20-26 / %x28-5B / %x5D-10FFFD / SESC / CRLF
+~~~
+{: #e6527-orig2a title="Original RFC 8610 ABNF for BCHAR"}
+
+## Change proposed by Errata Report 6543
+{:unnumbered}
+
+Errata report 6543 proposes to handle the two cases in separate
+ABNF rules (where, with an updated SESC, BCHAR obviously needs to be
+updated as above):
+
+~~~ abnf
+; Err6543 proposal:
+bytes = %x27 *BCHAR %x27
+      / bsqual %x27 *QCHAR %x27
+BCHAR = %x20-26 / %x28-5B / %x5D-10FFFD / SESC / CRLF
+QCHAR = DIGIT / ALPHA / "+" / "/" / "-" / "_" / "=" / WS
+~~~~
+{: #e6543-1 title="Errata Report 8653 Proposal to Split the Byte String Rules"}
+
+This potentially causes a subtle change, which is hidden in the WS rule:
+
+~~~ abnf
+; RFC 8610 ABNF:
+WS = SP / NL
+SP = %x20
+NL = COMMENT / CRLF
+COMMENT = ";" *PCHAR CRLF
+PCHAR = %x20-7E / %x80-10FFFD
+CRLF = %x0A / %x0D.0A
+~~~
+{: #e6543-2 title="ABNF definition of WS from RFC 8610"}
+
+This allows any non-C0 character in a comment, so this fragment
+becomes possible:
+
+~~~ cddl
+foo = h'
+   43424F52 ; 'CBOR'
+   0A       ; LF, but don't use CR!
+'
+~~~
+
+The current text is not unambiguously saying whether the three apostrophes
+need to be escaped with a `\` or not, as in:
+
+~~~ cddl
+foo = h'
+   43424F52 ; \'CBOR\'
+   0A       ; LF, but don\'t use CR!
+'
+~~~
+
+... which would be supported by the existing ABNF in {{-cddl}}.
+
+## No change needed after addressing Err6527 and Err6278 ({{e6527}})
+{:unnumbered}
+
+This document takes the simpler approach of leaving the processing of
+the content of the byte string literal to a semantic step after
+processing the syntax of the `bytes`/`BCHAR` rules as updated by
+{{e6527-new1}} and {{e6527-new2}}.
+
+The rules in {{e6543-2}} are therefore applied to the result of this
+processing where `bsqual` is given as `h` or `b64`.
+
+Note that this approach also works well with the use of byte strings
+in {{Section 3 of -control1}}.
+It does require some care when copy-pasting into CDDL models from ABNF
+that contains single quotes (which may also hide as apostrophes
+in comments); these need to be escaped or possibly replaced by `%x27`.
+
+Finally, our approach lends support to extending `bsqual` in CDDL
+similar to the way this is done for CBOR diagnostic notation in {{-edn}}.
+(Note that the processing of string literals now is quite similar between
+CDDL and EDN, except that CDDL has "`;`"-based end-of-line comments, while EDN has
+two comment syntaxes, in-line "`/`"-based and end-of-line "`#`"-based.)
+
 
 # Acknowledgments
 {:numbered="false"}
