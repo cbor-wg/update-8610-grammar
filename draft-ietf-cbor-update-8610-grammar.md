@@ -371,7 +371,8 @@ the `start` rule in {{string-examples}}, using pretty-printed hexadecimal.
    53                                   # bytes(19)
       446f6d696e6f277320f09f81b3202b20e28c98 # "Domino's 🁳 + ⌘"
 ~~~
-{: #string-examples-pretty title="Generated CBOR from CDDL example"}
+{: #string-examples-pretty title="Generated CBOR from CDDL example
+(Pretty-Printed Hexadecimal)"}
 
 <!-- cddl sourcecode/cddl/no-change-needed-after-addr.cddl g | diag2pretty.rb | diff - sourcecode/cbor-pretty/no-change-needed-after-addr.cbor-pretty  -->
 
