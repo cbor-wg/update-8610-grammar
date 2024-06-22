@@ -142,7 +142,7 @@ text = %x22 *SCHAR %x22
 SCHAR = %x20-21 / %x23-5B / %x5D-7E / %x80-10FFFD / SESC
 SESC = "\" (%x20-7E / %x80-10FFFD)
 ~~~
-{: #e6527-old1 title="Old ABNF for strings with permissive ABNF for
+{: #e6527-orig1 title="Original RFC 8610 ABNF for strings with permissive ABNF for
 SESC, but not allowing hex escapes"}
 
 This allows almost any non-C0 character to be escaped by a backslash,
@@ -176,7 +176,7 @@ hexscalar = "10" 4HEXDIG / HEXDIG1 4HEXDIG
           / non-surrogate / 1*3HEXDIG
 HEXDIG1 = DIGIT1 / "A" / "B" / "C" / "D" / "E" / "F"
 ~~~
-{: #e6527-new1 title="Updated string ABNF to allow hex escapes"
+{: #e6527-new1 title="Update to string ABNF in Appendix B of RFC 8610: allow hex escapes"
 sourcecode-name="cddl-new-sesc.abnf"}
 
 (Notes:
@@ -195,7 +195,7 @@ bytes = [bsqual] %x27 *BCHAR %x27
 BCHAR = %x20-26 / %x28-5B / %x5D-10FFFD / SESC / CRLF
 bsqual = "h" / "b64"
 ~~~
-{: #e6527-old2 title="Old ABNF for BCHAR"}
+{: #e6527-orig2 title="Original RFC 8610 ABNF for BCHAR"}
 
 With the SESC updated as above, `\'` is no longer allowed in BCHAR;
 this now needs to be explicitly included.
@@ -219,7 +219,7 @@ BCHAR = %x20-26 / %x28-5B / %x5D-7E / NONASCII / SESC / "\'" / CRLF
 PCHAR = %x20-7E / NONASCII
 NONASCII = %xA0-D7FF / %xE000-10FFFD
 ~~~
-{: #e6527-new2 title="Updated ABNF for BCHAR, SCHAR, and PCHAR"
+{: #e6527-new2 title="Update to ABNF in Appendix B of RFC 8610: BCHAR, SCHAR, and PCHAR"
 sourcecode-name="cddl-new-bchar.abnf"}
 
 (Note that, apart from addressing the inconsistencies, there is no
@@ -239,7 +239,7 @@ in base16 (hex) or base64 (but see also updated BCHAR rule above):
 bytes = [bsqual] %x27 *BCHAR %x27
 BCHAR = %x20-26 / %x28-5B / %x5D-10FFFD / SESC / CRLF
 ~~~
-{: #e6527-old2a title="Old ABNF for BCHAR"}
+{: #e6527-orig2a title="Original RFC 8610 ABNF for BCHAR"}
 
 ### Change proposed by Errata Report 6543
 {:unnumbered}
@@ -385,7 +385,7 @@ Empty data models {#empty}
 ; RFC 8610 ABNF:
 cddl = S 1*(rule S)
 ~~~
-{: #empty-old title="Old ABNF for top-level rule cddl"}
+{: #empty-orig title="Original RFC 8610 ABNF for top-level rule cddl"}
 
 
 This makes sense when the file has to stand alone, as a CDDL data
@@ -406,7 +406,7 @@ be fulfilled after processing of all directives.
 ; new top-level rule:
 cddl = S *(rule S)
 ~~~
-{: #empty-new title="Updated ABNF for top-level rule cddl"
+{: #empty-new title="Update to top-level ABNF in Appendices B and C of RFC 8610"
 sourcecode-name="cddl-new-cddl.abnf"}
 
 
@@ -420,7 +420,7 @@ The existing ABNF syntax for expressing tags in CDDL is:
 ; extracted from RFC 8610 ABNF:
 type2 =/ "#" "6" ["." uint] "(" S type S ")"
 ~~~
-{: #tag-old title="Old ABNF for tag syntax"}
+{: #tag-orig title="Original RFC 8610 ABNF for tag syntax"}
 
 This means tag numbers can only be given as literal numbers (uints).
 Some specifications operate on ranges of tag numbers, e.g., {{?RFC9277}}
@@ -437,7 +437,8 @@ type2 =/ "#" "6" ["." head-number] "(" S type S ")"
        / "#" "7" ["." head-number]
 head-number = uint / ("<" type ">")
 ~~~
-{: #tag-new title="Updated ABNF for tag and simple value syntaxes"
+{: #tag-new title="Update to tag and simple value ABNF in Appendices B
+and C of RFC 8610"
 sourcecode-name="cddl-new-tag.abnf"}
 
 For `#6`, the `head-number` stands for the tag number.
