@@ -149,13 +149,13 @@ This allows almost any non-C0 character to be escaped by a backslash,
 but critically misses out on the `\uXXXX` and `\uHHHH\uLLLL` forms
 that JSON allows to specify characters in hex (which should be
 applying here according to Bullet 6 of {{Section 3.1 of -cddl}}).
-(Note that we import from JSON the unwieldy `\uHHHH\uLLLL` syntax,
+(Note that CDDL imports from JSON the unwieldy `\uHHHH\uLLLL` syntax,
 which represents Unicode code points beyond U+FFFF by making them look
 like UTF-16 surrogate pairs; CDDL text strings are not using UTF-16 or
 surrogates.)
 
 Both can be solved by updating the SESC production.
-We use the opportunity to add a popular form of directly specifying
+This document uses the opportunity to add a popular form of directly specifying
 characters in strings using hexadecimal escape sequences of the form
 `\u{hex}`, where `hex` is the hexadecimal representation of the
 Unicode scalar value.
@@ -182,7 +182,7 @@ sourcecode-name="cddl-new-sesc.abnf"}
 (Notes:
 In ABNF, strings such as `"A"`, `"B"` etc. are case-insensitive, as is
 intended here.
-We could have written `%x62` as `%s"b"`, but didn't, in order to
+The rules above could, instead of `%x62`, also have used `%s"b"` etc., but didn't, in order to
 maximize ABNF tool compatibility.)
 
 Now that SESC is more restrictively formulated, this also requires an
@@ -207,7 +207,7 @@ As U+007F is not printable, including it in a byte string literal is
 as confusing as for a text string literal, and it should therefore be
 excluded from BCHAR as it is from SCHAR.
 The same reasoning also applies to the C1 control characters,
-so we actually exclude the entire range from U+007F to U+009F.
+so the updated ABNF actually excludes the entire range from U+007F to U+009F.
 The same reasoning then also applies to text in comments (PCHAR).
 For completeness, all these should also explicitly exclude the code
 points that have been set aside for UTF-16's surrogates.
@@ -398,8 +398,8 @@ ultimately make up the module created by the file.
 Any other rule content in the file has to be available for directive
 processing, making the requirement for at least one rule cumbersome.
 
-Therefore, we extend the grammar as in {{empty-new}}
-and make the existence of at least one rule a semantic constraint, to
+Therefore, the present update extends the grammar as in {{empty-new}}
+and turns the existence of at least one rule into a semantic constraint, to
 be fulfilled after processing of all directives.
 
 ~~~ abnf
