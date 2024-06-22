@@ -4,9 +4,9 @@
 
 CBOR                                                          C. Bormann
 Internet-Draft                                    Universität Bremen TZI
-Updates: 8610 (if approved)                                 19 June 2024
+Updates: 8610 (if approved)                                 22 June 2024
 Intended status: Standards Track                                        
-Expires: 21 December 2024
+Expires: 24 December 2024
 
 
                 Updates to the CDDL grammar of RFC 8610
@@ -53,7 +53,7 @@ Status of This Memo
 
 
 
-Bormann                 Expires 21 December 2024                [Page 1]
+Bormann                 Expires 24 December 2024                [Page 1]
 
 Internet-Draft            CDDL grammar updates                 June 2024
 
@@ -63,7 +63,7 @@ Internet-Draft            CDDL grammar updates                 June 2024
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 21 December 2024.
+   This Internet-Draft will expire on 24 December 2024.
 
 Copyright Notice
 
@@ -98,8 +98,8 @@ Table of Contents
      6.1.  Normative References  . . . . . . . . . . . . . . . . . .  10
      6.2.  Informative References  . . . . . . . . . . . . . . . . .  11
    Appendix A.  Updated Collected ABNF for CDDL  . . . . . . . . . .  12
-   Acknowledgments . . . . . . . . . . . . . . . . . . . . . . . . .  14
-   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .  14
+   Acknowledgments . . . . . . . . . . . . . . . . . . . . . . . . .  15
+   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .  15
 
 
 
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Bormann                 Expires 21 December 2024                [Page 2]
+Bormann                 Expires 24 December 2024                [Page 2]
 
 Internet-Draft            CDDL grammar updates                 June 2024
 
@@ -165,7 +165,7 @@ Internet-Draft            CDDL grammar updates                 June 2024
 
 
 
-Bormann                 Expires 21 December 2024                [Page 3]
+Bormann                 Expires 24 December 2024                [Page 3]
 
 Internet-Draft            CDDL grammar updates                 June 2024
 
@@ -221,7 +221,7 @@ Internet-Draft            CDDL grammar updates                 June 2024
 
 
 
-Bormann                 Expires 21 December 2024                [Page 4]
+Bormann                 Expires 24 December 2024                [Page 4]
 
 Internet-Draft            CDDL grammar updates                 June 2024
 
@@ -277,7 +277,7 @@ Change proposed by Errata Report 6543
 
 
 
-Bormann                 Expires 21 December 2024                [Page 5]
+Bormann                 Expires 24 December 2024                [Page 5]
 
 Internet-Draft            CDDL grammar updates                 June 2024
 
@@ -333,7 +333,7 @@ No change needed after addressing Err6527 (text string literals)
 
 
 
-Bormann                 Expires 21 December 2024                [Page 6]
+Bormann                 Expires 24 December 2024                [Page 6]
 
 Internet-Draft            CDDL grammar updates                 June 2024
 
@@ -389,7 +389,7 @@ Internet-Draft            CDDL grammar updates                 June 2024
 
 
 
-Bormann                 Expires 21 December 2024                [Page 7]
+Bormann                 Expires 24 December 2024                [Page 7]
 
 Internet-Draft            CDDL grammar updates                 June 2024
 
@@ -445,7 +445,7 @@ Internet-Draft            CDDL grammar updates                 June 2024
 
 
 
-Bormann                 Expires 21 December 2024                [Page 8]
+Bormann                 Expires 24 December 2024                [Page 8]
 
 Internet-Draft            CDDL grammar updates                 June 2024
 
@@ -501,7 +501,7 @@ Internet-Draft            CDDL grammar updates                 June 2024
 
 
 
-Bormann                 Expires 21 December 2024                [Page 9]
+Bormann                 Expires 24 December 2024                [Page 9]
 
 Internet-Draft            CDDL grammar updates                 June 2024
 
@@ -531,6 +531,21 @@ Internet-Draft            CDDL grammar updates                 June 2024
    a combination of CDDL tools some of which have been updated and some
    of which have not been, in particular based on Section 2.
 
+   Attackers may want to exploit such potential confusion by crafting
+   CDDL models that are interpreted differently by different parts of a
+   system.  There will be a period of transition from the details that
+   the [RFC8610] grammar handled in a less well-defined way, to the
+   updated grammar defined in the present document.  This transition
+   might offer one, but not the only kind of opportunity for the kind of
+   attack that relies on differences between implementations.
+   Implementations that make use of CDDL models operationally already
+   need to ascertain the provenance (and thus authenticity and
+   integrity) and applicability of models they employ.  At the time of
+   writing, it is expected that the models will generally be processed
+   by a software developer, within a software development environment.
+   Developers are therefore advised to treat CDDL models with the same
+   care as any other source code.
+
 5.  IANA Considerations
 
    This document has no IANA actions.
@@ -538,6 +553,14 @@ Internet-Draft            CDDL grammar updates                 June 2024
 6.  References
 
 6.1.  Normative References
+
+
+
+
+Bormann                 Expires 24 December 2024               [Page 10]
+
+Internet-Draft            CDDL grammar updates                 June 2024
+
 
    [RFC8610]  Birkholz, H., Vigano, C., and C. Bormann, "Concise Data
               Definition Language (CDDL): A Notational Convention to
@@ -553,14 +576,6 @@ Internet-Draft            CDDL grammar updates                 June 2024
               Specifications: ABNF", STD 68, RFC 5234,
               DOI 10.17487/RFC5234, January 2008,
               <https://www.rfc-editor.org/info/rfc5234>.
-
-
-
-
-Bormann                 Expires 21 December 2024               [Page 10]
-
-Internet-Draft            CDDL grammar updates                 June 2024
-
 
    [STD94]    Internet Standard 94,
               <https://www.rfc-editor.org/info/std94>.
@@ -594,6 +609,15 @@ Internet-Draft            CDDL grammar updates                 June 2024
               4 March 2024, <https://datatracker.ietf.org/doc/html/
               draft-ietf-cbor-cddl-modules-02>.
 
+
+
+
+
+Bormann                 Expires 24 December 2024               [Page 11]
+
+Internet-Draft            CDDL grammar updates                 June 2024
+
+
    [I-D.ietf-cbor-edn-literals]
               Bormann, C., "CBOR Extended Diagnostic Notation (EDN):
               Application-Oriented Literals, ABNF, and Media Type", Work
@@ -609,14 +633,6 @@ Internet-Draft            CDDL grammar updates                 June 2024
               Data Definition Language (CDDL)", RFC 9165,
               DOI 10.17487/RFC9165, December 2021,
               <https://www.rfc-editor.org/rfc/rfc9165>.
-
-
-
-
-Bormann                 Expires 21 December 2024               [Page 11]
-
-Internet-Draft            CDDL grammar updates                 June 2024
-
 
    [RFC9277]  Richardson, M. and C. Bormann, "On Stable Storage for
               Items in Concise Binary Object Representation (CBOR)",
@@ -651,6 +667,13 @@ Appendix A.  Updated Collected ABNF for CDDL
    genericparm = "<" S id S *("," S id S ) ">"
    genericarg = "<" S type1 S *("," S type1 S ) ">"
 
+
+
+Bormann                 Expires 24 December 2024               [Page 12]
+
+Internet-Draft            CDDL grammar updates                 June 2024
+
+
    type = type1 *(S "/" S type1)
 
    type1 = type2 [S (rangeop / ctlop) S type2]
@@ -666,14 +689,6 @@ Appendix A.  Updated Collected ABNF for CDDL
          / "&" S groupname [genericarg]
          / "#" "6" ["." head-number] "(" S type S ")"
          / "#" "7" ["." head-number]
-
-
-
-Bormann                 Expires 21 December 2024               [Page 12]
-
-Internet-Draft            CDDL grammar updates                 June 2024
-
-
          / "#" DIGIT ["." uint]                ; major/ai
          / "#"                                 ; any
    head-number = uint / ("<" type ">")
@@ -707,6 +722,14 @@ Internet-Draft            CDDL grammar updates                 June 2024
         / "0b" 1*BINDIG
         / "0"
 
+
+
+
+Bormann                 Expires 24 December 2024               [Page 13]
+
+Internet-Draft            CDDL grammar updates                 June 2024
+
+
    value = number
          / text
          / bytes
@@ -721,14 +744,6 @@ Internet-Draft            CDDL grammar updates                 June 2024
 
    text = %x22 *SCHAR %x22
    SCHAR = %x20-21 / %x23-5B / %x5D-7E / NONASCII / SESC
-
-
-
-
-Bormann                 Expires 21 December 2024               [Page 13]
-
-Internet-Draft            CDDL grammar updates                 June 2024
-
 
    SESC = "\" ( %x22 / "/" / "\" /                 ; \" \/ \\
                 %x62 / %x66 / %x6E / %x72 / %x74 / ; \b \f \n \r \t
@@ -763,6 +778,14 @@ Internet-Draft            CDDL grammar updates                 June 2024
    COMMENT = ";" *PCHAR CRLF
    PCHAR = %x20-7E / NONASCII
    NONASCII = %xA0-D7FF / %xE000-10FFFD
+
+
+
+Bormann                 Expires 24 December 2024               [Page 14]
+
+Internet-Draft            CDDL grammar updates                 June 2024
+
+
    CRLF = %x0A / %x0D.0A
 
                     Figure 14: ABNF for CDDL as updated
@@ -776,15 +799,6 @@ Acknowledgments
    Amsüss (shepherd review), and Orie Steele (AD review).
 
 Author's Address
-
-
-
-
-
-Bormann                 Expires 21 December 2024               [Page 14]
-
-Internet-Draft            CDDL grammar updates                 June 2024
-
 
    Carsten Bormann
    Universität Bremen TZI
@@ -823,18 +837,4 @@ Internet-Draft            CDDL grammar updates                 June 2024
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Bormann                 Expires 21 December 2024               [Page 15]
+Bormann                 Expires 24 December 2024               [Page 15]
