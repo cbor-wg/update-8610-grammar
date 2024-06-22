@@ -454,10 +454,12 @@ sourcecode-name="cddl-updated-complete.abnf"}
 
 # Details about Covered Errata Reports {#Err6543-covered}
 
+This appendix is informative.
 
-The ABNF used in {{RFC8610}} for the content of byte string literals
+{{Err6543}} observes that
+the ABNF used in {{RFC8610}} for the content of byte string literals
 lumps together byte strings notated as text with byte strings notated
-in base16 (hex) or base64 (but see also updated BCHAR rule above):
+in base16 (hex) or base64 (but see also updated BCHAR rule in {{e6527-new2}}):
 
 ~~~ abnf
 ; RFC 8610 ABNF:
