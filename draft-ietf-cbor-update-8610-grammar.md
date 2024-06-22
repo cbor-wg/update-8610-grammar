@@ -102,6 +102,10 @@ JSON.
 
 The present document updates {{-cddl}} by addressing errata and making
 other small fixes for the ABNF grammar defined for CDDL there.
+The body of this document motivates and explains the updates; the
+updated collected ABNF syntax in {{collected-abnf}} in
+{{collected-abnf-appendix}} replaces the collected ABNF syntax in
+{{Appendix B of -cddl}}.
 
 ## Conventions and Definitions
 
@@ -138,20 +142,20 @@ text = %x22 *SCHAR %x22
 SCHAR = %x20-21 / %x23-5B / %x5D-7E / %x80-10FFFD / SESC
 SESC = "\" (%x20-7E / %x80-10FFFD)
 ~~~
-{: #e6527-old1 title="Old ABNF for strings with permissive ABNF for
+{: #e6527-orig1 title="Original RFC 8610 ABNF for strings with permissive ABNF for
 SESC, but not allowing hex escapes"}
 
 This allows almost any non-C0 character to be escaped by a backslash,
 but critically misses out on the `\uXXXX` and `\uHHHH\uLLLL` forms
 that JSON allows to specify characters in hex (which should be
 applying here according to Bullet 6 of {{Section 3.1 of -cddl}}).
-(Note that we import from JSON the unwieldy `\uHHHH\uLLLL` syntax,
+(Note that CDDL imports from JSON the unwieldy `\uHHHH\uLLLL` syntax,
 which represents Unicode code points beyond U+FFFF by making them look
 like UTF-16 surrogate pairs; CDDL text strings are not using UTF-16 or
 surrogates.)
 
-Both can be solved by updating the SESC production.
-We use the opportunity to add a popular form of directly specifying
+Both can be solved by updating the SESC rule.
+This document uses the opportunity to add a popular form of directly specifying
 characters in strings using hexadecimal escape sequences of the form
 `\u{hex}`, where `hex` is the hexadecimal representation of the
 Unicode scalar value.
@@ -172,17 +176,17 @@ hexscalar = "10" 4HEXDIG / HEXDIG1 4HEXDIG
           / non-surrogate / 1*3HEXDIG
 HEXDIG1 = DIGIT1 / "A" / "B" / "C" / "D" / "E" / "F"
 ~~~
-{: #e6527-new1 title="Updated string ABNF to allow hex escapes"
+{: #e6527-new1 title="Update to string ABNF in Appendix B of RFC 8610: allow hex escapes"
 sourcecode-name="cddl-new-sesc.abnf"}
 
 (Notes:
 In ABNF, strings such as `"A"`, `"B"` etc. are case-insensitive, as is
 intended here.
-We could have written `%x62` as `%s"b"`, but didn't, in order to
+The rules above could, instead of `%x62`, also have used `%s"b"` etc., but didn't, in order to
 maximize ABNF tool compatibility.)
 
 Now that SESC is more restrictively formulated, this also requires an
-update to the BCHAR production used in the ABNF syntax for byte string
+update to the BCHAR rule used in the ABNF syntax for byte string
 literals:
 
 ~~~ abnf
@@ -191,7 +195,7 @@ bytes = [bsqual] %x27 *BCHAR %x27
 BCHAR = %x20-26 / %x28-5B / %x5D-10FFFD / SESC / CRLF
 bsqual = "h" / "b64"
 ~~~
-{: #e6527-old2 title="Old ABNF for BCHAR"}
+{: #e6527-orig2 title="Original RFC 8610 ABNF for BCHAR"}
 
 With the SESC updated as above, `\'` is no longer allowed in BCHAR;
 this now needs to be explicitly included.
@@ -203,7 +207,7 @@ As U+007F is not printable, including it in a byte string literal is
 as confusing as for a text string literal, and it should therefore be
 excluded from BCHAR as it is from SCHAR.
 The same reasoning also applies to the C1 control characters,
-so we actually exclude the entire range from U+007F to U+009F.
+so the updated ABNF actually excludes the entire range from U+007F to U+009F.
 The same reasoning then also applies to text in comments (PCHAR).
 For completeness, all these should also explicitly exclude the code
 points that have been set aside for UTF-16's surrogates.
@@ -215,7 +219,7 @@ BCHAR = %x20-26 / %x28-5B / %x5D-7E / NONASCII / SESC / "\'" / CRLF
 PCHAR = %x20-7E / NONASCII
 NONASCII = %xA0-D7FF / %xE000-10FFFD
 ~~~
-{: #e6527-new2 title="Updated ABNF for BCHAR, SCHAR, and PCHAR"
+{: #e6527-new2 title="Update to ABNF in Appendix B of RFC 8610: BCHAR, SCHAR, and PCHAR"
 sourcecode-name="cddl-new-bchar.abnf"}
 
 (Note that, apart from addressing the inconsistencies, there is no
@@ -238,20 +242,20 @@ syntax.
 
 The ABNF used in {{RFC8610}} for the content of byte string literals
 lumps together byte strings notated as text with byte strings notated
-in base16 (hex) or base64 (but see also updated BCHAR production above):
+in base16 (hex) or base64 (but see also updated BCHAR rule above):
 
 ~~~ abnf
 ; RFC 8610 ABNF:
 bytes = [bsqual] %x27 *BCHAR %x27
 BCHAR = %x20-26 / %x28-5B / %x5D-10FFFD / SESC / CRLF
 ~~~
-{: #e6527-old2a title="Old ABNF for BCHAR"}
+{: #e6527-orig2a title="Original RFC 8610 ABNF for BCHAR"}
 
 ### Change proposed by Errata Report 6543
 {:unnumbered}
 
 Errata report 6543 proposes to handle the two cases in separate
-productions (where, with an updated SESC, BCHAR obviously needs to be
+ABNF rules (where, with an updated SESC, BCHAR obviously needs to be
 updated as above):
 
 ~~~ abnf
@@ -263,7 +267,7 @@ QCHAR = DIGIT / ALPHA / "+" / "/" / "-" / "_" / "=" / WS
 ~~~~
 {: #e6543-1 title="Errata Report 8653 Proposal to Split the Byte String Rules"}
 
-This potentially causes a subtle change, which is hidden in the WS production:
+This potentially causes a subtle change, which is hidden in the WS rule:
 
 ~~~ abnf
 ; RFC 8610 ABNF:
@@ -391,7 +395,7 @@ Empty data models {#empty}
 ; RFC 8610 ABNF:
 cddl = S 1*(rule S)
 ~~~
-{: #empty-old title="Old ABNF for top-level rule cddl"}
+{: #empty-orig title="Original RFC 8610 ABNF for top-level rule cddl"}
 
 
 This makes sense when the file has to stand alone, as a CDDL data
@@ -404,15 +408,15 @@ ultimately make up the module created by the file.
 Any other rule content in the file has to be available for directive
 processing, making the requirement for at least one rule cumbersome.
 
-Therefore, we extend the grammar as in {{empty-new}}
-and make the existence of at least one rule a semantic constraint, to
+Therefore, the present update extends the grammar as in {{empty-new}}
+and turns the existence of at least one rule into a semantic constraint, to
 be fulfilled after processing of all directives.
 
 ~~~ abnf
 ; new top-level rule:
 cddl = S *(rule S)
 ~~~
-{: #empty-new title="Updated ABNF for top-level rule cddl"
+{: #empty-new title="Update to top-level ABNF in Appendices B and C of RFC 8610"
 sourcecode-name="cddl-new-cddl.abnf"}
 
 
@@ -426,7 +430,7 @@ The existing ABNF syntax for expressing tags in CDDL is:
 ; extracted from RFC 8610 ABNF:
 type2 =/ "#" "6" ["." uint] "(" S type S ")"
 ~~~
-{: #tag-old title="Old ABNF for tag syntax"}
+{: #tag-orig title="Original RFC 8610 ABNF for tag syntax"}
 
 This means tag numbers can only be given as literal numbers (uints).
 Some specifications operate on ranges of tag numbers, e.g., {{?RFC9277}}
@@ -443,7 +447,8 @@ type2 =/ "#" "6" ["." head-number] "(" S type S ")"
        / "#" "7" ["." head-number]
 head-number = uint / ("<" type ">")
 ~~~
-{: #tag-new title="Updated ABNF for tag and simple value syntaxes"
+{: #tag-new title="Update to tag and simple value ABNF in Appendices B
+and C of RFC 8610"
 sourcecode-name="cddl-new-tag.abnf"}
 
 For `#6`, the `head-number` stands for the tag number.
@@ -490,6 +495,24 @@ environment that uses a combination of CDDL tools some of which have
 been updated and some of which have not been, in particular based on
 {{clari}}.
 
+Attackers may want to exploit such potential confusion by crafting
+CDDL models that are interpreted differently by different parts of a
+system.
+There will be a period of transition from the details that the
+{{RFC8610}} grammar handled in a less well-defined way, to the updated
+grammar defined in the present document.
+This transition might offer one, but not the only kind of opportunity
+for the kind of attack that relies on differences between
+implementations.
+Implementations that make use of CDDL models operationally already
+need to ascertain the provenance (and thus authenticity and integrity)
+and applicability of models they employ.
+At the time of writing, it is expected that the models will generally
+be processed by a software developer, within a software development
+environment.
+Developers are therefore advised to treat CDDL models with
+the same care as any other source code.
+
 # IANA Considerations
 
 This document has no IANA actions.
@@ -497,7 +520,7 @@ This document has no IANA actions.
 
 --- back
 
-# Updated Collected ABNF for CDDL
+# Updated Collected ABNF for CDDL {#collected-abnf-appendix}
 
 This appendix is normative.
 
