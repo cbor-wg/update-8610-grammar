@@ -324,9 +324,10 @@ similar to the way this is done for CBOR diagnostic notation in {{-edn}}.
 (Note that the processing of string literals now is quite similar between
 CDDL and EDN, except that CDDL has "`;`"-based end-of-line comments, while EDN has
 two comment syntaxes, in-line "`/`"-based and end-of-line "`#`"-based.)
+## Examples Demonstrating the Updated String Syntaxes
 
 The CDDL example in {{string-examples}} demonstrates various escaping
-techniques.
+techniques now available for (byte and text) strings in CDDL.
 Obviously in the literals for `a` and `x`, there is no need to escape
 the second character, an `o`, as `\u{6f}`; this is just for demonstration.
 Similarly, as shown in `c` and `z` there also is no need to escape the
