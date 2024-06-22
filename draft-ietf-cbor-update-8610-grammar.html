@@ -1263,7 +1263,7 @@ specification recommends).<a href="#section-2-2" class="pilcrow">¶</a></p>
         </h3>
 <p id="section-2.1-1">The ABNF used in <span>[<a href="#RFC8610" class="cite xref">RFC8610</a>]</span> for the content of text string literals
 is rather permissive:<a href="#section-2.1-1" class="pilcrow">¶</a></p>
-<span id="name-old-abnf-for-strings-with-p"></span><div id="e6527-old1">
+<span id="name-original-rfc-8610-abnf-for-"></span><div id="e6527-orig1">
 <figure id="figure-1">
           <div class="lang-abnf sourcecode" id="section-2.1-2.1">
 <pre>
@@ -1274,7 +1274,7 @@ SESC = "\" (%x20-7E / %x80-10FFFD)
 </pre>
 </div>
 <figcaption><a href="#figure-1" class="selfRef">Figure 1</a>:
-<a href="#name-old-abnf-for-strings-with-p" class="selfRef">Old ABNF for strings with permissive ABNF for SESC, but not allowing hex escapes</a>
+<a href="#name-original-rfc-8610-abnf-for-" class="selfRef">Original RFC 8610 ABNF for strings with permissive ABNF for SESC, but not allowing hex escapes</a>
           </figcaption></figure>
 </div>
 <p id="section-2.1-3">This allows almost any non-C0 character to be escaped by a backslash,
@@ -1291,7 +1291,7 @@ characters in strings using hexadecimal escape sequences of the form
 <code>\u{hex}</code>, where <code>hex</code> is the hexadecimal representation of the
 Unicode scalar value.
 The result is the new set of rules defining SESC in <a href="#e6527-new1" class="auto internal xref">Figure 2</a>:<a href="#section-2.1-4" class="pilcrow">¶</a></p>
-<span id="name-updated-string-abnf-to-allo"></span><div id="e6527-new1">
+<span id="name-update-to-string-abnf-in-ap"></span><div id="e6527-new1">
 <figure id="figure-2">
           <div class="lang-abnf sourcecode" id="section-2.1-5.1">
 <pre>
@@ -1311,7 +1311,7 @@ HEXDIG1 = DIGIT1 / "A" / "B" / "C" / "D" / "E" / "F"
 </pre>
 </div>
 <figcaption><a href="#figure-2" class="selfRef">Figure 2</a>:
-<a href="#name-updated-string-abnf-to-allo" class="selfRef">Updated string ABNF to allow hex escapes</a>
+<a href="#name-update-to-string-abnf-in-ap" class="selfRef">Update to string ABNF in Appendix B of RFC 8610: allow hex escapes</a>
           </figcaption></figure>
 </div>
 <p id="section-2.1-6">(Notes:
@@ -1322,7 +1322,7 @@ maximize ABNF tool compatibility.)<a href="#section-2.1-6" class="pilcrow">¶</a
 <p id="section-2.1-7">Now that SESC is more restrictively formulated, this also requires an
 update to the BCHAR rule used in the ABNF syntax for byte string
 literals:<a href="#section-2.1-7" class="pilcrow">¶</a></p>
-<span id="name-old-abnf-for-bchar"></span><div id="e6527-old2">
+<span id="name-original-rfc-8610-abnf-for-b"></span><div id="e6527-orig2">
 <figure id="figure-3">
           <div class="lang-abnf sourcecode" id="section-2.1-8.1">
 <pre>
@@ -1333,7 +1333,7 @@ bsqual = "h" / "b64"
 </pre>
 </div>
 <figcaption><a href="#figure-3" class="selfRef">Figure 3</a>:
-<a href="#name-old-abnf-for-bchar" class="selfRef">Old ABNF for BCHAR</a>
+<a href="#name-original-rfc-8610-abnf-for-b" class="selfRef">Original RFC 8610 ABNF for BCHAR</a>
           </figcaption></figure>
 </div>
 <p id="section-2.1-9">With the SESC updated as above, <code>\'</code> is no longer allowed in BCHAR;
@@ -1349,7 +1349,7 @@ so the updated ABNF actually excludes the entire range from U+007F to U+009F.
 The same reasoning then also applies to text in comments (PCHAR).
 For completeness, all these should also explicitly exclude the code
 points that have been set aside for UTF-16's surrogates.<a href="#section-2.1-10" class="pilcrow">¶</a></p>
-<span id="name-updated-abnf-for-bchar-scha"></span><div id="e6527-new2">
+<span id="name-update-to-abnf-in-appendix-"></span><div id="e6527-new2">
 <figure id="figure-4">
           <div class="lang-abnf sourcecode" id="section-2.1-11.1">
 <pre>
@@ -1361,7 +1361,7 @@ NONASCII = %xA0-D7FF / %xE000-10FFFD
 </pre>
 </div>
 <figcaption><a href="#figure-4" class="selfRef">Figure 4</a>:
-<a href="#name-updated-abnf-for-bchar-scha" class="selfRef">Updated ABNF for BCHAR, SCHAR, and PCHAR</a>
+<a href="#name-update-to-abnf-in-appendix-" class="selfRef">Update to ABNF in Appendix B of RFC 8610: BCHAR, SCHAR, and PCHAR</a>
           </figcaption></figure>
 </div>
 <p id="section-2.1-12">(Note that, apart from addressing the inconsistencies, there is no
@@ -1378,7 +1378,7 @@ evolution of the Unicode standard that is not needed here.)<a href="#section-2.1
 <p id="section-2.2-1">The ABNF used in <span>[<a href="#RFC8610" class="cite xref">RFC8610</a>]</span> for the content of byte string literals
 lumps together byte strings notated as text with byte strings notated
 in base16 (hex) or base64 (but see also updated BCHAR rule above):<a href="#section-2.2-1" class="pilcrow">¶</a></p>
-<span id="name-old-abnf-for-bchar-2"></span><div id="e6527-old2a">
+<span id="name-original-rfc-8610-abnf-for-bc"></span><div id="e6527-orig2a">
 <figure id="figure-5">
           <div class="lang-abnf sourcecode" id="section-2.2-2.1">
 <pre>
@@ -1388,7 +1388,7 @@ BCHAR = %x20-26 / %x28-5B / %x5D-10FFFD / SESC / CRLF
 </pre>
 </div>
 <figcaption><a href="#figure-5" class="selfRef">Figure 5</a>:
-<a href="#name-old-abnf-for-bchar-2" class="selfRef">Old ABNF for BCHAR</a>
+<a href="#name-original-rfc-8610-abnf-for-bc" class="selfRef">Original RFC 8610 ABNF for BCHAR</a>
           </figcaption></figure>
 </div>
 <div id="change-proposed-by-errata-report-6543">
@@ -1557,7 +1557,7 @@ implementations.<a href="#section-3-1" class="pilcrow">¶</a></p>
 <a href="#section-3.1" class="section-number selfRef">3.1. </a><a href="#name-empty-data-models" class="section-name selfRef">Empty data models</a>
         </h3>
 <p id="section-3.1-1"><span>[<a href="#RFC8610" class="cite xref">RFC8610</a>]</span> requires a CDDL file to have at least one rule.<a href="#section-3.1-1" class="pilcrow">¶</a></p>
-<span id="name-old-abnf-for-top-level-rule"></span><div id="empty-old">
+<span id="name-original-rfc-8610-abnf-for-t"></span><div id="empty-orig">
 <figure id="figure-10">
           <div class="lang-abnf sourcecode" id="section-3.1-2.1">
 <pre>
@@ -1566,7 +1566,7 @@ cddl = S 1*(rule S)
 </pre>
 </div>
 <figcaption><a href="#figure-10" class="selfRef">Figure 10</a>:
-<a href="#name-old-abnf-for-top-level-rule" class="selfRef">Old ABNF for top-level rule cddl</a>
+<a href="#name-original-rfc-8610-abnf-for-t" class="selfRef">Original RFC 8610 ABNF for top-level rule cddl</a>
           </figcaption></figure>
 </div>
 <p id="section-3.1-3">This makes sense when the file has to stand alone, as a CDDL data
@@ -1580,7 +1580,7 @@ processing, making the requirement for at least one rule cumbersome.<a href="#se
 <p id="section-3.1-5">Therefore, the present update extends the grammar as in <a href="#empty-new" class="auto internal xref">Figure 11</a>
 and turns the existence of at least one rule into a semantic constraint, to
 be fulfilled after processing of all directives.<a href="#section-3.1-5" class="pilcrow">¶</a></p>
-<span id="name-updated-abnf-for-top-level-"></span><div id="empty-new">
+<span id="name-update-to-top-level-abnf-in"></span><div id="empty-new">
 <figure id="figure-11">
           <div class="lang-abnf sourcecode" id="section-3.1-6.1">
 <pre>
@@ -1589,7 +1589,7 @@ cddl = S *(rule S)
 </pre>
 </div>
 <figcaption><a href="#figure-11" class="selfRef">Figure 11</a>:
-<a href="#name-updated-abnf-for-top-level-" class="selfRef">Updated ABNF for top-level rule cddl</a>
+<a href="#name-update-to-top-level-abnf-in" class="selfRef">Update to top-level ABNF in Appendices B and C of RFC 8610</a>
           </figcaption></figure>
 </div>
 </section>
@@ -1600,7 +1600,7 @@ cddl = S *(rule S)
 <a href="#section-3.2" class="section-number selfRef">3.2. </a><a href="#name-non-literal-tag-numbers-sim" class="section-name selfRef">Non-literal Tag Numbers, Simple Values</a>
         </h3>
 <p id="section-3.2-1">The existing ABNF syntax for expressing tags in CDDL is:<a href="#section-3.2-1" class="pilcrow">¶</a></p>
-<span id="name-old-abnf-for-tag-syntax"></span><div id="tag-old">
+<span id="name-original-rfc-8610-abnf-for-ta"></span><div id="tag-orig">
 <figure id="figure-12">
           <div class="lang-abnf sourcecode" id="section-3.2-2.1">
 <pre>
@@ -1609,7 +1609,7 @@ type2 =/ "#" "6" ["." uint] "(" S type S ")"
 </pre>
 </div>
 <figcaption><a href="#figure-12" class="selfRef">Figure 12</a>:
-<a href="#name-old-abnf-for-tag-syntax" class="selfRef">Old ABNF for tag syntax</a>
+<a href="#name-original-rfc-8610-abnf-for-ta" class="selfRef">Original RFC 8610 ABNF for tag syntax</a>
           </figcaption></figure>
 </div>
 <p id="section-3.2-3">This means tag numbers can only be given as literal numbers (uints).
@@ -1619,7 +1619,7 @@ has a range of tag numbers 1668546817 (0x63740101) to 1668612095
 This can currently not be expressed in CDDL.
 Similar considerations apply to simple values (<code>#7.</code>xx).<a href="#section-3.2-3" class="pilcrow">¶</a></p>
 <p id="section-3.2-4">This update extends the syntax to:<a href="#section-3.2-4" class="pilcrow">¶</a></p>
-<span id="name-updated-abnf-for-tag-and-si"></span><div id="tag-new">
+<span id="name-update-to-tag-and-simple-va"></span><div id="tag-new">
 <figure id="figure-13">
           <div class="lang-abnf sourcecode" id="section-3.2-5.1">
 <pre>
@@ -1630,7 +1630,7 @@ head-number = uint / ("&lt;" type "&gt;")
 </pre>
 </div>
 <figcaption><a href="#figure-13" class="selfRef">Figure 13</a>:
-<a href="#name-updated-abnf-for-tag-and-si" class="selfRef">Updated ABNF for tag and simple value syntaxes</a>
+<a href="#name-update-to-tag-and-simple-va" class="selfRef">Update to tag and simple value ABNF in Appendices B and C of RFC 8610</a>
           </figcaption></figure>
 </div>
 <p id="section-3.2-6">For <code>#6</code>, the <code>head-number</code> stands for the tag number.

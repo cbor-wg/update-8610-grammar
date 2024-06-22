@@ -160,8 +160,8 @@ Internet-Draft            CDDL grammar updates                 June 2024
    SCHAR = %x20-21 / %x23-5B / %x5D-7E / %x80-10FFFD / SESC
    SESC = "\" (%x20-7E / %x80-10FFFD)
 
-     Figure 1: Old ABNF for strings with permissive ABNF for SESC, but
-                          not allowing hex escapes
+     Figure 1: Original RFC 8610 ABNF for strings with permissive ABNF
+                   for SESC, but not allowing hex escapes
 
 
 
@@ -199,7 +199,8 @@ Internet-Draft            CDDL grammar updates                 June 2024
              / non-surrogate / 1*3HEXDIG
    HEXDIG1 = DIGIT1 / "A" / "B" / "C" / "D" / "E" / "F"
 
-             Figure 2: Updated string ABNF to allow hex escapes
+      Figure 2: Update to string ABNF in Appendix B of RFC 8610: allow
+                                hex escapes
 
    (Notes: In ABNF, strings such as "A", "B" etc. are case-insensitive,
    as is intended here.  The rules above could, instead of %x62, also
@@ -215,8 +216,7 @@ Internet-Draft            CDDL grammar updates                 June 2024
    BCHAR = %x20-26 / %x28-5B / %x5D-10FFFD / SESC / CRLF
    bsqual = "h" / "b64"
 
-                        Figure 3: Old ABNF for BCHAR
-
+                 Figure 3: Original RFC 8610 ABNF for BCHAR
 
 
 
@@ -246,7 +246,8 @@ Internet-Draft            CDDL grammar updates                 June 2024
    PCHAR = %x20-7E / NONASCII
    NONASCII = %xA0-D7FF / %xE000-10FFFD
 
-             Figure 4: Updated ABNF for BCHAR, SCHAR, and PCHAR
+     Figure 4: Update to ABNF in Appendix B of RFC 8610: BCHAR, SCHAR,
+                                 and PCHAR
 
    (Note that, apart from addressing the inconsistencies, there is no
    attempt to further exclude non-printable characters from the ABNF;
@@ -263,14 +264,13 @@ Internet-Draft            CDDL grammar updates                 June 2024
    bytes = [bsqual] %x27 *BCHAR %x27
    BCHAR = %x20-26 / %x28-5B / %x5D-10FFFD / SESC / CRLF
 
-                        Figure 5: Old ABNF for BCHAR
+                 Figure 5: Original RFC 8610 ABNF for BCHAR
 
 Change proposed by Errata Report 6543
 
    Errata report 6543 proposes to handle the two cases in separate ABNF
    rules (where, with an updated SESC, BCHAR obviously needs to be
    updated as above):
-
 
 
 
@@ -427,7 +427,7 @@ Internet-Draft            CDDL grammar updates                 June 2024
    ; RFC 8610 ABNF:
    cddl = S 1*(rule S)
 
-                Figure 10: Old ABNF for top-level rule cddl
+         Figure 10: Original RFC 8610 ABNF for top-level rule cddl
 
    This makes sense when the file has to stand alone, as a CDDL data
    model needs to have at least one rule to provide an entry point
@@ -453,7 +453,7 @@ Internet-Draft            CDDL grammar updates                 June 2024
    ; new top-level rule:
    cddl = S *(rule S)
 
-              Figure 11: Updated ABNF for top-level rule cddl
+   Figure 11: Update to top-level ABNF in Appendices B and C of RFC 8610
 
 3.2.  Non-literal Tag Numbers, Simple Values
 
@@ -462,7 +462,7 @@ Internet-Draft            CDDL grammar updates                 June 2024
    ; extracted from RFC 8610 ABNF:
    type2 =/ "#" "6" ["." uint] "(" S type S ")"
 
-                     Figure 12: Old ABNF for tag syntax
+              Figure 12: Original RFC 8610 ABNF for tag syntax
 
    This means tag numbers can only be given as literal numbers (uints).
    Some specifications operate on ranges of tag numbers, e.g., [RFC9277]
@@ -478,7 +478,8 @@ Internet-Draft            CDDL grammar updates                 June 2024
           / "#" "7" ["." head-number]
    head-number = uint / ("<" type ">")
 
-         Figure 13: Updated ABNF for tag and simple value syntaxes
+       Figure 13: Update to tag and simple value ABNF in Appendices B
+                             and C of RFC 8610
 
    For #6, the head-number stands for the tag number.  For #7, the head-
    number stands for the simple value if it is in the ranges 0..23 or
@@ -494,7 +495,6 @@ Internet-Draft            CDDL grammar updates                 June 2024
    ; or use 0x63740101..0x6374FFFF
 
    Notes:
-
 
 
 
