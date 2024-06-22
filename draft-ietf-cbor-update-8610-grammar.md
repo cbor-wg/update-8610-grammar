@@ -537,7 +537,7 @@ It does require some care when copy-pasting into CDDL models from ABNF
 that contains single quotes (which may also hide as apostrophes
 in comments); these need to be escaped or possibly replaced by `%x27`.
 
-Finally, our approach lends support to extending `bsqual` in CDDL
+Finally, the approach taken lends support to extending `bsqual` in CDDL
 similar to the way this is done for CBOR diagnostic notation in {{-edn}}.
 (Note that the processing of string literals now is quite similar between
 CDDL and EDN, except that CDDL has "`;`"-based end-of-line comments, while EDN has
