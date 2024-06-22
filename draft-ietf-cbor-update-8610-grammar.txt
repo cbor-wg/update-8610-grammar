@@ -174,16 +174,17 @@ Internet-Draft            CDDL grammar updates                 June 2024
    but critically misses out on the \uXXXX and \uHHHH\uLLLL forms that
    JSON allows to specify characters in hex (which should be applying
    here according to Bullet 6 of Section 3.1 of [RFC8610]).  (Note that
-   we import from JSON the unwieldy \uHHHH\uLLLL syntax, which
+   CDDL imports from JSON the unwieldy \uHHHH\uLLLL syntax, which
    represents Unicode code points beyond U+FFFF by making them look like
    UTF-16 surrogate pairs; CDDL text strings are not using UTF-16 or
    surrogates.)
 
-   Both can be solved by updating the SESC production.  We use the
-   opportunity to add a popular form of directly specifying characters
-   in strings using hexadecimal escape sequences of the form \u{hex},
-   where hex is the hexadecimal representation of the Unicode scalar
-   value.  The result is the new set of rules defining SESC in Figure 2:
+   Both can be solved by updating the SESC production.  This document
+   uses the opportunity to add a popular form of directly specifying
+   characters in strings using hexadecimal escape sequences of the form
+   \u{hex}, where hex is the hexadecimal representation of the Unicode
+   scalar value.  The result is the new set of rules defining SESC in
+   Figure 2:
 
    ; new rules collectively defining SESC:
    SESC = "\" ( %x22 / "/" / "\" /                 ; \" \/ \\
@@ -202,8 +203,9 @@ Internet-Draft            CDDL grammar updates                 June 2024
              Figure 2: Updated string ABNF to allow hex escapes
 
    (Notes: In ABNF, strings such as "A", "B" etc. are case-insensitive,
-   as is intended here.  We could have written %x62 as %s"b", but
-   didn't, in order to maximize ABNF tool compatibility.)
+   as is intended here.  The rules above could, instead of %x62, also
+   have used %s"b" etc., but didn't, in order to maximize ABNF tool
+   compatibility.)
 
    Now that SESC is more restrictively formulated, this also requires an
    update to the BCHAR production used in the ABNF syntax for byte
@@ -216,8 +218,6 @@ Internet-Draft            CDDL grammar updates                 June 2024
 
                         Figure 3: Old ABNF for BCHAR
 
-   With the SESC updated as above, \' is no longer allowed in BCHAR;
-   this now needs to be explicitly included.
 
 
 
@@ -226,16 +226,19 @@ Bormann                 Expires 24 December 2024                [Page 4]
 Internet-Draft            CDDL grammar updates                 June 2024
 
 
+   With the SESC updated as above, \' is no longer allowed in BCHAR;
+   this now needs to be explicitly included.
+
    Updating BCHAR also provides an opportunity to address [Err6278],
    which points to an inconsistency in treating U+007F (DEL) between
    SCHAR and BCHAR.  As U+007F is not printable, including it in a byte
    string literal is as confusing as for a text string literal, and it
    should therefore be excluded from BCHAR as it is from SCHAR.  The
-   same reasoning also applies to the C1 control characters, so we
-   actually exclude the entire range from U+007F to U+009F.  The same
-   reasoning then also applies to text in comments (PCHAR).  For
-   completeness, all these should also explicitly exclude the code
-   points that have been set aside for UTF-16's surrogates.
+   same reasoning also applies to the C1 control characters, so the
+   updated ABNF actually excludes the entire range from U+007F to
+   U+009F.  The same reasoning then also applies to text in comments
+   (PCHAR).  For completeness, all these should also explicitly exclude
+   the code points that have been set aside for UTF-16's surrogates.
 
    ; new rules for BCHAR and SCHAR:
    SCHAR = %x20-21 / %x23-5B / %x5D-7E / NONASCII / SESC
@@ -269,11 +272,8 @@ Change proposed by Errata Report 6543
    productions (where, with an updated SESC, BCHAR obviously needs to be
    updated as above):
 
-   ; Err6543 proposal:
-   bytes = %x27 *BCHAR %x27
-         / bsqual %x27 *QCHAR %x27
-   BCHAR = %x20-26 / %x28-5B / %x5D-10FFFD / SESC / CRLF
-   QCHAR = DIGIT / ALPHA / "+" / "/" / "-" / "_" / "=" / WS
+
+
 
 
 
@@ -281,6 +281,12 @@ Bormann                 Expires 24 December 2024                [Page 5]
 
 Internet-Draft            CDDL grammar updates                 June 2024
 
+
+   ; Err6543 proposal:
+   bytes = %x27 *BCHAR %x27
+         / bsqual %x27 *QCHAR %x27
+   BCHAR = %x20-26 / %x28-5B / %x5D-10FFFD / SESC / CRLF
+   QCHAR = DIGIT / ALPHA / "+" / "/" / "-" / "_" / "=" / WS
 
     Figure 6: Errata Report 8653 Proposal to Split the Byte String Rules
 
@@ -323,12 +329,6 @@ No change needed after addressing Err6527 (text string literals)
    processing the syntax of the bytes/BCHAR rules as updated by Figure 2
    and Figure 4.
 
-   The rules in Figure 7 are therefore applied to the result of this
-   processing where bsqual is given as h or b64.
-
-
-
-
 
 
 
@@ -337,6 +337,9 @@ Bormann                 Expires 24 December 2024                [Page 6]
 
 Internet-Draft            CDDL grammar updates                 June 2024
 
+
+   The rules in Figure 7 are therefore applied to the result of this
+   processing where bsqual is given as h or b64.
 
    Note that this approach also works well with the use of byte strings
    in Section 3 of [RFC9165].  It does require some care when copy-
@@ -380,9 +383,6 @@ Internet-Draft            CDDL grammar updates                 June 2024
    z are byte strings.  Figure 9 illustrates this by showing the output
    generated from the start rule in Figure 8, using pretty-printed
    hexadecimal.
-
-
-
 
 
 
@@ -439,9 +439,9 @@ Internet-Draft            CDDL grammar updates                 June 2024
    rule content in the file has to be available for directive
    processing, making the requirement for at least one rule cumbersome.
 
-   Therefore, we extend the grammar as in Figure 11 and make the
-   existence of at least one rule a semantic constraint, to be fulfilled
-   after processing of all directives.
+   Therefore, the present update extends the grammar as in Figure 11 and
+   turns the existence of at least one rule into a semantic constraint,
+   to be fulfilled after processing of all directives.
 
 
 
