@@ -525,7 +525,8 @@ the content of the byte string literal to a semantic step after
 processing the syntax of the `bytes`/`BCHAR` rules as updated by
 {{e6527-new1}} and {{e6527-new2}}.
 
-The rules in {{e6543-2}} are therefore applied to the result of this
+The rules in {{e6543-2}} (as updated by {{e6527-new2}}) are therefore
+applied to the result of this
 processing where `bsqual` is given as `h` or `b64`.
 
 Note that this approach also works well with the use of byte strings
@@ -549,5 +550,6 @@ this document.
 In one of the ensuing discussions, {{{Doug Ewell}}} proposed to define an
 ABNF rule NONASCII, of which we have included the essence.
 Special thanks to the reviewers {{{Marco Tiloca}}}, {{{Christian
-Amsüss}}} (shepherd review), {{{Orie Steele}}} (AD review), and Éric Vyncke
+Amsüss}}} (shepherd review and further guidance), {{{Orie Steele}}} (AD
+review and further guidance), and Éric Vyncke
 (detailed IESG review).
