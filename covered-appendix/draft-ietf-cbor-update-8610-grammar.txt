@@ -84,26 +84,26 @@ Table of Contents
    1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   3
      1.1.  Conventions and Definitions . . . . . . . . . . . . . . .   3
    2.  Clarifications and Changes based on Errata Reports  . . . . .   3
-     2.1.  Err6527 (text string literals), Err6278 . . . . . . . . .   3
-     2.2.  Err6526, Err6543  . . . . . . . . . . . . . . . . . . . .   5
-       Change proposed by Errata Report 6543 . . . . . . . . . . . .   6
-       No change needed after addressing Err6527 (text string
-           literals), Err6278 (Section 2.1)  . . . . . . . . . . . .   7
-   3.  Small Enabling Grammar Changes  . . . . . . . . . . . . . . .   8
-     3.1.  Empty data models . . . . . . . . . . . . . . . . . . . .   8
-     3.2.  Non-literal Tag Numbers, Simple Values  . . . . . . . . .   9
-   4.  Security Considerations . . . . . . . . . . . . . . . . . . .  10
-   5.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  11
-   6.  References  . . . . . . . . . . . . . . . . . . . . . . . . .  11
-     6.1.  Normative References  . . . . . . . . . . . . . . . . . .  11
-     6.2.  Informative References  . . . . . . . . . . . . . . . . .  11
-   Appendix A.  Updated Collected ABNF for CDDL  . . . . . . . . . .  12
-   Appendix B.  Details about Covered Errata Reports . . . . . . . .  15
+     2.1.  Updates to String Literal Grammar . . . . . . . . . . . .   3
+       Err6527 (Text String Literals)  . . . . . . . . . . . . . . .   3
+       Err6278 (Consistent String Literals)  . . . . . . . . . . . .   5
+       Addressing Err6526, Err6543 . . . . . . . . . . . . . . . . .   5
+     2.2.  Examples Demonstrating the Updated String Syntaxes  . . .   5
+   3.  Small Enabling Grammar Changes  . . . . . . . . . . . . . . .   6
+     3.1.  Empty data models . . . . . . . . . . . . . . . . . . . .   7
+     3.2.  Non-literal Tag Numbers, Simple Values  . . . . . . . . .   7
+   4.  Security Considerations . . . . . . . . . . . . . . . . . . .   8
+   5.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   9
+   6.  References  . . . . . . . . . . . . . . . . . . . . . . . . .   9
+     6.1.  Normative References  . . . . . . . . . . . . . . . . . .   9
+     6.2.  Informative References  . . . . . . . . . . . . . . . . .   9
+   Appendix A.  Updated Collected ABNF for CDDL  . . . . . . . . . .  11
+   Appendix B.  Details about Covered Errata Reports . . . . . . . .  13
+     Change proposed by Errata Report 6543 . . . . . . . . . . . . .  13
+     No change needed after addressing Err6527 and Err6278
+         (Section 2.1) . . . . . . . . . . . . . . . . . . . . . . .  14
    Acknowledgments . . . . . . . . . . . . . . . . . . . . . . . . .  15
    Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .  15
-
-
-
 
 
 
@@ -124,7 +124,7 @@ Internet-Draft            CDDL grammar updates                 June 2024
    The present document updates [RFC8610] by addressing errata and
    making other small fixes for the ABNF grammar defined for CDDL there.
    The body of this document motivates and explains the updates; the
-   updated collected ABNF syntax in Figure 14 in Appendix A replaces the
+   updated collected ABNF syntax in Figure 11 in Appendix A replaces the
    collected ABNF syntax in Appendix B of [RFC8610].
 
 1.1.  Conventions and Definitions
@@ -150,7 +150,9 @@ Internet-Draft            CDDL grammar updates                 June 2024
    with existing implementations until these are updated, which this
    specification recommends).
 
-2.1.  Err6527 (text string literals), Err6278
+2.1.  Updates to String Literal Grammar
+
+Err6527 (Text String Literals)
 
    The ABNF used in [RFC8610] for the content of text string literals is
    rather permissive:
@@ -160,8 +162,6 @@ Internet-Draft            CDDL grammar updates                 June 2024
    SCHAR = %x20-21 / %x23-5B / %x5D-7E / %x80-10FFFD / SESC
    SESC = "\" (%x20-7E / %x80-10FFFD)
 
-     Figure 1: Original RFC 8610 ABNF for strings with permissive ABNF
-                   for SESC, but not allowing hex escapes
 
 
 
@@ -169,6 +169,9 @@ Bormann                 Expires 24 December 2024                [Page 3]
 
 Internet-Draft            CDDL grammar updates                 June 2024
 
+
+     Figure 1: Original RFC 8610 ABNF for strings with permissive ABNF
+                   for SESC, but not allowing hex escapes
 
    This allows almost any non-C0 character to be escaped by a backslash,
    but critically misses out on the \uXXXX and \uHHHH\uLLLL forms that
@@ -216,9 +219,6 @@ Internet-Draft            CDDL grammar updates                 June 2024
    BCHAR = %x20-26 / %x28-5B / %x5D-10FFFD / SESC / CRLF
    bsqual = "h" / "b64"
 
-                 Figure 3: Original RFC 8610 ABNF for BCHAR
-
-
 
 
 Bormann                 Expires 24 December 2024                [Page 4]
@@ -226,8 +226,12 @@ Bormann                 Expires 24 December 2024                [Page 4]
 Internet-Draft            CDDL grammar updates                 June 2024
 
 
+                 Figure 3: Original RFC 8610 ABNF for BCHAR
+
    With the SESC updated as above, \' is no longer allowed in BCHAR;
-   this now needs to be explicitly included.
+   this now needs to be explicitly included; see below.
+
+Err6278 (Consistent String Literals)
 
    Updating BCHAR also provides an opportunity to address [Err6278],
    which points to an inconsistency in treating U+007F (DEL) between
@@ -240,7 +244,7 @@ Internet-Draft            CDDL grammar updates                 June 2024
    (PCHAR).  For completeness, all these should also explicitly exclude
    the code points that have been set aside for UTF-16's surrogates.
 
-   ; new rules for BCHAR and SCHAR:
+   ; new rules for SCHAR, BCHAR, and PCHAR:
    SCHAR = %x20-21 / %x23-5B / %x5D-7E / NONASCII / SESC
    BCHAR = %x20-26 / %x28-5B / %x5D-7E / NONASCII / SESC / "\'" / CRLF
    PCHAR = %x20-7E / NONASCII
@@ -254,25 +258,21 @@ Internet-Draft            CDDL grammar updates                 June 2024
    doing this properly would draw in complexity from the ongoing
    evolution of the Unicode standard that is not needed here.)
 
-2.2.  Err6526, Err6543
+Addressing Err6526, Err6543
 
-   The above changes also cover [Err6543] and [Err6526]; see Appendix B
-   for details.  Please also consult Figures 8 and 9 for examples that
-   use the updated string syntax.
+   The above changes also cover [Err6543] (a proposal to split off
+   qualified byte string literals from UTF-8 byte string literals) and
+   [Err6526] (lost backslashes); see Appendix B for details.
 
+2.2.  Examples Demonstrating the Updated String Syntaxes
 
-   // Now move the rest of this section 2.2 to Appendix B.
-
-   The ABNF used in [RFC8610] for the content of byte string literals
-   lumps together byte strings notated as text with byte strings notated
-   in base16 (hex) or base64 (but see also updated BCHAR rule above):
-
-   ; RFC 8610 ABNF:
-   bytes = [bsqual] %x27 *BCHAR %x27
-   BCHAR = %x20-26 / %x28-5B / %x5D-10FFFD / SESC / CRLF
-
-                 Figure 5: Original RFC 8610 ABNF for BCHAR
-
+   The CDDL example in Figure 5 demonstrates various escaping techniques
+   now available for (byte and text) strings in CDDL.  Obviously in the
+   literals for a and x, there is no need to escape the second
+   character, an o, as \u{6f}; this is just for demonstration.
+   Similarly, as shown in c and z there also is no need to escape the 🁳
+   or ⌘, but escaping them may be convenient in order to limit the
+   character repertoire of a CDDL file itself to ASCII [STD80].
 
 
 
@@ -281,94 +281,6 @@ Bormann                 Expires 24 December 2024                [Page 5]
 
 Internet-Draft            CDDL grammar updates                 June 2024
 
-
-Change proposed by Errata Report 6543
-
-   Errata report 6543 proposes to handle the two cases in separate ABNF
-   rules (where, with an updated SESC, BCHAR obviously needs to be
-   updated as above):
-
-   ; Err6543 proposal:
-   bytes = %x27 *BCHAR %x27
-         / bsqual %x27 *QCHAR %x27
-   BCHAR = %x20-26 / %x28-5B / %x5D-10FFFD / SESC / CRLF
-   QCHAR = DIGIT / ALPHA / "+" / "/" / "-" / "_" / "=" / WS
-
-    Figure 6: Errata Report 8653 Proposal to Split the Byte String Rules
-
-   This potentially causes a subtle change, which is hidden in the WS
-   rule:
-
-   ; RFC 8610 ABNF:
-   WS = SP / NL
-   SP = %x20
-   NL = COMMENT / CRLF
-   COMMENT = ";" *PCHAR CRLF
-   PCHAR = %x20-7E / %x80-10FFFD
-   CRLF = %x0A / %x0D.0A
-
-               Figure 7: ABNF definition of WS from RFC 8610
-
-   This allows any non-C0 character in a comment, so this fragment
-   becomes possible:
-
-   foo = h'
-      43424F52 ; 'CBOR'
-      0A       ; LF, but don't use CR!
-   '
-
-   The current text is not unambiguously saying whether the three
-   apostrophes need to be escaped with a \ or not, as in:
-
-   foo = h'
-      43424F52 ; \'CBOR\'
-      0A       ; LF, but don\'t use CR!
-   '
-
-   ... which would be supported by the existing ABNF in [RFC8610].
-
-
-
-
-
-
-
-Bormann                 Expires 24 December 2024                [Page 6]
-
-Internet-Draft            CDDL grammar updates                 June 2024
-
-
-No change needed after addressing Err6527 (text string literals),
-Err6278 (Section 2.1)
-
-   This document takes the simpler approach of leaving the processing of
-   the content of the byte string literal to a semantic step after
-   processing the syntax of the bytes/BCHAR rules as updated by Figure 2
-   and Figure 4.
-
-   The rules in Figure 7 are therefore applied to the result of this
-   processing where bsqual is given as h or b64.
-
-   Note that this approach also works well with the use of byte strings
-   in Section 3 of [RFC9165].  It does require some care when copy-
-   pasting into CDDL models from ABNF that contains single quotes (which
-   may also hide as apostrophes in comments); these need to be escaped
-   or possibly replaced by %x27.
-
-   Finally, our approach lends support to extending bsqual in CDDL
-   similar to the way this is done for CBOR diagnostic notation in
-   [I-D.ietf-cbor-edn-literals].  (Note that the processing of string
-   literals now is quite similar between CDDL and EDN, except that CDDL
-   has ";"-based end-of-line comments, while EDN has two comment
-   syntaxes, in-line "/"-based and end-of-line "#"-based.)
-
-   The CDDL example in Figure 8 demonstrates various escaping
-   techniques.  Obviously in the literals for a and x, there is no need
-   to escape the second character, an o, as \u{6f}; this is just for
-   demonstration.  Similarly, as shown in c and z there also is no need
-   to escape the 🁳 or ⌘, but escaping them may be convenient in order to
-   limit the character repertoire of a CDDL file itself to ASCII
-   [STD80].
 
    start = [a, b, c, x, y, z]
 
@@ -383,21 +295,13 @@ Err6278 (Section 2.1)
    y = 'Domino\'s \uD83C\uDC73 + \u2318'         ; escape JSON-like
    z = 'Domino\'s 🁳 + ⌘'                         ; escape ' only
 
-   Figure 8: Example text and byte string literals with various escaping
+   Figure 5: Example text and byte string literals with various escaping
                                  techniques
-
-
-
-
-Bormann                 Expires 24 December 2024                [Page 7]
-
-Internet-Draft            CDDL grammar updates                 June 2024
-
 
    In this example, the rules a to c and x to z all produce strings with
    byte-wise identical content, where a to c are text strings, and x to
-   z are byte strings.  Figure 9 illustrates this by showing the output
-   generated from the start rule in Figure 8, using pretty-printed
+   z are byte strings.  Figure 6 illustrates this by showing the output
+   generated from the start rule in Figure 5, using pretty-printed
    hexadecimal.
 
    86                                      # array(6)
@@ -414,7 +318,8 @@ Internet-Draft            CDDL grammar updates                 June 2024
       53                                   # bytes(19)
          446f6d696e6f277320f09f81b3202b20e28c98 # "Domino's 🁳 + ⌘"
 
-                 Figure 9: Generated CBOR from CDDL example
+         Figure 6: Generated CBOR from CDDL example (Pretty-Printed
+                                Hexadecimal)
 
 3.  Small Enabling Grammar Changes
 
@@ -426,6 +331,13 @@ Internet-Draft            CDDL grammar updates                 June 2024
    use of these changes cannot necessarily be processed by existing
    [RFC8610] implementations.
 
+
+
+Bormann                 Expires 24 December 2024                [Page 6]
+
+Internet-Draft            CDDL grammar updates                 June 2024
+
+
 3.1.  Empty data models
 
    [RFC8610] requires a CDDL file to have at least one rule.
@@ -433,22 +345,11 @@ Internet-Draft            CDDL grammar updates                 June 2024
    ; RFC 8610 ABNF:
    cddl = S 1*(rule S)
 
-         Figure 10: Original RFC 8610 ABNF for top-level rule cddl
+          Figure 7: Original RFC 8610 ABNF for top-level rule cddl
 
    This makes sense when the file has to stand alone, as a CDDL data
    model needs to have at least one rule to provide an entry point
    (start rule).
-
-
-
-
-
-
-
-Bormann                 Expires 24 December 2024                [Page 8]
-
-Internet-Draft            CDDL grammar updates                 June 2024
-
 
    With CDDL modules [I-D.ietf-cbor-cddl-modules], CDDL files can also
    include directives, and these might be the source of all the rules
@@ -456,14 +357,14 @@ Internet-Draft            CDDL grammar updates                 June 2024
    rule content in the file has to be available for directive
    processing, making the requirement for at least one rule cumbersome.
 
-   Therefore, the present update extends the grammar as in Figure 11 and
+   Therefore, the present update extends the grammar as in Figure 8 and
    turns the existence of at least one rule into a semantic constraint,
    to be fulfilled after processing of all directives.
 
    ; new top-level rule:
    cddl = S *(rule S)
 
-   Figure 11: Update to top-level ABNF in Appendices B and C of RFC 8610
+    Figure 8: Update to top-level ABNF in Appendices B and C of RFC 8610
 
 3.2.  Non-literal Tag Numbers, Simple Values
 
@@ -472,7 +373,7 @@ Internet-Draft            CDDL grammar updates                 June 2024
    ; extracted from RFC 8610 ABNF:
    type2 =/ "#" "6" ["." uint] "(" S type S ")"
 
-              Figure 12: Original RFC 8610 ABNF for tag syntax
+              Figure 9: Original RFC 8610 ABNF for tag syntax
 
    This means tag numbers can only be given as literal numbers (uints).
    Some specifications operate on ranges of tag numbers, e.g., [RFC9277]
@@ -483,12 +384,22 @@ Internet-Draft            CDDL grammar updates                 June 2024
 
    This update extends the syntax to:
 
+
+
+
+
+
+Bormann                 Expires 24 December 2024                [Page 7]
+
+Internet-Draft            CDDL grammar updates                 June 2024
+
+
    ; new rules collectively defining the tagged case:
    type2 =/ "#" "6" ["." head-number] "(" S type S ")"
           / "#" "7" ["." head-number]
    head-number = uint / ("<" type ">")
 
-       Figure 13: Update to tag and simple value ABNF in Appendices B
+       Figure 10: Update to tag and simple value ABNF in Appendices B
                              and C of RFC 8610
 
    For #6, the head-number stands for the tag number.  For #7, the head-
@@ -497,14 +408,6 @@ Internet-Draft            CDDL grammar updates                 June 2024
    24..31 are not used).  For 24..31, the head-number stands for the
    "additional information", e.g., #7.25 or #7.<25> is a float16, etc.
    (All ranges mentioned here are inclusive.)
-
-
-
-
-Bormann                 Expires 24 December 2024                [Page 9]
-
-Internet-Draft            CDDL grammar updates                 June 2024
-
 
    So the above range can be expressed in a CDDL fragment such as:
 
@@ -539,6 +442,14 @@ Internet-Draft            CDDL grammar updates                 June 2024
    a combination of CDDL tools some of which have been updated and some
    of which have not been, in particular based on Section 2.
 
+
+
+
+Bormann                 Expires 24 December 2024                [Page 8]
+
+Internet-Draft            CDDL grammar updates                 June 2024
+
+
    Attackers may want to exploit such potential confusion by crafting
    CDDL models that are interpreted differently by different parts of a
    system.  There will be a period of transition from the details that
@@ -553,14 +464,6 @@ Internet-Draft            CDDL grammar updates                 June 2024
    by a software developer, within a software development environment.
    Developers are therefore advised to treat CDDL models with the same
    care as any other source code.
-
-
-
-
-Bormann                 Expires 24 December 2024               [Page 10]
-
-Internet-Draft            CDDL grammar updates                 June 2024
-
 
 5.  IANA Considerations
 
@@ -596,6 +499,13 @@ Internet-Draft            CDDL grammar updates                 June 2024
 
 6.2.  Informative References
 
+
+
+Bormann                 Expires 24 December 2024                [Page 9]
+
+Internet-Draft            CDDL grammar updates                 June 2024
+
+
    [Err6278]  "Errata Report 6278", RFC 8610,
               <https://www.rfc-editor.org/errata/eid6278>.
 
@@ -610,13 +520,6 @@ Internet-Draft            CDDL grammar updates                 June 2024
 
    [Err6575]  "Errata Report 6575", RFC 8610,
               <https://www.rfc-editor.org/errata/eid6575>.
-
-
-
-Bormann                 Expires 24 December 2024               [Page 11]
-
-Internet-Draft            CDDL grammar updates                 June 2024
-
 
    [I-D.ietf-cbor-cddl-modules]
               Bormann, C. and B. Moran, "CDDL Module Structure", Work in
@@ -649,6 +552,16 @@ Internet-Draft            CDDL grammar updates                 June 2024
               <https://www.rfc-editor.org/info/std80>.
               At the time of writing, this STD comprises the following:
 
+
+
+
+
+
+Bormann                 Expires 24 December 2024               [Page 10]
+
+Internet-Draft            CDDL grammar updates                 June 2024
+
+
               Cerf, V., "ASCII format for network interchange", STD 80,
               RFC 20, DOI 10.17487/RFC0020, October 1969,
               <https://www.rfc-editor.org/info/rfc20>.
@@ -666,13 +579,6 @@ Appendix A.  Updated Collected ABNF for CDDL
 
    typename = id
    groupname = id
-
-
-
-Bormann                 Expires 24 December 2024               [Page 12]
-
-Internet-Draft            CDDL grammar updates                 June 2024
-
 
    assignt = "=" / "/="
    assigng = "=" / "//="
@@ -705,6 +611,13 @@ Internet-Draft            CDDL grammar updates                 June 2024
 
    group = grpchoice *(S "//" S grpchoice)
 
+
+
+Bormann                 Expires 24 December 2024               [Page 11]
+
+Internet-Draft            CDDL grammar updates                 June 2024
+
+
    grpchoice = *(grpent optcom)
 
    grpent = [occur S] [memberkey S] type
@@ -722,13 +635,6 @@ Internet-Draft            CDDL grammar updates                 June 2024
    occur = [uint] "*" [uint]
          / "+"
          / "?"
-
-
-
-Bormann                 Expires 24 December 2024               [Page 13]
-
-Internet-Draft            CDDL grammar updates                 June 2024
-
 
    uint = DIGIT1 *DIGIT
         / "0x" 1*HEXDIG
@@ -760,6 +666,14 @@ Internet-Draft            CDDL grammar updates                 June 2024
                    ("D" %x30-37 2HEXDIG )
    high-surrogate = "D" ("8"/"9"/"A"/"B") 2HEXDIG
    low-surrogate = "D" ("C"/"D"/"E"/"F") 2HEXDIG
+
+
+
+Bormann                 Expires 24 December 2024               [Page 12]
+
+Internet-Draft            CDDL grammar updates                 June 2024
+
+
    hexscalar = "10" 4HEXDIG / HEXDIG1 4HEXDIG
              / non-surrogate / 1*3HEXDIG
 
@@ -778,6 +692,92 @@ Internet-Draft            CDDL grammar updates                 June 2024
 
    S = *WS
    WS = SP / NL
+   SP = %x20
+   NL = COMMENT / CRLF
+   COMMENT = ";" *PCHAR CRLF
+   PCHAR = %x20-7E / NONASCII
+   NONASCII = %xA0-D7FF / %xE000-10FFFD
+   CRLF = %x0A / %x0D.0A
+
+                    Figure 11: ABNF for CDDL as updated
+
+Appendix B.  Details about Covered Errata Reports
+
+   This appendix is informative.
+
+   [Err6543] observes that the ABNF used in [RFC8610] for the content of
+   byte string literals lumps together byte strings notated as text with
+   byte strings notated in base16 (hex) or base64 (but see also updated
+   BCHAR rule in Figure 4):
+
+   ; RFC 8610 ABNF:
+   bytes = [bsqual] %x27 *BCHAR %x27
+   BCHAR = %x20-26 / %x28-5B / %x5D-10FFFD / SESC / CRLF
+
+                Figure 12: Original RFC 8610 ABNF for BCHAR
+
+Change proposed by Errata Report 6543
+
+   Errata report 6543 proposes to handle the two cases in separate ABNF
+   rules (where, with an updated SESC, BCHAR obviously needs to be
+   updated as above):
+
+
+
+
+Bormann                 Expires 24 December 2024               [Page 13]
+
+Internet-Draft            CDDL grammar updates                 June 2024
+
+
+   ; Err6543 proposal:
+   bytes = %x27 *BCHAR %x27
+         / bsqual %x27 *QCHAR %x27
+   BCHAR = %x20-26 / %x28-5B / %x5D-10FFFD / SESC / CRLF
+   QCHAR = DIGIT / ALPHA / "+" / "/" / "-" / "_" / "=" / WS
+
+   Figure 13: Errata Report 8653 Proposal to Split the Byte String Rules
+
+   This potentially causes a subtle change, which is hidden in the WS
+   rule:
+
+   ; RFC 8610 ABNF:
+   WS = SP / NL
+   SP = %x20
+   NL = COMMENT / CRLF
+   COMMENT = ";" *PCHAR CRLF
+   PCHAR = %x20-7E / %x80-10FFFD
+   CRLF = %x0A / %x0D.0A
+
+               Figure 14: ABNF definition of WS from RFC 8610
+
+   This allows any non-C0 character in a comment, so this fragment
+   becomes possible:
+
+   foo = h'
+      43424F52 ; 'CBOR'
+      0A       ; LF, but don't use CR!
+   '
+
+   The current text is not unambiguously saying whether the three
+   apostrophes need to be escaped with a \ or not, as in:
+
+   foo = h'
+      43424F52 ; \'CBOR\'
+      0A       ; LF, but don\'t use CR!
+   '
+
+   ... which would be supported by the existing ABNF in [RFC8610].
+
+No change needed after addressing Err6527 and Err6278 (Section 2.1)
+
+   This document takes the simpler approach of leaving the processing of
+   the content of the byte string literal to a semantic step after
+   processing the syntax of the bytes/BCHAR rules as updated by Figure 2
+   and Figure 4.
+
+   The rules in Figure 14 (as updated by Figure 4) are therefore applied
+   to the result of this processing where bsqual is given as h or b64.
 
 
 
@@ -786,19 +786,18 @@ Bormann                 Expires 24 December 2024               [Page 14]
 Internet-Draft            CDDL grammar updates                 June 2024
 
 
-   SP = %x20
-   NL = COMMENT / CRLF
-   COMMENT = ";" *PCHAR CRLF
-   PCHAR = %x20-7E / NONASCII
-   NONASCII = %xA0-D7FF / %xE000-10FFFD
-   CRLF = %x0A / %x0D.0A
+   Note that this approach also works well with the use of byte strings
+   in Section 3 of [RFC9165].  It does require some care when copy-
+   pasting into CDDL models from ABNF that contains single quotes (which
+   may also hide as apostrophes in comments); these need to be escaped
+   or possibly replaced by %x27.
 
-                    Figure 14: ABNF for CDDL as updated
-
-Appendix B.  Details about Covered Errata Reports
-
-
-   // Move most of the content of 2.2 here.
+   Finally, the approach taken lends support to extending bsqual in CDDL
+   similar to the way this is done for CBOR diagnostic notation in
+   [I-D.ietf-cbor-edn-literals].  (Note that the processing of string
+   literals now is quite similar between CDDL and EDN, except that CDDL
+   has ";"-based end-of-line comments, while EDN has two comment
+   syntaxes, in-line "/"-based and end-of-line "#"-based.)
 
 Acknowledgments
 
@@ -806,8 +805,8 @@ Acknowledgments
    this document.  In one of the ensuing discussions, Doug Ewell
    proposed to define an ABNF rule NONASCII, of which we have included
    the essence.  Special thanks to the reviewers Marco Tiloca, Christian
-   Amsüss (shepherd review), Orie Steele (AD review), and Éric Vyncke
-   (detailed IESG review).
+   Amsüss (shepherd review and further guidance), Orie Steele (AD review
+   and further guidance), and Éric Vyncke (detailed IESG review).
 
 Author's Address
 
@@ -818,6 +817,7 @@ Author's Address
    Germany
    Phone: +49-421-218-63921
    Email: cabo@tzi.org
+
 
 
 
