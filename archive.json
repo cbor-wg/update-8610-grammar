@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-06-20T01:23:13.718180+00:00",
+  "timestamp": "2024-06-23T01:35:31.847599+00:00",
   "repo": "cbor-wg/update-8610-grammar",
   "labels": [
     {
@@ -476,7 +476,7 @@
             "abbreviatedOid": "e923d6c"
           },
           "author": "OR13",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "state": "APPROVED",
           "body": "",
           "createdAt": "2024-05-16T22:15:20Z",
@@ -531,7 +531,7 @@
             "abbreviatedOid": "8d47261"
           },
           "author": "OR13",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "state": "APPROVED",
           "body": "",
           "createdAt": "2024-05-16T22:16:08Z",
@@ -586,7 +586,7 @@
             "abbreviatedOid": "22b074a"
           },
           "author": "OR13",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "state": "APPROVED",
           "body": "",
           "createdAt": "2024-05-16T22:18:29Z",
@@ -666,52 +666,91 @@
       "id": "PR_kwDOJHZRCM5y9Qq6",
       "title": "Don't use \"Old\" in captions (and labels), clarify what are updates..",
       "url": "https://github.com/cbor-wg/update-8610-grammar/pull/12",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "cabo",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": ".. and where.\r\n\r\n(\u00c9ric Vyncke re \u00a7 2.1)",
       "createdAt": "2024-06-19T12:26:44Z",
-      "updatedAt": "2024-06-19T12:26:44Z",
+      "updatedAt": "2024-06-22T10:31:13Z",
       "baseRepository": "cbor-wg/update-8610-grammar",
       "baseRefName": "main",
       "baseRefOid": "070bcd0dd8ff0140043eeea906badbe143556a65",
       "headRepository": "cbor-wg/update-8610-grammar",
       "headRefName": "better-captions",
-      "headRefOid": "86b8f9c248b22a3bf9dee67def75932583e4211c",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "a6ec4da5230df571fccfa33a85dd7789c4be4a6f",
+      "closedAt": "2024-06-22T10:31:13Z",
+      "mergedAt": "2024-06-22T10:31:13Z",
+      "mergedBy": "cabo",
+      "mergeCommit": {
+        "oid": "267d7b49b452a650fa78096af8927d90bccb2b3a"
+      },
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOJHZRCM5_BrIr",
+          "commit": {
+            "abbreviatedOid": "86b8f9c"
+          },
+          "author": "chrysn",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-06-20T18:54:40Z",
+          "updatedAt": "2024-06-20T18:54:51Z",
+          "comments": [
+            {
+              "originalPosition": 32,
+              "body": "```suggestion\r\n{: #e6527-new2 title=\"Update to ABNF in Appendix B of RFC 8610: BCHAR, SCHAR, and PCHAR\"\r\n```\r\n\r\nLooking through the figures changed in this I found that addition to be more confusing than helpful. (And there is no comment the document received recently I remember this change to address -- mentioning that not because that'd be a strict requirement for that kind of change at this time, but because if there were, there'd be another extra reason for the \"character-level\" text that I didn't find).",
+              "createdAt": "2024-06-20T18:54:41Z",
+              "updatedAt": "2024-06-20T18:54:51Z"
+            }
+          ]
+        }
+      ]
     },
     {
       "number": 13,
       "id": "PR_kwDOJHZRCM5y9XMa",
       "title": "Avoid CS jargon \"production\" and use STD68 terminology \"rule\"",
       "url": "https://github.com/cbor-wg/update-8610-grammar/pull/13",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "cabo",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "(\u00c9ric Vyncke re \u00a7 2.2)",
       "createdAt": "2024-06-19T12:38:47Z",
-      "updatedAt": "2024-06-19T12:38:47Z",
+      "updatedAt": "2024-06-22T10:29:37Z",
       "baseRepository": "cbor-wg/update-8610-grammar",
       "baseRefName": "main",
-      "baseRefOid": "070bcd0dd8ff0140043eeea906badbe143556a65",
+      "baseRefOid": "7311af316c57d0799813fb4f2f20793995c821b5",
       "headRepository": "cbor-wg/update-8610-grammar",
       "headRefName": "production-rule",
-      "headRefOid": "5ad17dfdfddc0f43999e97edbe92f415fd12500b",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "77353d820c85af736464ceb02aa205a2975f4ac1",
+      "closedAt": "2024-06-22T10:29:37Z",
+      "mergedAt": "2024-06-22T10:29:37Z",
+      "mergedBy": "cabo",
+      "mergeCommit": {
+        "oid": "e9914c7ba6c6dc51cbfab0880727f369da9a0681"
+      },
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOJHZRCM5_Brv6",
+          "commit": {
+            "abbreviatedOid": "5ad17df"
+          },
+          "author": "chrysn",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-06-20T18:56:14Z",
+          "updatedAt": "2024-06-20T18:56:14Z",
+          "comments": []
+        }
+      ]
     },
     {
       "number": 14,
@@ -725,43 +764,59 @@
       "labels": [],
       "body": "(\u00c9ric Vyncke re \u00a7 2.2)",
       "createdAt": "2024-06-19T13:00:12Z",
-      "updatedAt": "2024-06-19T13:00:12Z",
+      "updatedAt": "2024-06-22T13:03:59Z",
       "baseRepository": "cbor-wg/update-8610-grammar",
       "baseRefName": "main",
-      "baseRefOid": "070bcd0dd8ff0140043eeea906badbe143556a65",
+      "baseRefOid": "267d7b49b452a650fa78096af8927d90bccb2b3a",
       "headRepository": "cbor-wg/update-8610-grammar",
       "headRefName": "covered-appendix",
-      "headRefOid": "e3be643558a41d21d128023530f60c7f8c35a368",
+      "headRefOid": "7600484b9282b297e58afe4bac8d623437f555f6",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOJHZRCM5_L09l",
+          "commit": {
+            "abbreviatedOid": "7600484"
+          },
+          "author": "OR13",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-06-22T13:03:59Z",
+          "updatedAt": "2024-06-22T13:03:59Z",
+          "comments": []
+        }
+      ]
     },
     {
       "number": 15,
       "id": "PR_kwDOJHZRCM5y9mKY",
       "title": "Avoid \"we\" except in the acknowledgements.",
       "url": "https://github.com/cbor-wg/update-8610-grammar/pull/15",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "cabo",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "(\u00c9ric Vyncke re \u00a7 3.1)",
       "createdAt": "2024-06-19T13:09:57Z",
-      "updatedAt": "2024-06-19T17:54:51Z",
+      "updatedAt": "2024-06-22T10:24:21Z",
       "baseRepository": "cbor-wg/update-8610-grammar",
       "baseRefName": "main",
       "baseRefOid": "070bcd0dd8ff0140043eeea906badbe143556a65",
       "headRepository": "cbor-wg/update-8610-grammar",
       "headRefName": "we",
-      "headRefOid": "ad3d8fac1e69b9995e07656d7e00fe2c1c087dd4",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "2230436c4f1fe90ad48b9f74d4b5f872e1a746b7",
+      "closedAt": "2024-06-22T10:24:21Z",
+      "mergedAt": "2024-06-22T10:24:21Z",
+      "mergedBy": "cabo",
+      "mergeCommit": {
+        "oid": "7311af316c57d0799813fb4f2f20793995c821b5"
+      },
       "comments": [],
       "reviews": [
         {
@@ -770,11 +825,44 @@
             "abbreviatedOid": "ad3d8fa"
           },
           "author": "OR13",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "state": "APPROVED",
           "body": "",
           "createdAt": "2024-06-19T17:54:51Z",
           "updatedAt": "2024-06-19T17:54:51Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOJHZRCM5_BuFQ",
+          "commit": {
+            "abbreviatedOid": "ad3d8fa"
+          },
+          "author": "chrysn",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-06-20T19:02:27Z",
+          "updatedAt": "2024-06-20T19:02:30Z",
+          "comments": [
+            {
+              "originalPosition": 21,
+              "body": "```suggestion\r\nThe rules above could, instead of `%x62`, also have used `%s\"b\"` etc., but didn't, in order to\r\n```\r\n\r\nWhile \"the rules could have written\" is arguably correct, reading it gave me a kneejerk \"could have \u2026 *been* written\" reaction that stopped my reading flow. I'm not sure my suggestion is a real improvement \u2013 maybe you find a better rephrasing.",
+              "createdAt": "2024-06-20T19:02:27Z",
+              "updatedAt": "2024-06-20T19:02:30Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOJHZRCM5_Hps8",
+          "commit": {
+            "abbreviatedOid": "2230436"
+          },
+          "author": "aj-stein-nist",
+          "authorAssociation": "NONE",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-06-21T13:51:30Z",
+          "updatedAt": "2024-06-21T13:51:30Z",
           "comments": []
         }
       ]
@@ -784,26 +872,163 @@
       "id": "PR_kwDOJHZRCM5y-AWg",
       "title": "Explain the structure of the document in the intro.",
       "url": "https://github.com/cbor-wg/update-8610-grammar/pull/16",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "cabo",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "(\u00c9ric Vyncke re Appendix A)",
       "createdAt": "2024-06-19T14:00:19Z",
-      "updatedAt": "2024-06-19T14:00:19Z",
+      "updatedAt": "2024-06-22T10:22:36Z",
       "baseRepository": "cbor-wg/update-8610-grammar",
       "baseRefName": "main",
       "baseRefOid": "070bcd0dd8ff0140043eeea906badbe143556a65",
       "headRepository": "cbor-wg/update-8610-grammar",
       "headRefName": "intro-structure",
       "headRefOid": "c16bb3724639cc50955f31c079eca92b571a2e17",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2024-06-22T10:22:36Z",
+      "mergedAt": "2024-06-22T10:22:36Z",
+      "mergedBy": "cabo",
+      "mergeCommit": {
+        "oid": "476738c9fc94be13e66a20520732335cf77c26f4"
+      },
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOJHZRCM5_BvQz",
+          "commit": {
+            "abbreviatedOid": "c16bb37"
+          },
+          "author": "chrysn",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-06-20T19:05:46Z",
+          "updatedAt": "2024-06-20T19:05:46Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOJHZRCM5_HrD3",
+          "commit": {
+            "abbreviatedOid": "c16bb37"
+          },
+          "author": "aj-stein-nist",
+          "authorAssociation": "NONE",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-06-21T13:54:01Z",
+          "updatedAt": "2024-06-21T13:54:01Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 17,
+      "id": "PR_kwDOJHZRCM5zF-v6",
+      "title": "Security considerations: Explain how the need for provenance...",
+      "url": "https://github.com/cbor-wg/update-8610-grammar/pull/17",
+      "state": "MERGED",
+      "author": "cabo",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "... checking of models also comes from possible implementation differences caused by this grammar update.\r\n\r\n(based on a comment from Paul Wouters)",
+      "createdAt": "2024-06-20T16:13:37Z",
+      "updatedAt": "2024-06-22T10:21:49Z",
+      "baseRepository": "cbor-wg/update-8610-grammar",
+      "baseRefName": "main",
+      "baseRefOid": "070bcd0dd8ff0140043eeea906badbe143556a65",
+      "headRepository": "cbor-wg/update-8610-grammar",
+      "headRefName": "need-for-provenance",
+      "headRefOid": "bd8a223e368fba5b5cfc5774551b5f6f11ea9315",
+      "closedAt": "2024-06-22T10:21:49Z",
+      "mergedAt": "2024-06-22T10:21:49Z",
+      "mergedBy": "cabo",
+      "mergeCommit": {
+        "oid": "ea5ee84f93005cffe85c3763e90ee15ab3f4d9b0"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOJHZRCM5_BdR-",
+          "commit": {
+            "abbreviatedOid": "46d9ee4"
+          },
+          "author": "chrysn",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-06-20T18:21:08Z",
+          "updatedAt": "2024-06-20T18:21:08Z",
+          "comments": [
+            {
+              "originalPosition": 21,
+              "body": "```suggestion\r\nDevelopers are therefore advised in general to treat CDDL models with\r\nthe same care as any other source code.\r\n```\r\n\r\ncould both reduce the verbose expression and not make assumptions on how they come to trust the code.",
+              "createdAt": "2024-06-20T18:21:08Z",
+              "updatedAt": "2024-06-20T18:21:08Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOJHZRCM5_Blih",
+          "commit": {
+            "abbreviatedOid": "4842708"
+          },
+          "author": "OR13",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-06-20T18:42:33Z",
+          "updatedAt": "2024-06-20T18:42:33Z",
+          "comments": [
+            {
+              "originalPosition": 19,
+              "body": "```suggestion\r\nDevelopers are therefore advised to treat CDDL models with\r\n```",
+              "createdAt": "2024-06-20T18:42:33Z",
+              "updatedAt": "2024-06-20T18:42:33Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOJHZRCM5_BlpM",
+          "commit": {
+            "abbreviatedOid": "4842708"
+          },
+          "author": "OR13",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-06-20T18:42:51Z",
+          "updatedAt": "2024-06-20T18:42:51Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOJHZRCM5_CDVv",
+          "commit": {
+            "abbreviatedOid": "bd8a223"
+          },
+          "author": "chrysn",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-06-20T20:00:15Z",
+          "updatedAt": "2024-06-20T20:00:15Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOJHZRCM5_HqQu",
+          "commit": {
+            "abbreviatedOid": "bd8a223"
+          },
+          "author": "aj-stein-nist",
+          "authorAssociation": "NONE",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-06-21T13:52:33Z",
+          "updatedAt": "2024-06-21T13:52:33Z",
+          "comments": []
+        }
+      ]
     }
   ]
 }
