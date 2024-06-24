@@ -452,7 +452,7 @@ applied in the present document.
 {: #collected-abnf title="ABNF for CDDL as updated"
 sourcecode-name="cddl-updated-complete.abnf"}
 
-# Details about Covered Errata Reports {#Err6543-covered}
+# Details about Covering Errata Report 6543 {#Err6543-covered}
 
 This appendix is informative.
 
@@ -468,7 +468,7 @@ BCHAR = %x20-26 / %x28-5B / %x5D-10FFFD / SESC / CRLF
 ~~~
 {: #e6527-orig2a title="Original RFC 8610 ABNF for BCHAR"}
 
-## Change proposed by Errata Report 6543
+## Change Proposed By Errata Report 6543
 {:unnumbered}
 
 Errata report 6543 proposes to handle the two cases in separate
@@ -519,13 +519,14 @@ foo = h'
 
 ... which would be supported by the existing ABNF in {{-cddl}}.
 
-## No change needed after addressing Err6527 and Err6278 ({{e6527}})
+## No Further Change Needed After Updating String Literal Grammar ({{e6527}})
 {:unnumbered}
 
 This document takes the simpler approach of leaving the processing of
 the content of the byte string literal to a semantic step after
-processing the syntax of the `bytes`/`BCHAR` rules as updated by
-{{e6527-new1}} and {{e6527-new2}}.
+processing the syntax of the `bytes`/`BCHAR` rules, as updated by
+{{e6527-new1}} and {{e6527-new2}} in {{e6527}} (updates prompted by the combination
+of {{Err6527}} and {{Err6278}}).
 
 The rules in {{e6543-2}} (as updated by {{e6527-new2}}) are therefore
 applied to the result of this
