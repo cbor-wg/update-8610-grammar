@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-06-23T01:35:31.847599+00:00",
+  "timestamp": "2024-06-25T01:24:50.942637+00:00",
   "repo": "cbor-wg/update-8610-grammar",
   "labels": [
     {
@@ -757,24 +757,26 @@
       "id": "PR_kwDOJHZRCM5y9hdy",
       "title": "Move details about Errata Reports covered by 2.1 to new appendix B",
       "url": "https://github.com/cbor-wg/update-8610-grammar/pull/14",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "cabo",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "(\u00c9ric Vyncke re \u00a7 2.2)",
       "createdAt": "2024-06-19T13:00:12Z",
-      "updatedAt": "2024-06-22T13:03:59Z",
+      "updatedAt": "2024-06-24T09:26:35Z",
       "baseRepository": "cbor-wg/update-8610-grammar",
       "baseRefName": "main",
       "baseRefOid": "267d7b49b452a650fa78096af8927d90bccb2b3a",
       "headRepository": "cbor-wg/update-8610-grammar",
       "headRefName": "covered-appendix",
-      "headRefOid": "7600484b9282b297e58afe4bac8d623437f555f6",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "4b8d52076fdf03815dcd6fdff18930b830189178",
+      "closedAt": "2024-06-24T09:26:35Z",
+      "mergedAt": "2024-06-24T09:26:35Z",
+      "mergedBy": "cabo",
+      "mergeCommit": {
+        "oid": "d2870001604315c77276c05d8442906bb1f7bbdc"
+      },
       "comments": [],
       "reviews": [
         {
@@ -788,6 +790,59 @@
           "body": "",
           "createdAt": "2024-06-22T13:03:59Z",
           "updatedAt": "2024-06-22T13:03:59Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOJHZRCM5_QdsE",
+          "commit": {
+            "abbreviatedOid": "7600484"
+          },
+          "author": "chrysn",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "The body is now way smoother, but I think the appendix could be a bit more reader-friendly when the reader does not know the numbers by heart.",
+          "createdAt": "2024-06-24T08:21:48Z",
+          "updatedAt": "2024-06-24T08:22:48Z",
+          "comments": [
+            {
+              "originalPosition": 216,
+              "body": "The structure was confusing to me at first: We start (above the first subsection heading in the appendix) with 6543, which feels off but OK, then comes the change proposed by 6543, but here I'm left hanging with \"OK, but what's the conclusion here? Did we follow the proposed change or not? Sounds like not.\" \u2026 but the next subsection apparently goes off with different errata items.\r\n\r\nWith reading it again and jumping back to see that the errata interact, I now do see that this is still about 6543, but on how those other errata resolutions solved it.\r\n\r\nI don't have any local suggestions on how to avoid more readers doing the same exercise; maybe a combination of:\r\n* The whole Appendix B is all about 6543. That could be reflected in the appendix title. (IIUC all errata handling unrelated to 6543 has little enough need for discussion to be done inline).\r\n* The sub-headings may then be \"Change proposed in the errata report\" and \"No change needed due to updated string literal grammar (Section 2.1)\" (\"\u2026Figure 2 and Figure 4, *as prompted by Err6527 and Err6278*.\")",
+              "createdAt": "2024-06-24T08:21:48Z",
+              "updatedAt": "2024-06-24T08:22:48Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOJHZRCM5_QrcJ",
+          "commit": {
+            "abbreviatedOid": "7600484"
+          },
+          "author": "cabo",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-06-24T08:37:55Z",
+          "updatedAt": "2024-06-24T08:37:56Z",
+          "comments": [
+            {
+              "originalPosition": 216,
+              "body": "I prefer to be explicit as in \"Change Proposed By Errata Report 6543\", but otherwise put in your suggestions.\r\n\r\n",
+              "createdAt": "2024-06-24T08:37:55Z",
+              "updatedAt": "2024-06-24T08:37:56Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOJHZRCM5_Qtsh",
+          "commit": {
+            "abbreviatedOid": "4b8d520"
+          },
+          "author": "chrysn",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "Thanks for addressing this.",
+          "createdAt": "2024-06-24T08:40:39Z",
+          "updatedAt": "2024-06-24T08:40:39Z",
           "comments": []
         }
       ]
