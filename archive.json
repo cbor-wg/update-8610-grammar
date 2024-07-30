@@ -1,0 +1,1089 @@
+{
+  "magic": "E!vIA5L86J2I",
+  "timestamp": "2024-07-30T01:34:26.292405+00:00",
+  "repo": "cbor-wg/update-8610-grammar",
+  "labels": [
+    {
+      "name": "bug",
+      "description": "Something isn't working",
+      "color": "d73a4a"
+    },
+    {
+      "name": "documentation",
+      "description": "Improvements or additions to documentation",
+      "color": "0075ca"
+    },
+    {
+      "name": "duplicate",
+      "description": "This issue or pull request already exists",
+      "color": "cfd3d7"
+    },
+    {
+      "name": "enhancement",
+      "description": "New feature or request",
+      "color": "a2eeef"
+    },
+    {
+      "name": "good first issue",
+      "description": "Good for newcomers",
+      "color": "7057ff"
+    },
+    {
+      "name": "help wanted",
+      "description": "Extra attention is needed",
+      "color": "008672"
+    },
+    {
+      "name": "invalid",
+      "description": "This doesn't seem right",
+      "color": "e4e669"
+    },
+    {
+      "name": "question",
+      "description": "Further information is requested",
+      "color": "d876e3"
+    },
+    {
+      "name": "wontfix",
+      "description": "This will not be worked on",
+      "color": "ffffff"
+    }
+  ],
+  "issues": [
+    {
+      "number": 2,
+      "id": "I_kwDOJHZRCM55zs76",
+      "title": "ABNF trouble",
+      "url": "https://github.com/cbor-wg/update-8610-grammar/issues/2",
+      "state": "CLOSED",
+      "author": "chrysn",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "The ABNF provided in the appendix fails the test at https://author-tools.ietf.org/abnf, but inside code that came from https://www.rfc-editor.org/rfc/rfc8610#appendix-B\r\n\r\nABNF from -01:\r\n\r\n```\r\ncddl = S *(rule S)\r\nrule = typename [genericparm] S assignt S type\r\n     / groupname [genericparm] S assigng S grpent\r\n\r\ntypename = id\r\ngroupname = id\r\n\r\nassignt = \"=\" / \"/=\"\r\nassigng = \"=\" / \"//=\"\r\n\r\ngenericparm = \"<\" S id S *(\",\" S id S ) \">\"\r\ngenericarg = \"<\" S type1 S *(\",\" S type1 S ) \">\"\r\n\r\ntype = type1 *(S \"/\" S type1)\r\n\r\ntype1 = type2 [S (rangeop / ctlop) S type2]\r\n; space may be needed before the operator if type2 ends in a name\r\n\r\ntype2 = value\r\n      / typename [genericarg]\r\n      / \"(\" S type S \")\"\r\n      / \"{\" S group S \"}\"\r\n      / \"[\" S group S \"]\"\r\n      / \"~\" S typename [genericarg]\r\n      / \"&\" S \"(\" S group S \")\"\r\n      / \"&\" S groupname [genericarg]\r\n      / \"#\" \"6\" [\".\" tag-number] \"(\" S type S \")\"\r\n      / \"#\" DIGIT [\".\" uint]                ; major/ai\r\n      / \"#\"                                 ; any\r\ntag-number = uint / (\"<\" type \">\")\r\n\r\n\r\nrangeop = \"...\" / \"..\"\r\n\r\nctlop = \".\" id\r\n\r\ngroup = grpchoice *(S \"//\" S grpchoice)\r\n\r\ngrpchoice = *(grpent optcom)\r\n\r\ngrpent = [occur S] [memberkey S] type\r\n       / [occur S] groupname [genericarg]  ; preempted by above\r\n       / [occur S] \"(\" S group S \")\"\r\n\r\nmemberkey = type1 S [\"^\" S] \"=>\"\r\n          / bareword S \":\"\r\n          / value S \":\"\r\n\r\nbareword = id\r\n\r\noptcom = S [\",\" S]\r\n\r\noccur = [uint] \"*\" [uint]\r\n      / \"+\"\r\n      / \"?\"\r\n\r\nuint = DIGIT1 *DIGIT\r\n     / \"0x\" 1*HEXDIG\r\n     / \"0b\" 1*BINDIG\r\n     / \"0\"\r\n\r\nvalue = number\r\n      / text\r\n      / bytes\r\n\r\nint = [\"-\"] uint\r\n\r\n; This is a float if it has fraction or exponent; int otherwise\r\nnumber = hexfloat / (int [\".\" fraction] [\"e\" exponent ])\r\nhexfloat = [\"-\"] \"0x\" 1*HEXDIG [\".\" 1*HEXDIG] \"p\" exponent\r\nfraction = 1*DIGIT\r\nexponent = [\"+\"/\"-\"] 1*DIGIT\r\n\r\ntext = %x22 *SCHAR %x22\r\nSCHAR = %x20-21 / %x23-5B / %x5D-7E / %x80-10FFFD / SESC\r\n\r\nSESC = \"\\\" ( %x22 / \"/\" / \"\\\" /                 ; \\\" \\/ \\\\\r\n             %x62 / %x66 / %x6E / %x72 / %x74 / ; \\b \\f \\n \\r \\t\r\n             (%x75 hexchar) )                   ; \\uXXXX\r\nhexchar = non-surrogate / (high-surrogate \"\\\" %x75 low-surrogate)\r\nnon-surrogate = ((DIGIT / \"A\"/\"B\"/\"C\" / \"E\"/\"F\") 3HEXDIG) /\r\n                (\"D\" %x30-37 2HEXDIG )\r\nhigh-surrogate = \"D\" (\"8\"/\"9\"/\"A\"/\"B\") 2HEXDIG\r\nlow-surrogate = \"D\" (\"C\"/\"D\"/\"E\"/\"F\") 2HEXDIG\r\n\r\nbytes = [bsqual] %x27 *BCHAR %x27\r\nBCHAR = %x20-26 / %x28-5B / %x5D-10FFFD / SESC / \"\\'\" / CRLF\r\nbsqual = \"h\" / \"b64\"\r\n\r\nid = EALPHA *(*(\"-\" / \".\") (EALPHA / DIGIT))\r\nALPHA = %x41-5A / %x61-7A\r\nEALPHA = ALPHA / \"@\" / \"_\" / \"$\"\r\nDIGIT = %x30-39\r\nDIGIT1 = %x31-39\r\nHEXDIG = DIGIT / \"A\" / \"B\" / \"C\" / \"D\" / \"E\" / \"F\"\r\nBINDIG = %x30-31\r\n\r\nS = *WS\r\nWS = SP / NL\r\nSP = %x20\r\nNL = COMMENT / CRLF\r\nCOMMENT = \";\" *PCHAR CRLF\r\nPCHAR = %x20-7E / %x80-10FFFD\r\nCRLF = %x0A / %x0D.0A\r\n```\r\n\r\nError message:\r\n\r\n```\r\n(103:21): error: state 54, token \"end of file\": syntax error\r\nparsing failed: 1 errors encountered\r\n```\r\n\r\nThat's in the last two lines -- but those are identical to those in 8610... any ideas what's going wrong?",
+      "createdAt": "2023-12-15T11:55:14Z",
+      "updatedAt": "2023-12-15T12:08:19Z",
+      "closedAt": "2023-12-15T12:08:18Z",
+      "comments": [
+        {
+          "author": "cabo",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Weird.  Works for me.  Do you copy/paste into the form on https://author-tools.ietf.org/abnf ?\r\n",
+          "createdAt": "2023-12-15T12:04:48Z",
+          "updatedAt": "2023-12-15T12:04:48Z"
+        },
+        {
+          "author": "cabo",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Ha.  Can reproduce if I delete the final newline.",
+          "createdAt": "2023-12-15T12:07:31Z",
+          "updatedAt": "2023-12-15T12:07:31Z"
+        },
+        {
+          "author": "chrysn",
+          "authorAssociation": "MEMBER",
+          "body": "/me facepalms\r\n\r\nThanks",
+          "createdAt": "2023-12-15T12:08:18Z",
+          "updatedAt": "2023-12-15T12:08:18Z"
+        }
+      ]
+    },
+    {
+      "number": 3,
+      "id": "I_kwDOJHZRCM55z1e5",
+      "title": "ABNF: CDDLism",
+      "url": "https://github.com/cbor-wg/update-8610-grammar/issues/3",
+      "state": "CLOSED",
+      "author": "chrysn",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "While the summarized ABNF is OK (if one adds a final newline), the snippet in 3.2 does not validate even with the proper surroundings.\r\n\r\nIt says\r\n\r\n```\r\ntype2 /= \"#\" \"6\" [\".\" tag-number] \"(\" S type S \")\"\r\n```\r\n\r\nwhich uses a CDDL-style later alternative, whereas [ABNF's incremental alternatives](https://www.rfc-editor.org/rfc/rfc5234.html#section-3.3) are `=/`.\r\n\r\nNeither validates in https://author-tools.ietf.org/abnf, but that's probably OK because those are rarely used.",
+      "createdAt": "2023-12-15T12:19:47Z",
+      "updatedAt": "2023-12-15T12:51:11Z",
+      "closedAt": "2023-12-15T12:51:11Z",
+      "comments": [
+        {
+          "author": "cabo",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Right, these snippets are extracted from the long\r\n\r\n```\r\ntype2 = value\r\n      / typename [genericarg]\r\n      / \"(\" S type S \")\"\r\n      / \"{\" S group S \"}\"\r\n      / \"[\" S group S \"]\"\r\n      / \"~\" S typename [genericarg]\r\n      / \"&\" S \"(\" S group S \")\"\r\n      / \"&\" S groupname [genericarg]\r\n      / \"#\" \"6\" [\".\" tag-number] \"(\" S type S \")\"\r\n      / \"#\" DIGIT [\".\" uint]                ; major/ai\r\n      / \"#\"                                 ; any\r\ntag-number = uint / (\"<\" type \">\")\r\n```\r\n\r\nSo the question would be how best to phrase these extracts (certainly not with broken ABNF).",
+          "createdAt": "2023-12-15T12:29:18Z",
+          "updatedAt": "2023-12-15T12:29:34Z"
+        },
+        {
+          "author": "chrysn",
+          "authorAssociation": "MEMBER",
+          "body": "The `=/` mechanism in ABNF's incremental alternatives does seem suitable. It's apparently a niche thing in ABNF (as evidenced by lack of support in the tool), but it's sufficient to create a small example that is valid ABNF.",
+          "createdAt": "2023-12-15T12:32:03Z",
+          "updatedAt": "2023-12-15T12:32:03Z"
+        },
+        {
+          "author": "cabo",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "The  ABNF tool does support =/, but it requires type2 to already be defined (which is not needed in CDDL, by the way).\r\nSo the snippet would not validate stand-alone.\r\n",
+          "createdAt": "2023-12-15T12:33:19Z",
+          "updatedAt": "2023-12-15T12:35:02Z"
+        },
+        {
+          "author": "chrysn",
+          "authorAssociation": "MEMBER",
+          "body": "Does it need to? It's common in documents to incrementally build ABNF, and to what I would assume to be Knuth's discontent, we do not have formal language that expresses order or dependencies. This snippet will need to be appended to the original RFC8610 ABNF to be valid.",
+          "createdAt": "2023-12-15T12:38:07Z",
+          "updatedAt": "2023-12-15T12:38:07Z"
+        },
+        {
+          "author": "cabo",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Well, these are snippets, not code that actually integrates with the existing ABNF.\r\n\r\n(We do have a syntax for building models from snippets based on name=, but that is not used here, as we don't have the other snippets.)",
+          "createdAt": "2023-12-15T12:43:47Z",
+          "updatedAt": "2023-12-15T12:43:47Z"
+        },
+        {
+          "author": "chrysn",
+          "authorAssociation": "MEMBER",
+          "body": "To me, #4 is good enough to close this.\r\n\r\n(as for don't have ... if only we could just import from another document ;-) )",
+          "createdAt": "2023-12-15T12:49:50Z",
+          "updatedAt": "2023-12-15T12:50:24Z"
+        }
+      ]
+    },
+    {
+      "number": 5,
+      "id": "I_kwDOJHZRCM550C8q",
+      "title": "Have other errata been considered?",
+      "url": "https://github.com/cbor-wg/update-8610-grammar/issues/5",
+      "state": "CLOSED",
+      "author": "chrysn",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "From [the check list](https://authors.ietf.org/required-content#summary-of-changes):\r\n\r\n> Ensure any errata against RFCs that are being obsoleted or updated have been considered, and that the I-D clearly identifies those that have been addressed.\r\n\r\n* [x] https://www.rfc-editor.org/errata/eid6526 was about escaping in text, doesn't apply here\r\n* [x] https://www.rfc-editor.org/errata/eid6278 was about the role of the DELETE character, 0x7F. It's still allowed in BCHAR in the update -- are we still good at \"the proper fix is not straightforward, and that it should be handled in the next version of the spec.\", and why is this not the document to fix this in?\r\n  (AIU this doesn't need to be stated in the document; an acknowledgement that we still don't know how to best address this in here suffices to me.)\r\n* [x] https://www.rfc-editor.org/errata/eid6527 is just done here\r\n* [x] https://www.rfc-editor.org/errata/eid6543 is resolved (not as suggested in the erratum, but resolved)\r\n* [x] https://www.rfc-editor.org/errata/eid6575 is not about the grammar, and this document updates the grammar, so nothing to be done.",
+      "createdAt": "2023-12-15T12:58:10Z",
+      "updatedAt": "2023-12-15T15:19:54Z",
+      "closedAt": "2023-12-15T14:56:50Z",
+      "comments": []
+    }
+  ],
+  "pulls": [
+    {
+      "number": 1,
+      "id": "PR_kwDOJHZRCM5h_WQJ",
+      "title": "Shepherd review",
+      "url": "https://github.com/cbor-wg/update-8610-grammar/pull/1",
+      "state": "MERGED",
+      "author": "cabo",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Address Christian Ams\u00fcss' shepherd review.",
+      "createdAt": "2023-12-14T11:06:31Z",
+      "updatedAt": "2024-06-19T12:01:59Z",
+      "baseRepository": "cbor-wg/update-8610-grammar",
+      "baseRefName": "main",
+      "baseRefOid": "56f6f8b310566d74795fa6dcbac6b6cef92d9a7d",
+      "headRepository": "cbor-wg/update-8610-grammar",
+      "headRefName": "shepherd-review",
+      "headRefOid": "f157e60486cc302fe06975d08cd079f92a2c22a2",
+      "closedAt": "2023-12-15T09:53:15Z",
+      "mergedAt": "2023-12-15T09:53:15Z",
+      "mergedBy": "cabo",
+      "mergeCommit": {
+        "oid": "bb63c7be1bae5f1a78179eaabc9599d705012864"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOJHZRCM5qMiEp",
+          "commit": {
+            "abbreviatedOid": "f157e60"
+          },
+          "author": "chrysn",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2023-12-14T12:04:29Z",
+          "updatedAt": "2023-12-14T12:04:29Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 4,
+      "id": "PR_kwDOJHZRCM5iG2JL",
+      "title": "Close #3: ABNF has =/, not /=",
+      "url": "https://github.com/cbor-wg/update-8610-grammar/pull/4",
+      "state": "MERGED",
+      "author": "cabo",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2023-12-15T12:35:36Z",
+      "updatedAt": "2024-06-19T12:01:57Z",
+      "baseRepository": "cbor-wg/update-8610-grammar",
+      "baseRefName": "main",
+      "baseRefOid": "98bc87cab515d8e72df7c2722e5834b68c0d3a41",
+      "headRepository": "cbor-wg/update-8610-grammar",
+      "headRefName": "cddlism",
+      "headRefOid": "309c63b7e13658f5fbfa9371b44e63e313eeedd6",
+      "closedAt": "2023-12-15T12:51:09Z",
+      "mergedAt": "2023-12-15T12:51:09Z",
+      "mergedBy": "cabo",
+      "mergeCommit": {
+        "oid": "f18c49f6aa713719ed4eb8d9d08e9f1016f72dcc"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 6,
+      "id": "PR_kwDOJHZRCM5iHUny",
+      "title": "Cover more errata reports (close #5)",
+      "url": "https://github.com/cbor-wg/update-8610-grammar/pull/6",
+      "state": "MERGED",
+      "author": "cabo",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2023-12-15T14:06:59Z",
+      "updatedAt": "2024-06-19T12:01:54Z",
+      "baseRepository": "cbor-wg/update-8610-grammar",
+      "baseRefName": "main",
+      "baseRefOid": "f18c49f6aa713719ed4eb8d9d08e9f1016f72dcc",
+      "headRepository": "cbor-wg/update-8610-grammar",
+      "headRefName": "cover-more-errata-reports",
+      "headRefOid": "77bf301151e59441fe3b3416b9015ccdf1f8ba23",
+      "closedAt": "2023-12-15T14:56:48Z",
+      "mergedAt": "2023-12-15T14:56:47Z",
+      "mergedBy": "cabo",
+      "mergeCommit": {
+        "oid": "84dcc7a7f5725710c9f323b920abd2e1557572f1"
+      },
+      "comments": [
+        {
+          "author": "cabo",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "[b7ef215](https://github.com/cbor-wg/update-8610-grammar/pull/6/commits/b7ef2154924683207a1f87b795327a506b9ad7f5) is intended to start to close #5",
+          "createdAt": "2023-12-15T14:07:57Z",
+          "updatedAt": "2023-12-15T14:08:24Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOJHZRCM5qWT4B",
+          "commit": {
+            "abbreviatedOid": "77bf301"
+          },
+          "author": "chrysn",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "LGTM, thanks for addressing this.",
+          "createdAt": "2023-12-15T14:41:07Z",
+          "updatedAt": "2023-12-15T14:41:07Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 7,
+      "id": "PR_kwDOJHZRCM5lOxOi",
+      "title": "Add Unicode scalar hex escapes (\\u{1F913} for \ud83e\udd13) to SESC syntax",
+      "url": "https://github.com/cbor-wg/update-8610-grammar/pull/7",
+      "state": "MERGED",
+      "author": "cabo",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "As discussed in <https://mailarchive.ietf.org/arch/msg/cbor/O68sk29PRrEOdSEDQBV1y5QZ8wY>\r\n",
+      "createdAt": "2024-01-27T16:36:57Z",
+      "updatedAt": "2024-06-19T12:01:50Z",
+      "baseRepository": "cbor-wg/update-8610-grammar",
+      "baseRefName": "main",
+      "baseRefOid": "92072cc73bba9cadc705cc9e63042691d1ce7b6d",
+      "headRepository": "cbor-wg/update-8610-grammar",
+      "headRefName": "scalar-hex-escapes",
+      "headRefOid": "b9b1f6969edff97bb972fc2318591c0f7ac13787",
+      "closedAt": "2024-01-29T17:09:06Z",
+      "mergedAt": "2024-01-29T17:09:06Z",
+      "mergedBy": "cabo",
+      "mergeCommit": {
+        "oid": "3ce5839590c7e616cc132f8491afe84e956b6390"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOJHZRCM5uGQJz",
+          "commit": {
+            "abbreviatedOid": "c6fe792"
+          },
+          "author": "hildjj",
+          "authorAssociation": "NONE",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-01-27T16:59:12Z",
+          "updatedAt": "2024-01-27T16:59:49Z",
+          "comments": [
+            {
+              "originalPosition": 7,
+              "body": "I don't like this backslash syntax, but it looks like it's always been there.",
+              "createdAt": "2024-01-27T16:59:12Z",
+              "updatedAt": "2024-01-27T16:59:49Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOJHZRCM5uGQPT",
+          "commit": {
+            "abbreviatedOid": "c6fe792"
+          },
+          "author": "cabo",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-01-27T17:02:00Z",
+          "updatedAt": "2024-01-27T17:02:00Z",
+          "comments": [
+            {
+              "originalPosition": 7,
+              "body": "We copied that from JSON...\r\n(Not sure what specifically you don't like.)",
+              "createdAt": "2024-01-27T17:02:00Z",
+              "updatedAt": "2024-01-27T17:02:00Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOJHZRCM5uGRfb",
+          "commit": {
+            "abbreviatedOid": "c6fe792"
+          },
+          "author": "hildjj",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-01-27T17:13:29Z",
+          "updatedAt": "2024-01-27T17:13:29Z",
+          "comments": [
+            {
+              "originalPosition": 7,
+              "body": "Sorry, I get it now.  The %75 bit obfuscated it slightly.  It's fine as-is.",
+              "createdAt": "2024-01-27T17:13:29Z",
+              "updatedAt": "2024-01-27T17:13:29Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 8,
+      "id": "PR_kwDOJHZRCM5ofEeZ",
+      "title": "Add #7.<x> syntax for simple values.",
+      "url": "https://github.com/cbor-wg/update-8610-grammar/pull/8",
+      "state": "MERGED",
+      "author": "cabo",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "As implemented in the tools cddl (0.11.1) and cddlc (0.3.1),",
+      "createdAt": "2024-03-02T14:51:33Z",
+      "updatedAt": "2024-06-19T12:01:38Z",
+      "baseRepository": "cbor-wg/update-8610-grammar",
+      "baseRefName": "main",
+      "baseRefOid": "3ce5839590c7e616cc132f8491afe84e956b6390",
+      "headRepository": "cbor-wg/update-8610-grammar",
+      "headRefName": "simple-values-head-number",
+      "headRefOid": "2408228b3c6ac71087c9a9596f8c05beeaafdc36",
+      "closedAt": "2024-03-02T15:10:06Z",
+      "mergedAt": "2024-03-02T15:10:06Z",
+      "mergedBy": "cabo",
+      "mergeCommit": {
+        "oid": "d946922cc01a02849710dc502e33a3c56717ef5f"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOJHZRCM5yASA5",
+          "commit": {
+            "abbreviatedOid": "2408228"
+          },
+          "author": "chrysn",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "Nice and simple on the grammar side. LGTM.",
+          "createdAt": "2024-03-02T15:05:07Z",
+          "updatedAt": "2024-03-02T15:05:24Z",
+          "comments": [
+            {
+              "originalPosition": 34,
+              "body": "Does this need to include `uint` even? There is already a line in the type2 that is being extended that says ` / \"#\" DIGIT [\".\" uint]  ; major/ai` -- wouldn't that match first anyway, and thus no uint ever comes \"down\" this far?\r\n\r\n(Not new for `#7`)",
+              "createdAt": "2024-03-02T15:05:07Z",
+              "updatedAt": "2024-03-02T15:05:24Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOJHZRCM5yASLo",
+          "commit": {
+            "abbreviatedOid": "2408228"
+          },
+          "author": "cabo",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-03-02T15:09:53Z",
+          "updatedAt": "2024-03-02T15:09:53Z",
+          "comments": [
+            {
+              "originalPosition": 34,
+              "body": "The sequence in the collected ABNF in Appendix A is\r\n\r\n``` abnf\r\n      / \"#\" \"6\" [\".\" head-number] \"(\" S type S \")\"\r\n      / \"#\" \"7\" [\".\" head-number]\r\n      / \"#\" DIGIT [\".\" uint]                ; major/ai\r\n```\r\n\r\nSo, in a PEG parser, the second line wins over the third line.\r\nIn a traditional parser generator, this might be an ambiguity; ABNF does not require avoiding ambiguities though.",
+              "createdAt": "2024-03-02T15:09:53Z",
+              "updatedAt": "2024-03-02T15:09:54Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 9,
+      "id": "PR_kwDOJHZRCM5viJh4",
+      "title": "Say that Appendix A is normative.",
+      "url": "https://github.com/cbor-wg/update-8610-grammar/pull/9",
+      "state": "MERGED",
+      "author": "cabo",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2024-05-15T13:28:33Z",
+      "updatedAt": "2024-06-19T12:01:34Z",
+      "baseRepository": "cbor-wg/update-8610-grammar",
+      "baseRefName": "main",
+      "baseRefOid": "d946922cc01a02849710dc502e33a3c56717ef5f",
+      "headRepository": "cbor-wg/update-8610-grammar",
+      "headRefName": "appendix-normative",
+      "headRefOid": "e923d6c33a33cc463eb9083d63e7e3195d8e489e",
+      "closedAt": "2024-05-17T14:34:07Z",
+      "mergedAt": "2024-05-17T14:34:07Z",
+      "mergedBy": "cabo",
+      "mergeCommit": {
+        "oid": "4f70998d0804f83a9f91df6ee8a9f71cae6bcfde"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOJHZRCM5658ca",
+          "commit": {
+            "abbreviatedOid": "e923d6c"
+          },
+          "author": "OR13",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-05-16T22:15:20Z",
+          "updatedAt": "2024-05-16T22:15:20Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOJHZRCM56_4hr",
+          "commit": {
+            "abbreviatedOid": "e923d6c"
+          },
+          "author": "chrysn",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-05-17T14:17:20Z",
+          "updatedAt": "2024-05-17T14:17:20Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 10,
+      "id": "PR_kwDOJHZRCM5vi9wt",
+      "title": "Replace unexplained compatibility notation by explicit explanation",
+      "url": "https://github.com/cbor-wg/update-8610-grammar/pull/10",
+      "state": "MERGED",
+      "author": "cabo",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2024-05-15T14:55:31Z",
+      "updatedAt": "2024-06-19T12:01:32Z",
+      "baseRepository": "cbor-wg/update-8610-grammar",
+      "baseRefName": "main",
+      "baseRefOid": "d946922cc01a02849710dc502e33a3c56717ef5f",
+      "headRepository": "cbor-wg/update-8610-grammar",
+      "headRefName": "explain-compatibility",
+      "headRefOid": "8d47261307bc7914bfc56cc20544b46c30b84473",
+      "closedAt": "2024-05-17T14:33:21Z",
+      "mergedAt": "2024-05-17T14:33:21Z",
+      "mergedBy": "cabo",
+      "mergeCommit": {
+        "oid": "15b46c26c1ac9ab07510c618a8c551ace239bdfc"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOJHZRCM5658oZ",
+          "commit": {
+            "abbreviatedOid": "8d47261"
+          },
+          "author": "OR13",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-05-16T22:16:08Z",
+          "updatedAt": "2024-05-16T22:16:08Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOJHZRCM56__Tp",
+          "commit": {
+            "abbreviatedOid": "8d47261"
+          },
+          "author": "chrysn",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-05-17T14:27:42Z",
+          "updatedAt": "2024-05-17T14:27:42Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 11,
+      "id": "PR_kwDOJHZRCM5vuDGL",
+      "title": "Add example showing various escaping techniques",
+      "url": "https://github.com/cbor-wg/update-8610-grammar/pull/11",
+      "state": "MERGED",
+      "author": "cabo",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2024-05-16T21:30:18Z",
+      "updatedAt": "2024-06-19T12:01:29Z",
+      "baseRepository": "cbor-wg/update-8610-grammar",
+      "baseRefName": "main",
+      "baseRefOid": "d946922cc01a02849710dc502e33a3c56717ef5f",
+      "headRepository": "cbor-wg/update-8610-grammar",
+      "headRefName": "escaping-example",
+      "headRefOid": "7e0c89364a3ab27f49354e3415ec87686d61e8a0",
+      "closedAt": "2024-05-17T18:16:32Z",
+      "mergedAt": "2024-05-17T18:16:32Z",
+      "mergedBy": "cabo",
+      "mergeCommit": {
+        "oid": "a3e5d4b05d7b1fa352b94d6562c709da31a3e7f1"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOJHZRCM5659G_",
+          "commit": {
+            "abbreviatedOid": "22b074a"
+          },
+          "author": "OR13",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-05-16T22:18:29Z",
+          "updatedAt": "2024-05-16T22:18:29Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOJHZRCM56_8ab",
+          "commit": {
+            "abbreviatedOid": "22b074a"
+          },
+          "author": "chrysn",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-05-17T14:23:32Z",
+          "updatedAt": "2024-05-17T14:25:33Z",
+          "comments": [
+            {
+              "originalPosition": 34,
+              "body": "At least GitHub's code viewer renders \ud83c\udc41 wider than a single character width, offsetting the comments. If that happens with the IETF rendered view as well, \ud83c\udc81 might avoid the issue.",
+              "createdAt": "2024-05-17T14:23:32Z",
+              "updatedAt": "2024-05-17T14:25:33Z"
+            },
+            {
+              "originalPosition": 37,
+              "body": "```suggestion\r\nx = 'D\\u{6f}mino\\u{27}s \\u{1F041} + \\u{2318}' ; \\u{}-escape 4 chars\r\n```\r\n\r\nmight be a nice addition.",
+              "createdAt": "2024-05-17T14:24:36Z",
+              "updatedAt": "2024-05-17T14:25:33Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOJHZRCM57AGZU",
+          "commit": {
+            "abbreviatedOid": "22b074a"
+          },
+          "author": "cabo",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-05-17T14:40:15Z",
+          "updatedAt": "2024-05-17T14:40:16Z",
+          "comments": [
+            {
+              "originalPosition": 34,
+              "body": " \ud83c\udc41 is the result of a long journey to get a non-BMP character into RFC 9535.\r\n\ud83c\udc73 probably would be accepted by the RFC editor as well, so I'll make this small esthetic change.\r\n",
+              "createdAt": "2024-05-17T14:40:15Z",
+              "updatedAt": "2024-05-17T14:40:16Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOJHZRCM57AQtU",
+          "commit": {
+            "abbreviatedOid": "22b074a"
+          },
+          "author": "cabo",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-05-17T14:57:49Z",
+          "updatedAt": "2024-05-17T14:57:49Z",
+          "comments": [
+            {
+              "originalPosition": 37,
+              "body": "I wondered about doing that.  This muddies the example a little bit.  But I did it anyway, for additional variety.",
+              "createdAt": "2024-05-17T14:57:49Z",
+              "updatedAt": "2024-05-17T14:57:49Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 12,
+      "id": "PR_kwDOJHZRCM5y9Qq6",
+      "title": "Don't use \"Old\" in captions (and labels), clarify what are updates..",
+      "url": "https://github.com/cbor-wg/update-8610-grammar/pull/12",
+      "state": "MERGED",
+      "author": "cabo",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": ".. and where.\r\n\r\n(\u00c9ric Vyncke re \u00a7 2.1)",
+      "createdAt": "2024-06-19T12:26:44Z",
+      "updatedAt": "2024-06-22T10:31:13Z",
+      "baseRepository": "cbor-wg/update-8610-grammar",
+      "baseRefName": "main",
+      "baseRefOid": "070bcd0dd8ff0140043eeea906badbe143556a65",
+      "headRepository": "cbor-wg/update-8610-grammar",
+      "headRefName": "better-captions",
+      "headRefOid": "a6ec4da5230df571fccfa33a85dd7789c4be4a6f",
+      "closedAt": "2024-06-22T10:31:13Z",
+      "mergedAt": "2024-06-22T10:31:13Z",
+      "mergedBy": "cabo",
+      "mergeCommit": {
+        "oid": "267d7b49b452a650fa78096af8927d90bccb2b3a"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOJHZRCM5_BrIr",
+          "commit": {
+            "abbreviatedOid": "86b8f9c"
+          },
+          "author": "chrysn",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-06-20T18:54:40Z",
+          "updatedAt": "2024-06-20T18:54:51Z",
+          "comments": [
+            {
+              "originalPosition": 32,
+              "body": "```suggestion\r\n{: #e6527-new2 title=\"Update to ABNF in Appendix B of RFC 8610: BCHAR, SCHAR, and PCHAR\"\r\n```\r\n\r\nLooking through the figures changed in this I found that addition to be more confusing than helpful. (And there is no comment the document received recently I remember this change to address -- mentioning that not because that'd be a strict requirement for that kind of change at this time, but because if there were, there'd be another extra reason for the \"character-level\" text that I didn't find).",
+              "createdAt": "2024-06-20T18:54:41Z",
+              "updatedAt": "2024-06-20T18:54:51Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 13,
+      "id": "PR_kwDOJHZRCM5y9XMa",
+      "title": "Avoid CS jargon \"production\" and use STD68 terminology \"rule\"",
+      "url": "https://github.com/cbor-wg/update-8610-grammar/pull/13",
+      "state": "MERGED",
+      "author": "cabo",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "(\u00c9ric Vyncke re \u00a7 2.2)",
+      "createdAt": "2024-06-19T12:38:47Z",
+      "updatedAt": "2024-06-22T10:29:37Z",
+      "baseRepository": "cbor-wg/update-8610-grammar",
+      "baseRefName": "main",
+      "baseRefOid": "7311af316c57d0799813fb4f2f20793995c821b5",
+      "headRepository": "cbor-wg/update-8610-grammar",
+      "headRefName": "production-rule",
+      "headRefOid": "77353d820c85af736464ceb02aa205a2975f4ac1",
+      "closedAt": "2024-06-22T10:29:37Z",
+      "mergedAt": "2024-06-22T10:29:37Z",
+      "mergedBy": "cabo",
+      "mergeCommit": {
+        "oid": "e9914c7ba6c6dc51cbfab0880727f369da9a0681"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOJHZRCM5_Brv6",
+          "commit": {
+            "abbreviatedOid": "5ad17df"
+          },
+          "author": "chrysn",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-06-20T18:56:14Z",
+          "updatedAt": "2024-06-20T18:56:14Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 14,
+      "id": "PR_kwDOJHZRCM5y9hdy",
+      "title": "Move details about Errata Reports covered by 2.1 to new appendix B",
+      "url": "https://github.com/cbor-wg/update-8610-grammar/pull/14",
+      "state": "MERGED",
+      "author": "cabo",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "(\u00c9ric Vyncke re \u00a7 2.2)",
+      "createdAt": "2024-06-19T13:00:12Z",
+      "updatedAt": "2024-06-24T09:26:35Z",
+      "baseRepository": "cbor-wg/update-8610-grammar",
+      "baseRefName": "main",
+      "baseRefOid": "267d7b49b452a650fa78096af8927d90bccb2b3a",
+      "headRepository": "cbor-wg/update-8610-grammar",
+      "headRefName": "covered-appendix",
+      "headRefOid": "4b8d52076fdf03815dcd6fdff18930b830189178",
+      "closedAt": "2024-06-24T09:26:35Z",
+      "mergedAt": "2024-06-24T09:26:35Z",
+      "mergedBy": "cabo",
+      "mergeCommit": {
+        "oid": "d2870001604315c77276c05d8442906bb1f7bbdc"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOJHZRCM5_L09l",
+          "commit": {
+            "abbreviatedOid": "7600484"
+          },
+          "author": "OR13",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-06-22T13:03:59Z",
+          "updatedAt": "2024-06-22T13:03:59Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOJHZRCM5_QdsE",
+          "commit": {
+            "abbreviatedOid": "7600484"
+          },
+          "author": "chrysn",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "The body is now way smoother, but I think the appendix could be a bit more reader-friendly when the reader does not know the numbers by heart.",
+          "createdAt": "2024-06-24T08:21:48Z",
+          "updatedAt": "2024-06-24T08:22:48Z",
+          "comments": [
+            {
+              "originalPosition": 216,
+              "body": "The structure was confusing to me at first: We start (above the first subsection heading in the appendix) with 6543, which feels off but OK, then comes the change proposed by 6543, but here I'm left hanging with \"OK, but what's the conclusion here? Did we follow the proposed change or not? Sounds like not.\" \u2026 but the next subsection apparently goes off with different errata items.\r\n\r\nWith reading it again and jumping back to see that the errata interact, I now do see that this is still about 6543, but on how those other errata resolutions solved it.\r\n\r\nI don't have any local suggestions on how to avoid more readers doing the same exercise; maybe a combination of:\r\n* The whole Appendix B is all about 6543. That could be reflected in the appendix title. (IIUC all errata handling unrelated to 6543 has little enough need for discussion to be done inline).\r\n* The sub-headings may then be \"Change proposed in the errata report\" and \"No change needed due to updated string literal grammar (Section 2.1)\" (\"\u2026Figure 2 and Figure 4, *as prompted by Err6527 and Err6278*.\")",
+              "createdAt": "2024-06-24T08:21:48Z",
+              "updatedAt": "2024-06-24T08:22:48Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOJHZRCM5_QrcJ",
+          "commit": {
+            "abbreviatedOid": "7600484"
+          },
+          "author": "cabo",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-06-24T08:37:55Z",
+          "updatedAt": "2024-06-24T08:37:56Z",
+          "comments": [
+            {
+              "originalPosition": 216,
+              "body": "I prefer to be explicit as in \"Change Proposed By Errata Report 6543\", but otherwise put in your suggestions.\r\n\r\n",
+              "createdAt": "2024-06-24T08:37:55Z",
+              "updatedAt": "2024-06-24T08:37:56Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOJHZRCM5_Qtsh",
+          "commit": {
+            "abbreviatedOid": "4b8d520"
+          },
+          "author": "chrysn",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "Thanks for addressing this.",
+          "createdAt": "2024-06-24T08:40:39Z",
+          "updatedAt": "2024-06-24T08:40:39Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 15,
+      "id": "PR_kwDOJHZRCM5y9mKY",
+      "title": "Avoid \"we\" except in the acknowledgements.",
+      "url": "https://github.com/cbor-wg/update-8610-grammar/pull/15",
+      "state": "MERGED",
+      "author": "cabo",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "(\u00c9ric Vyncke re \u00a7 3.1)",
+      "createdAt": "2024-06-19T13:09:57Z",
+      "updatedAt": "2024-06-22T10:24:21Z",
+      "baseRepository": "cbor-wg/update-8610-grammar",
+      "baseRefName": "main",
+      "baseRefOid": "070bcd0dd8ff0140043eeea906badbe143556a65",
+      "headRepository": "cbor-wg/update-8610-grammar",
+      "headRefName": "we",
+      "headRefOid": "2230436c4f1fe90ad48b9f74d4b5f872e1a746b7",
+      "closedAt": "2024-06-22T10:24:21Z",
+      "mergedAt": "2024-06-22T10:24:21Z",
+      "mergedBy": "cabo",
+      "mergeCommit": {
+        "oid": "7311af316c57d0799813fb4f2f20793995c821b5"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOJHZRCM5-43GD",
+          "commit": {
+            "abbreviatedOid": "ad3d8fa"
+          },
+          "author": "OR13",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-06-19T17:54:51Z",
+          "updatedAt": "2024-06-19T17:54:51Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOJHZRCM5_BuFQ",
+          "commit": {
+            "abbreviatedOid": "ad3d8fa"
+          },
+          "author": "chrysn",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-06-20T19:02:27Z",
+          "updatedAt": "2024-06-20T19:02:30Z",
+          "comments": [
+            {
+              "originalPosition": 21,
+              "body": "```suggestion\r\nThe rules above could, instead of `%x62`, also have used `%s\"b\"` etc., but didn't, in order to\r\n```\r\n\r\nWhile \"the rules could have written\" is arguably correct, reading it gave me a kneejerk \"could have \u2026 *been* written\" reaction that stopped my reading flow. I'm not sure my suggestion is a real improvement \u2013 maybe you find a better rephrasing.",
+              "createdAt": "2024-06-20T19:02:27Z",
+              "updatedAt": "2024-06-20T19:02:30Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOJHZRCM5_Hps8",
+          "commit": {
+            "abbreviatedOid": "2230436"
+          },
+          "author": "aj-stein-nist",
+          "authorAssociation": "NONE",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-06-21T13:51:30Z",
+          "updatedAt": "2024-06-21T13:51:30Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 16,
+      "id": "PR_kwDOJHZRCM5y-AWg",
+      "title": "Explain the structure of the document in the intro.",
+      "url": "https://github.com/cbor-wg/update-8610-grammar/pull/16",
+      "state": "MERGED",
+      "author": "cabo",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "(\u00c9ric Vyncke re Appendix A)",
+      "createdAt": "2024-06-19T14:00:19Z",
+      "updatedAt": "2024-06-22T10:22:36Z",
+      "baseRepository": "cbor-wg/update-8610-grammar",
+      "baseRefName": "main",
+      "baseRefOid": "070bcd0dd8ff0140043eeea906badbe143556a65",
+      "headRepository": "cbor-wg/update-8610-grammar",
+      "headRefName": "intro-structure",
+      "headRefOid": "c16bb3724639cc50955f31c079eca92b571a2e17",
+      "closedAt": "2024-06-22T10:22:36Z",
+      "mergedAt": "2024-06-22T10:22:36Z",
+      "mergedBy": "cabo",
+      "mergeCommit": {
+        "oid": "476738c9fc94be13e66a20520732335cf77c26f4"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOJHZRCM5_BvQz",
+          "commit": {
+            "abbreviatedOid": "c16bb37"
+          },
+          "author": "chrysn",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-06-20T19:05:46Z",
+          "updatedAt": "2024-06-20T19:05:46Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOJHZRCM5_HrD3",
+          "commit": {
+            "abbreviatedOid": "c16bb37"
+          },
+          "author": "aj-stein-nist",
+          "authorAssociation": "NONE",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-06-21T13:54:01Z",
+          "updatedAt": "2024-06-21T13:54:01Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 17,
+      "id": "PR_kwDOJHZRCM5zF-v6",
+      "title": "Security considerations: Explain how the need for provenance...",
+      "url": "https://github.com/cbor-wg/update-8610-grammar/pull/17",
+      "state": "MERGED",
+      "author": "cabo",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "... checking of models also comes from possible implementation differences caused by this grammar update.\r\n\r\n(based on a comment from Paul Wouters)",
+      "createdAt": "2024-06-20T16:13:37Z",
+      "updatedAt": "2024-06-22T10:21:49Z",
+      "baseRepository": "cbor-wg/update-8610-grammar",
+      "baseRefName": "main",
+      "baseRefOid": "070bcd0dd8ff0140043eeea906badbe143556a65",
+      "headRepository": "cbor-wg/update-8610-grammar",
+      "headRefName": "need-for-provenance",
+      "headRefOid": "bd8a223e368fba5b5cfc5774551b5f6f11ea9315",
+      "closedAt": "2024-06-22T10:21:49Z",
+      "mergedAt": "2024-06-22T10:21:49Z",
+      "mergedBy": "cabo",
+      "mergeCommit": {
+        "oid": "ea5ee84f93005cffe85c3763e90ee15ab3f4d9b0"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOJHZRCM5_BdR-",
+          "commit": {
+            "abbreviatedOid": "46d9ee4"
+          },
+          "author": "chrysn",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-06-20T18:21:08Z",
+          "updatedAt": "2024-06-20T18:21:08Z",
+          "comments": [
+            {
+              "originalPosition": 21,
+              "body": "```suggestion\r\nDevelopers are therefore advised in general to treat CDDL models with\r\nthe same care as any other source code.\r\n```\r\n\r\ncould both reduce the verbose expression and not make assumptions on how they come to trust the code.",
+              "createdAt": "2024-06-20T18:21:08Z",
+              "updatedAt": "2024-06-20T18:21:08Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOJHZRCM5_Blih",
+          "commit": {
+            "abbreviatedOid": "4842708"
+          },
+          "author": "OR13",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-06-20T18:42:33Z",
+          "updatedAt": "2024-06-20T18:42:33Z",
+          "comments": [
+            {
+              "originalPosition": 19,
+              "body": "```suggestion\r\nDevelopers are therefore advised to treat CDDL models with\r\n```",
+              "createdAt": "2024-06-20T18:42:33Z",
+              "updatedAt": "2024-06-20T18:42:33Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOJHZRCM5_BlpM",
+          "commit": {
+            "abbreviatedOid": "4842708"
+          },
+          "author": "OR13",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-06-20T18:42:51Z",
+          "updatedAt": "2024-06-20T18:42:51Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOJHZRCM5_CDVv",
+          "commit": {
+            "abbreviatedOid": "bd8a223"
+          },
+          "author": "chrysn",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-06-20T20:00:15Z",
+          "updatedAt": "2024-06-20T20:00:15Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOJHZRCM5_HqQu",
+          "commit": {
+            "abbreviatedOid": "bd8a223"
+          },
+          "author": "aj-stein-nist",
+          "authorAssociation": "NONE",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-06-21T13:52:33Z",
+          "updatedAt": "2024-06-21T13:52:33Z",
+          "comments": []
+        }
+      ]
+    }
+  ]
+}
