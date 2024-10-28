@@ -15,23 +15,22 @@ JSON.
        The present document updates RFC 8610 by addressing errata and making
 other small fixes for the ABNF grammar defined for CDDL there. 
     " name="description">
-<meta content="xml2rfc 3.21.0" name="generator">
+<meta content="xml2rfc 3.23.2" name="generator">
 <meta content="Concise Data Definition Language" name="keyword">
 <meta content="draft-ietf-cbor-update-8610-grammar-latest" name="ietf.draft">
 <!-- Generator version information:
-  xml2rfc 3.21.0
-    Python 3.12.3
+  xml2rfc 3.23.2
+    Python 3.12.7
     ConfigArgParse 1.7
-    google-i18n-address 3.1.0
+    google-i18n-address 3.1.1
     intervaltree 3.1.0
     Jinja2 3.1.4
     lxml 4.9.4
-    platformdirs 4.2.2
+    platformdirs 4.3.6
     pycountry 22.3.5
     PyYAML 6.0.1
-    requests 2.31.0
-    setuptools 69.5.1
-    six 1.16.0
+    requests 2.32.3
+    setuptools 70.3.0
     wcwidth 0.2.13
 -->
 <link href="draft-ietf-cbor-update-8610-grammar.xml" rel="alternate" type="application/rfc+xml">
@@ -1031,11 +1030,11 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">CDDL grammar updates</td>
-<td class="right">June 2024</td>
+<td class="right">October 2024</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">Bormann</td>
-<td class="center">Expires 24 December 2024</td>
+<td class="center">Expires 1 May 2025</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1051,12 +1050,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <a href="https://www.rfc-editor.org/rfc/rfc8610" class="eref">8610</a> (if approved)</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2024-06-22" class="published">22 June 2024</time>
+<time datetime="2024-10-28" class="published">28 October 2024</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2024-12-24">24 December 2024</time></dd>
+<dd class="expires"><time datetime="2025-05-01">1 May 2025</time></dd>
 <dt class="label-authors">Author:</dt>
 <dd class="authors">
 <div class="author">
@@ -1112,7 +1111,7 @@ other small fixes for the ABNF grammar defined for CDDL there.<a href="#section-
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 24 December 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 1 May 2025.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1153,18 +1152,21 @@ other small fixes for the ABNF grammar defined for CDDL there.<a href="#section-
             <p id="section-toc.1-1.2.1"><a href="#section-2" class="auto internal xref">2</a>.  <a href="#name-clarifications-and-changes-" class="internal xref">Clarifications and Changes based on Errata Reports</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.1">
-                <p id="section-toc.1-1.2.2.1.1" class="keepWithNext"><a href="#section-2.1" class="auto internal xref">2.1</a>.  <a href="#name-err6527-text-string-literal" class="internal xref">Err6527 (text string literals)</a></p>
-</li>
-              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.2">
-                <p id="section-toc.1-1.2.2.2.1"><a href="#section-2.2" class="auto internal xref">2.2</a>.  <a href="#name-err6543-byte-string-literal" class="internal xref">Err6543 (byte string literals)</a></p>
+                <p id="section-toc.1-1.2.2.1.1"><a href="#section-2.1" class="auto internal xref">2.1</a>.  <a href="#name-updates-to-string-literal-g" class="internal xref">Updates to String Literal Grammar</a></p>
 <ul class="compact toc ulBare ulEmpty">
-<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.2.2.1">
-                    <p id="section-toc.1-1.2.2.2.2.1.1"><a href="#section-2.2.1" class="auto internal xref"></a><a href="#name-change-proposed-by-errata-r" class="internal xref">Change proposed by Errata Report 6543</a></p>
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.1.2.1">
+                    <p id="section-toc.1-1.2.2.1.2.1.1" class="keepWithNext"><a href="#section-2.1.1" class="auto internal xref"></a><a href="#name-err6527-text-string-literal" class="internal xref">Err6527 (Text String Literals)</a></p>
 </li>
-                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.2.2.2">
-                    <p id="section-toc.1-1.2.2.2.2.2.1"><a href="#section-2.2.2" class="auto internal xref"></a><a href="#name-no-change-needed-after-addr" class="internal xref">No change needed after addressing Err6527 (text string literals) (Section 2.1)</a></p>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.1.2.2">
+                    <p id="section-toc.1-1.2.2.1.2.2.1"><a href="#section-2.1.2" class="auto internal xref"></a><a href="#name-err6278-consistent-string-l" class="internal xref">Err6278 (Consistent String Literals)</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.1.2.3">
+                    <p id="section-toc.1-1.2.2.1.2.3.1"><a href="#section-2.1.3" class="auto internal xref"></a><a href="#name-addressing-err6526-err6543" class="internal xref">Addressing Err6526, Err6543</a></p>
 </li>
                 </ul>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.2">
+                <p id="section-toc.1-1.2.2.2.1"><a href="#section-2.2" class="auto internal xref">2.2</a>.  <a href="#name-examples-demonstrating-the-" class="internal xref">Examples Demonstrating the Updated String Syntaxes</a></p>
 </li>
             </ul>
 </li>
@@ -1200,10 +1202,21 @@ other small fixes for the ABNF grammar defined for CDDL there.<a href="#section-
             <p id="section-toc.1-1.7.1"><a href="#appendix-A" class="auto internal xref">Appendix A</a>.  <a href="#name-updated-collected-abnf-for-" class="internal xref">Updated Collected ABNF for CDDL</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8">
-            <p id="section-toc.1-1.8.1"><a href="#appendix-B" class="auto internal xref"></a><a href="#name-acknowledgments" class="internal xref">Acknowledgments</a></p>
+            <p id="section-toc.1-1.8.1"><a href="#appendix-B" class="auto internal xref">Appendix B</a>.  <a href="#name-details-about-covering-erra" class="internal xref">Details about Covering Errata Report 6543</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8.2.1">
+                <p id="section-toc.1-1.8.2.1.1"><a href="#appendix-B.1" class="auto internal xref"></a><a href="#name-change-proposed-by-errata-r" class="internal xref">Change Proposed By Errata Report 6543</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8.2.2">
+                <p id="section-toc.1-1.8.2.2.1"><a href="#appendix-B.2" class="auto internal xref"></a><a href="#name-no-further-change-needed-af" class="internal xref">No Further Change Needed After Updating String Literal Grammar (Section 2.1)</a></p>
+</li>
+            </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9">
-            <p id="section-toc.1-1.9.1"><a href="#appendix-C" class="auto internal xref"></a><a href="#name-authors-address" class="internal xref">Author's Address</a></p>
+            <p id="section-toc.1-1.9.1"><a href="#appendix-C" class="auto internal xref"></a><a href="#name-acknowledgments" class="internal xref">Acknowledgments</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10">
+            <p id="section-toc.1-1.10.1"><a href="#appendix-D" class="auto internal xref"></a><a href="#name-authors-address" class="internal xref">Author's Address</a></p>
 </li>
         </ul>
 </nav>
@@ -1222,7 +1235,7 @@ JSON.<a href="#section-1-1" class="pilcrow">¶</a></p>
 <p id="section-1-2">The present document updates <span>[<a href="#RFC8610" class="cite xref">RFC8610</a>]</span> by addressing errata and making
 other small fixes for the ABNF grammar defined for CDDL there.
 The body of this document motivates and explains the updates; the
-updated collected ABNF syntax in <a href="#collected-abnf" class="auto internal xref">Figure 14</a> in
+updated collected ABNF syntax in <a href="#collected-abnf" class="auto internal xref">Figure 11</a> in
 <a href="#collected-abnf-appendix" class="auto internal xref">Appendix A</a> replaces the collected ABNF syntax in
 <span><a href="https://rfc-editor.org/rfc/rfc8610#appendix-B" class="relref">Appendix B</a> of [<a href="#RFC8610" class="cite xref">RFC8610</a>]</span>.<a href="#section-1-2" class="pilcrow">¶</a></p>
 <div id="conventions-and-definitions">
@@ -1258,14 +1271,19 @@ with existing implementations until these are updated, which this
 specification recommends).<a href="#section-2-2" class="pilcrow">¶</a></p>
 <div id="e6527">
 <section id="section-2.1">
-        <h3 id="name-err6527-text-string-literal">
-<a href="#section-2.1" class="section-number selfRef">2.1. </a><a href="#name-err6527-text-string-literal" class="section-name selfRef">Err6527 (text string literals)</a>
+        <h3 id="name-updates-to-string-literal-g">
+<a href="#section-2.1" class="section-number selfRef">2.1. </a><a href="#name-updates-to-string-literal-g" class="section-name selfRef">Updates to String Literal Grammar</a>
         </h3>
-<p id="section-2.1-1">The ABNF used in <span>[<a href="#RFC8610" class="cite xref">RFC8610</a>]</span> for the content of text string literals
-is rather permissive:<a href="#section-2.1-1" class="pilcrow">¶</a></p>
-<span id="name-old-abnf-for-strings-with-p"></span><div id="e6527-old1">
+<div id="err6527-text-string-literals">
+<section id="section-2.1.1">
+          <h4 id="name-err6527-text-string-literal">
+<a href="#name-err6527-text-string-literal" class="section-name selfRef">Err6527 (Text String Literals)</a>
+          </h4>
+<p id="section-2.1.1-1">The ABNF used in <span>[<a href="#RFC8610" class="cite xref">RFC8610</a>]</span> for the content of text string literals
+is rather permissive:<a href="#section-2.1.1-1" class="pilcrow">¶</a></p>
+<span id="name-original-rfc-8610-abnf-for-"></span><div id="e6527-orig1">
 <figure id="figure-1">
-          <div class="lang-abnf sourcecode" id="section-2.1-2.1">
+            <div class="lang-abnf sourcecode" id="section-2.1.1-2.1">
 <pre>
 ; RFC 8610 ABNF:
 text = %x22 *SCHAR %x22
@@ -1274,26 +1292,26 @@ SESC = "\" (%x20-7E / %x80-10FFFD)
 </pre>
 </div>
 <figcaption><a href="#figure-1" class="selfRef">Figure 1</a>:
-<a href="#name-old-abnf-for-strings-with-p" class="selfRef">Old ABNF for strings with permissive ABNF for SESC, but not allowing hex escapes</a>
-          </figcaption></figure>
+<a href="#name-original-rfc-8610-abnf-for-" class="selfRef">Original RFC 8610 ABNF for strings with permissive ABNF for SESC, but not allowing hex escapes</a>
+            </figcaption></figure>
 </div>
-<p id="section-2.1-3">This allows almost any non-C0 character to be escaped by a backslash,
+<p id="section-2.1.1-3">This allows almost any non-C0 character to be escaped by a backslash,
 but critically misses out on the <code>\uXXXX</code> and <code>\uHHHH\uLLLL</code> forms
 that JSON allows to specify characters in hex (which should be
 applying here according to Bullet 6 of <span><a href="https://rfc-editor.org/rfc/rfc8610#section-3.1" class="relref">Section 3.1</a> of [<a href="#RFC8610" class="cite xref">RFC8610</a>]</span>).
 (Note that CDDL imports from JSON the unwieldy <code>\uHHHH\uLLLL</code> syntax,
 which represents Unicode code points beyond U+FFFF by making them look
 like UTF-16 surrogate pairs; CDDL text strings are not using UTF-16 or
-surrogates.)<a href="#section-2.1-3" class="pilcrow">¶</a></p>
-<p id="section-2.1-4">Both can be solved by updating the SESC rule.
+surrogates.)<a href="#section-2.1.1-3" class="pilcrow">¶</a></p>
+<p id="section-2.1.1-4">Both can be solved by updating the SESC rule.
 This document uses the opportunity to add a popular form of directly specifying
 characters in strings using hexadecimal escape sequences of the form
 <code>\u{hex}</code>, where <code>hex</code> is the hexadecimal representation of the
 Unicode scalar value.
-The result is the new set of rules defining SESC in <a href="#e6527-new1" class="auto internal xref">Figure 2</a>:<a href="#section-2.1-4" class="pilcrow">¶</a></p>
-<span id="name-updated-string-abnf-to-allo"></span><div id="e6527-new1">
+The result is the new set of rules defining SESC in <a href="#e6527-new1" class="auto internal xref">Figure 2</a>:<a href="#section-2.1.1-4" class="pilcrow">¶</a></p>
+<span id="name-update-to-string-abnf-in-ap"></span><div id="e6527-new1">
 <figure id="figure-2">
-          <div class="lang-abnf sourcecode" id="section-2.1-5.1">
+            <div class="lang-abnf sourcecode" id="section-2.1.1-5.1">
 <pre>
 ; new rules collectively defining SESC:
 SESC = "\" ( %x22 / "/" / "\" /                 ; \" \/ \\
@@ -1311,20 +1329,20 @@ HEXDIG1 = DIGIT1 / "A" / "B" / "C" / "D" / "E" / "F"
 </pre>
 </div>
 <figcaption><a href="#figure-2" class="selfRef">Figure 2</a>:
-<a href="#name-updated-string-abnf-to-allo" class="selfRef">Updated string ABNF to allow hex escapes</a>
-          </figcaption></figure>
+<a href="#name-update-to-string-abnf-in-ap" class="selfRef">Update to string ABNF in Appendix B of RFC 8610: allow hex escapes</a>
+            </figcaption></figure>
 </div>
-<p id="section-2.1-6">(Notes:
+<p id="section-2.1.1-6">(Notes:
 In ABNF, strings such as <code>"A"</code>, <code>"B"</code> etc. are case-insensitive, as is
 intended here.
 The rules above could, instead of <code>%x62</code>, also have used <code>%s"b"</code> etc., but didn't, in order to
-maximize ABNF tool compatibility.)<a href="#section-2.1-6" class="pilcrow">¶</a></p>
-<p id="section-2.1-7">Now that SESC is more restrictively formulated, this also requires an
+maximize ABNF tool compatibility.)<a href="#section-2.1.1-6" class="pilcrow">¶</a></p>
+<p id="section-2.1.1-7">Now that SESC is more restrictively formulated, this also requires an
 update to the BCHAR rule used in the ABNF syntax for byte string
-literals:<a href="#section-2.1-7" class="pilcrow">¶</a></p>
-<span id="name-old-abnf-for-bchar"></span><div id="e6527-old2">
+literals:<a href="#section-2.1.1-7" class="pilcrow">¶</a></p>
+<span id="name-original-rfc-8610-abnf-for-b"></span><div id="e6527-orig2">
 <figure id="figure-3">
-          <div class="lang-abnf sourcecode" id="section-2.1-8.1">
+            <div class="lang-abnf sourcecode" id="section-2.1.1-8.1">
 <pre>
 ; RFC 8610 ABNF:
 bytes = [bsqual] %x27 *BCHAR %x27
@@ -1333,12 +1351,19 @@ bsqual = "h" / "b64"
 </pre>
 </div>
 <figcaption><a href="#figure-3" class="selfRef">Figure 3</a>:
-<a href="#name-old-abnf-for-bchar" class="selfRef">Old ABNF for BCHAR</a>
-          </figcaption></figure>
+<a href="#name-original-rfc-8610-abnf-for-b" class="selfRef">Original RFC 8610 ABNF for BCHAR</a>
+            </figcaption></figure>
 </div>
-<p id="section-2.1-9">With the SESC updated as above, <code>\'</code> is no longer allowed in BCHAR;
-this now needs to be explicitly included.<a href="#section-2.1-9" class="pilcrow">¶</a></p>
-<p id="section-2.1-10">Updating BCHAR also provides an opportunity to address <span>[<a href="#Err6278" class="cite xref">Err6278</a>]</span>,
+<p id="section-2.1.1-9">With the SESC updated as above, <code>\'</code> is no longer allowed in BCHAR;
+this now needs to be explicitly included; see below.<a href="#section-2.1.1-9" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="e6278">
+<section id="section-2.1.2">
+          <h4 id="name-err6278-consistent-string-l">
+<a href="#name-err6278-consistent-string-l" class="section-name selfRef">Err6278 (Consistent String Literals)</a>
+          </h4>
+<p id="section-2.1.2-1">Updating BCHAR also provides an opportunity to address <span>[<a href="#Err6278" class="cite xref">Err6278</a>]</span>,
 which points to an inconsistency in treating U+007F (DEL) between SCHAR and
 BCHAR.
 As U+007F is not printable, including it in a byte string literal is
@@ -1348,12 +1373,12 @@ The same reasoning also applies to the C1 control characters,
 so the updated ABNF actually excludes the entire range from U+007F to U+009F.
 The same reasoning then also applies to text in comments (PCHAR).
 For completeness, all these should also explicitly exclude the code
-points that have been set aside for UTF-16's surrogates.<a href="#section-2.1-10" class="pilcrow">¶</a></p>
-<span id="name-updated-abnf-for-bchar-scha"></span><div id="e6527-new2">
+points that have been set aside for UTF-16's surrogates.<a href="#section-2.1.2-1" class="pilcrow">¶</a></p>
+<span id="name-update-to-abnf-in-appendix-"></span><div id="e6527-new2">
 <figure id="figure-4">
-          <div class="lang-abnf sourcecode" id="section-2.1-11.1">
+            <div class="lang-abnf sourcecode" id="section-2.1.2-2.1">
 <pre>
-; new rules for BCHAR and SCHAR:
+; new rules for SCHAR, BCHAR, and PCHAR:
 SCHAR = %x20-21 / %x23-5B / %x5D-7E / NONASCII / SESC
 BCHAR = %x20-26 / %x28-5B / %x5D-7E / NONASCII / SESC / "\'" / CRLF
 PCHAR = %x20-7E / NONASCII
@@ -1361,131 +1386,42 @@ NONASCII = %xA0-D7FF / %xE000-10FFFD
 </pre>
 </div>
 <figcaption><a href="#figure-4" class="selfRef">Figure 4</a>:
-<a href="#name-updated-abnf-for-bchar-scha" class="selfRef">Updated ABNF for BCHAR, SCHAR, and PCHAR</a>
-          </figcaption></figure>
+<a href="#name-update-to-abnf-in-appendix-" class="selfRef">Update to ABNF in Appendix B of RFC 8610: BCHAR, SCHAR, and PCHAR</a>
+            </figcaption></figure>
 </div>
-<p id="section-2.1-12">(Note that, apart from addressing the inconsistencies, there is no
+<p id="section-2.1.2-3">(Note that, apart from addressing the inconsistencies, there is no
 attempt to further exclude non-printable characters from the ABNF;
 doing this properly would draw in complexity from the ongoing
-evolution of the Unicode standard that is not needed here.)<a href="#section-2.1-12" class="pilcrow">¶</a></p>
+evolution of the Unicode standard that is not needed here.)<a href="#section-2.1.2-3" class="pilcrow">¶</a></p>
 </section>
 </div>
-<div id="err6543-byte-string-literals">
+<div id="addressing-err6526-err6543">
+<section id="section-2.1.3">
+          <h4 id="name-addressing-err6526-err6543">
+<a href="#name-addressing-err6526-err6543" class="section-name selfRef">Addressing Err6526, Err6543</a>
+          </h4>
+<p id="section-2.1.3-1">The above changes also cover <span>[<a href="#Err6543" class="cite xref">Err6543</a>]</span> (a proposal to split off
+qualified byte string literals from UTF-8 byte string literals) and
+<span>[<a href="#Err6526" class="cite xref">Err6526</a>]</span> (lost backslashes); see <a href="#Err6543-covered" class="auto internal xref">Appendix B</a> for details.<a href="#section-2.1.3-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+</section>
+</div>
+<div id="examples-demonstrating-the-updated-string-syntaxes">
 <section id="section-2.2">
-        <h3 id="name-err6543-byte-string-literal">
-<a href="#section-2.2" class="section-number selfRef">2.2. </a><a href="#name-err6543-byte-string-literal" class="section-name selfRef">Err6543 (byte string literals)</a>
+        <h3 id="name-examples-demonstrating-the-">
+<a href="#section-2.2" class="section-number selfRef">2.2. </a><a href="#name-examples-demonstrating-the-" class="section-name selfRef">Examples Demonstrating the Updated String Syntaxes</a>
         </h3>
-<p id="section-2.2-1">The ABNF used in <span>[<a href="#RFC8610" class="cite xref">RFC8610</a>]</span> for the content of byte string literals
-lumps together byte strings notated as text with byte strings notated
-in base16 (hex) or base64 (but see also updated BCHAR rule above):<a href="#section-2.2-1" class="pilcrow">¶</a></p>
-<span id="name-old-abnf-for-bchar-2"></span><div id="e6527-old2a">
-<figure id="figure-5">
-          <div class="lang-abnf sourcecode" id="section-2.2-2.1">
-<pre>
-; RFC 8610 ABNF:
-bytes = [bsqual] %x27 *BCHAR %x27
-BCHAR = %x20-26 / %x28-5B / %x5D-10FFFD / SESC / CRLF
-</pre>
-</div>
-<figcaption><a href="#figure-5" class="selfRef">Figure 5</a>:
-<a href="#name-old-abnf-for-bchar-2" class="selfRef">Old ABNF for BCHAR</a>
-          </figcaption></figure>
-</div>
-<div id="change-proposed-by-errata-report-6543">
-<section id="section-2.2.1">
-          <h4 id="name-change-proposed-by-errata-r">
-<a href="#name-change-proposed-by-errata-r" class="section-name selfRef">Change proposed by Errata Report 6543</a>
-          </h4>
-<p id="section-2.2.1-1">Errata report 6543 proposes to handle the two cases in separate
-ABNF rules (where, with an updated SESC, BCHAR obviously needs to be
-updated as above):<a href="#section-2.2.1-1" class="pilcrow">¶</a></p>
-<span id="name-errata-report-8653-proposal"></span><div id="e6543-1">
-<figure id="figure-6">
-            <div class="lang-abnf sourcecode" id="section-2.2.1-2.1">
-<pre>
-; Err6543 proposal:
-bytes = %x27 *BCHAR %x27
-      / bsqual %x27 *QCHAR %x27
-BCHAR = %x20-26 / %x28-5B / %x5D-10FFFD / SESC / CRLF
-QCHAR = DIGIT / ALPHA / "+" / "/" / "-" / "_" / "=" / WS
-</pre>
-</div>
-<figcaption><a href="#figure-6" class="selfRef">Figure 6</a>:
-<a href="#name-errata-report-8653-proposal" class="selfRef">Errata Report 8653 Proposal to Split the Byte String Rules</a>
-            </figcaption></figure>
-</div>
-<p id="section-2.2.1-3">This potentially causes a subtle change, which is hidden in the WS rule:<a href="#section-2.2.1-3" class="pilcrow">¶</a></p>
-<span id="name-abnf-definition-of-ws-from-"></span><div id="e6543-2">
-<figure id="figure-7">
-            <div class="lang-abnf sourcecode" id="section-2.2.1-4.1">
-<pre>
-; RFC 8610 ABNF:
-WS = SP / NL
-SP = %x20
-NL = COMMENT / CRLF
-COMMENT = ";" *PCHAR CRLF
-PCHAR = %x20-7E / %x80-10FFFD
-CRLF = %x0A / %x0D.0A
-</pre>
-</div>
-<figcaption><a href="#figure-7" class="selfRef">Figure 7</a>:
-<a href="#name-abnf-definition-of-ws-from-" class="selfRef">ABNF definition of WS from RFC 8610</a>
-            </figcaption></figure>
-</div>
-<p id="section-2.2.1-5">This allows any non-C0 character in a comment, so this fragment
-becomes possible:<a href="#section-2.2.1-5" class="pilcrow">¶</a></p>
-<div class="lang-cddl sourcecode" id="section-2.2.1-6">
-<pre>
-foo = h'
-   43424F52 ; 'CBOR'
-   0A       ; LF, but don't use CR!
-'
-</pre><a href="#section-2.2.1-6" class="pilcrow">¶</a>
-</div>
-<p id="section-2.2.1-7">The current text is not unambiguously saying whether the three apostrophes
-need to be escaped with a <code>\</code> or not, as in:<a href="#section-2.2.1-7" class="pilcrow">¶</a></p>
-<div class="lang-cddl sourcecode" id="section-2.2.1-8">
-<pre>
-foo = h'
-   43424F52 ; \'CBOR\'
-   0A       ; LF, but don\'t use CR!
-'
-</pre><a href="#section-2.2.1-8" class="pilcrow">¶</a>
-</div>
-<p id="section-2.2.1-9">... which would be supported by the existing ABNF in <span>[<a href="#RFC8610" class="cite xref">RFC8610</a>]</span>.<a href="#section-2.2.1-9" class="pilcrow">¶</a></p>
-</section>
-</div>
-<div id="no-change-needed-after-addressing-e6527-section-e6527">
-<section id="section-2.2.2">
-          <h4 id="name-no-change-needed-after-addr">
-<a href="#name-no-change-needed-after-addr" class="section-name selfRef">No change needed after addressing <span class="cite xref">Err6527 (text string literals)</span> (Section <span class="cite xref">2.1</span>)</a>
-          </h4>
-<p id="section-2.2.2-1">This document takes the simpler approach of leaving the processing of
-the content of the byte string literal to a semantic step after
-processing the syntax of the <code>bytes</code>/<code>BCHAR</code> rules as updated by
-<a href="#e6527-new1" class="auto internal xref">Figure 2</a> and <a href="#e6527-new2" class="auto internal xref">Figure 4</a>.<a href="#section-2.2.2-1" class="pilcrow">¶</a></p>
-<p id="section-2.2.2-2">The rules in <a href="#e6543-2" class="auto internal xref">Figure 7</a> are therefore applied to the result of this
-processing where <code>bsqual</code> is given as <code>h</code> or <code>b64</code>.<a href="#section-2.2.2-2" class="pilcrow">¶</a></p>
-<p id="section-2.2.2-3">Note that this approach also works well with the use of byte strings
-in <span><a href="https://rfc-editor.org/rfc/rfc9165#section-3" class="relref">Section 3</a> of [<a href="#RFC9165" class="cite xref">RFC9165</a>]</span>.
-It does require some care when copy-pasting into CDDL models from ABNF
-that contains single quotes (which may also hide as apostrophes
-in comments); these need to be escaped or possibly replaced by <code>%x27</code>.<a href="#section-2.2.2-3" class="pilcrow">¶</a></p>
-<p id="section-2.2.2-4">Finally, our approach lends support to extending <code>bsqual</code> in CDDL
-similar to the way this is done for CBOR diagnostic notation in <span>[<a href="#I-D.ietf-cbor-edn-literals" class="cite xref">I-D.ietf-cbor-edn-literals</a>]</span>.
-(Note that the processing of string literals now is quite similar between
-CDDL and EDN, except that CDDL has "<code>;</code>"-based end-of-line comments, while EDN has
-two comment syntaxes, in-line "<code>/</code>"-based and end-of-line "<code>#</code>"-based.)<a href="#section-2.2.2-4" class="pilcrow">¶</a></p>
-<p id="section-2.2.2-5">The CDDL example in <a href="#string-examples" class="auto internal xref">Figure 8</a> demonstrates various escaping
-techniques.
+<p id="section-2.2-1">The CDDL example in <a href="#string-examples" class="auto internal xref">Figure 5</a> demonstrates various escaping
+techniques now available for (byte and text) strings in CDDL.
 Obviously in the literals for <code>a</code> and <code>x</code>, there is no need to escape
 the second character, an <code>o</code>, as <code>\u{6f}</code>; this is just for demonstration.
 Similarly, as shown in <code>c</code> and <code>z</code> there also is no need to escape the
 <code>🁳</code> or <code>⌘</code>, but escaping them may be convenient in order to limit the character
-repertoire of a CDDL file itself to ASCII <span>[<a href="#STD80" class="cite xref">STD80</a>]</span>.<a href="#section-2.2.2-5" class="pilcrow">¶</a></p>
+repertoire of a CDDL file itself to ASCII <span>[<a href="#STD80" class="cite xref">STD80</a>]</span>.<a href="#section-2.2-1" class="pilcrow">¶</a></p>
 <span id="name-example-text-and-byte-strin"></span><div id="string-examples">
-<figure id="figure-8">
-            <div class="lang-cddl sourcecode" id="section-2.2.2-6.1">
+<figure id="figure-5">
+          <div class="lang-cddl sourcecode" id="section-2.2-2.1">
 <pre>
 start = [a, b, c, x, y, z]
 
@@ -1501,18 +1437,18 @@ y = 'Domino\'s \uD83C\uDC73 + \u2318'         ; escape JSON-like
 z = 'Domino\'s 🁳 + ⌘'                         ; escape ' only
 </pre>
 </div>
-<figcaption><a href="#figure-8" class="selfRef">Figure 8</a>:
+<figcaption><a href="#figure-5" class="selfRef">Figure 5</a>:
 <a href="#name-example-text-and-byte-strin" class="selfRef">Example text and byte string literals with various escaping techniques</a>
-            </figcaption></figure>
+          </figcaption></figure>
 </div>
-<p id="section-2.2.2-7">In this example, the rules a to c and x to z all produce strings with
+<p id="section-2.2-3">In this example, the rules a to c and x to z all produce strings with
 byte-wise identical content, where a to c are text strings, and x to z
 are byte strings.
-<a href="#string-examples-pretty" class="auto internal xref">Figure 9</a> illustrates this by showing the output generated from
-the <code>start</code> rule in <a href="#string-examples" class="auto internal xref">Figure 8</a>, using pretty-printed hexadecimal.<a href="#section-2.2.2-7" class="pilcrow">¶</a></p>
+<a href="#string-examples-pretty" class="auto internal xref">Figure 6</a> illustrates this by showing the output generated from
+the <code>start</code> rule in <a href="#string-examples" class="auto internal xref">Figure 5</a>, using pretty-printed hexadecimal.<a href="#section-2.2-3" class="pilcrow">¶</a></p>
 <span id="name-generated-cbor-from-cddl-ex"></span><div id="string-examples-pretty">
-<figure id="figure-9">
-            <div class="lang-cbor-pretty sourcecode" id="section-2.2.2-8.1">
+<figure id="figure-6">
+          <div class="lang-cbor-pretty sourcecode" id="section-2.2-4.1">
 <pre>
 86                                      # array(6)
    73                                   # text(19)
@@ -1529,11 +1465,9 @@ the <code>start</code> rule in <a href="#string-examples" class="auto internal x
       446f6d696e6f277320f09f81b3202b20e28c98 # "Domino's 🁳 + ⌘"
 </pre>
 </div>
-<figcaption><a href="#figure-9" class="selfRef">Figure 9</a>:
-<a href="#name-generated-cbor-from-cddl-ex" class="selfRef">Generated CBOR from CDDL example</a>
-            </figcaption></figure>
-</div>
-</section>
+<figcaption><a href="#figure-6" class="selfRef">Figure 6</a>:
+<a href="#name-generated-cbor-from-cddl-ex" class="selfRef">Generated CBOR from CDDL example (Pretty-Printed Hexadecimal)</a>
+          </figcaption></figure>
 </div>
 </section>
 </div>
@@ -1557,16 +1491,16 @@ implementations.<a href="#section-3-1" class="pilcrow">¶</a></p>
 <a href="#section-3.1" class="section-number selfRef">3.1. </a><a href="#name-empty-data-models" class="section-name selfRef">Empty data models</a>
         </h3>
 <p id="section-3.1-1"><span>[<a href="#RFC8610" class="cite xref">RFC8610</a>]</span> requires a CDDL file to have at least one rule.<a href="#section-3.1-1" class="pilcrow">¶</a></p>
-<span id="name-old-abnf-for-top-level-rule"></span><div id="empty-old">
-<figure id="figure-10">
+<span id="name-original-rfc-8610-abnf-for-t"></span><div id="empty-orig">
+<figure id="figure-7">
           <div class="lang-abnf sourcecode" id="section-3.1-2.1">
 <pre>
 ; RFC 8610 ABNF:
 cddl = S 1*(rule S)
 </pre>
 </div>
-<figcaption><a href="#figure-10" class="selfRef">Figure 10</a>:
-<a href="#name-old-abnf-for-top-level-rule" class="selfRef">Old ABNF for top-level rule cddl</a>
+<figcaption><a href="#figure-7" class="selfRef">Figure 7</a>:
+<a href="#name-original-rfc-8610-abnf-for-t" class="selfRef">Original RFC 8610 ABNF for top-level rule cddl</a>
           </figcaption></figure>
 </div>
 <p id="section-3.1-3">This makes sense when the file has to stand alone, as a CDDL data
@@ -1577,19 +1511,19 @@ and these might be the source of all the rules that
 ultimately make up the module created by the file.
 Any other rule content in the file has to be available for directive
 processing, making the requirement for at least one rule cumbersome.<a href="#section-3.1-4" class="pilcrow">¶</a></p>
-<p id="section-3.1-5">Therefore, the present update extends the grammar as in <a href="#empty-new" class="auto internal xref">Figure 11</a>
+<p id="section-3.1-5">Therefore, the present update extends the grammar as in <a href="#empty-new" class="auto internal xref">Figure 8</a>
 and turns the existence of at least one rule into a semantic constraint, to
 be fulfilled after processing of all directives.<a href="#section-3.1-5" class="pilcrow">¶</a></p>
-<span id="name-updated-abnf-for-top-level-"></span><div id="empty-new">
-<figure id="figure-11">
+<span id="name-update-to-top-level-abnf-in"></span><div id="empty-new">
+<figure id="figure-8">
           <div class="lang-abnf sourcecode" id="section-3.1-6.1">
 <pre>
 ; new top-level rule:
 cddl = S *(rule S)
 </pre>
 </div>
-<figcaption><a href="#figure-11" class="selfRef">Figure 11</a>:
-<a href="#name-updated-abnf-for-top-level-" class="selfRef">Updated ABNF for top-level rule cddl</a>
+<figcaption><a href="#figure-8" class="selfRef">Figure 8</a>:
+<a href="#name-update-to-top-level-abnf-in" class="selfRef">Update to top-level ABNF in Appendices B and C of RFC 8610</a>
           </figcaption></figure>
 </div>
 </section>
@@ -1600,16 +1534,16 @@ cddl = S *(rule S)
 <a href="#section-3.2" class="section-number selfRef">3.2. </a><a href="#name-non-literal-tag-numbers-sim" class="section-name selfRef">Non-literal Tag Numbers, Simple Values</a>
         </h3>
 <p id="section-3.2-1">The existing ABNF syntax for expressing tags in CDDL is:<a href="#section-3.2-1" class="pilcrow">¶</a></p>
-<span id="name-old-abnf-for-tag-syntax"></span><div id="tag-old">
-<figure id="figure-12">
+<span id="name-original-rfc-8610-abnf-for-ta"></span><div id="tag-orig">
+<figure id="figure-9">
           <div class="lang-abnf sourcecode" id="section-3.2-2.1">
 <pre>
 ; extracted from RFC 8610 ABNF:
 type2 =/ "#" "6" ["." uint] "(" S type S ")"
 </pre>
 </div>
-<figcaption><a href="#figure-12" class="selfRef">Figure 12</a>:
-<a href="#name-old-abnf-for-tag-syntax" class="selfRef">Old ABNF for tag syntax</a>
+<figcaption><a href="#figure-9" class="selfRef">Figure 9</a>:
+<a href="#name-original-rfc-8610-abnf-for-ta" class="selfRef">Original RFC 8610 ABNF for tag syntax</a>
           </figcaption></figure>
 </div>
 <p id="section-3.2-3">This means tag numbers can only be given as literal numbers (uints).
@@ -1619,8 +1553,8 @@ has a range of tag numbers 1668546817 (0x63740101) to 1668612095
 This can currently not be expressed in CDDL.
 Similar considerations apply to simple values (<code>#7.</code>xx).<a href="#section-3.2-3" class="pilcrow">¶</a></p>
 <p id="section-3.2-4">This update extends the syntax to:<a href="#section-3.2-4" class="pilcrow">¶</a></p>
-<span id="name-updated-abnf-for-tag-and-si"></span><div id="tag-new">
-<figure id="figure-13">
+<span id="name-update-to-tag-and-simple-va"></span><div id="tag-new">
+<figure id="figure-10">
           <div class="lang-abnf sourcecode" id="section-3.2-5.1">
 <pre>
 ; new rules collectively defining the tagged case:
@@ -1629,8 +1563,8 @@ type2 =/ "#" "6" ["." head-number] "(" S type S ")"
 head-number = uint / ("&lt;" type "&gt;")
 </pre>
 </div>
-<figcaption><a href="#figure-13" class="selfRef">Figure 13</a>:
-<a href="#name-updated-abnf-for-tag-and-si" class="selfRef">Updated ABNF for tag and simple value syntaxes</a>
+<figcaption><a href="#figure-10" class="selfRef">Figure 10</a>:
+<a href="#name-update-to-tag-and-simple-va" class="selfRef">Update to tag and simple value ABNF in Appendices B and C of RFC 8610</a>
           </figcaption></figure>
 </div>
 <p id="section-3.2-6">For <code>#6</code>, the <code>head-number</code> stands for the tag number.
@@ -1712,6 +1646,7 @@ the same care as any other source code.<a href="#section-4-2" class="pilcrow">¶
 <p id="section-5-1">This document has no IANA actions.<a href="#section-5-1" class="pilcrow">¶</a></p>
 </section>
 </div>
+<div id="sec-combined-references">
 <section id="section-6">
       <h2 id="name-references">
 <a href="#section-6" class="section-number selfRef">6. </a><a href="#name-references" class="section-name selfRef">References</a>
@@ -1773,11 +1708,11 @@ the same care as any other source code.<a href="#section-4-2" class="pilcrow">¶
 <dd class="break"></dd>
 <dt id="I-D.ietf-cbor-cddl-modules">[I-D.ietf-cbor-cddl-modules]</dt>
         <dd>
-<span class="refAuthor">Bormann, C.</span> and <span class="refAuthor">B. Moran</span>, <span class="refTitle">"CDDL Module Structure"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-cbor-cddl-modules-02</span>, <time datetime="2024-03-04" class="refDate">4 March 2024</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-cbor-cddl-modules-02">https://datatracker.ietf.org/doc/html/draft-ietf-cbor-cddl-modules-02</a>&gt;</span>. </dd>
+<span class="refAuthor">Bormann, C.</span> and <span class="refAuthor">B. Moran</span>, <span class="refTitle">"CDDL Module Structure"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-cbor-cddl-modules-03</span>, <time datetime="2024-09-01" class="refDate">1 September 2024</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-cbor-cddl-modules-03">https://datatracker.ietf.org/doc/html/draft-ietf-cbor-cddl-modules-03</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="I-D.ietf-cbor-edn-literals">[I-D.ietf-cbor-edn-literals]</dt>
         <dd>
-<span class="refAuthor">Bormann, C.</span>, <span class="refTitle">"CBOR Extended Diagnostic Notation (EDN): Application-Oriented Literals, ABNF, and Media Type"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-cbor-edn-literals-09</span>, <time datetime="2024-05-18" class="refDate">18 May 2024</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-cbor-edn-literals-09">https://datatracker.ietf.org/doc/html/draft-ietf-cbor-edn-literals-09</a>&gt;</span>. </dd>
+<span class="refAuthor">Bormann, C.</span>, <span class="refTitle">"CBOR Extended Diagnostic Notation (EDN)"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-cbor-edn-literals-12</span>, <time datetime="2024-09-01" class="refDate">1 September 2024</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-cbor-edn-literals-12">https://datatracker.ietf.org/doc/html/draft-ietf-cbor-edn-literals-12</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC7405">[RFC7405]</dt>
         <dd>
@@ -1803,6 +1738,7 @@ the same care as any other source code.<a href="#section-4-2" class="pilcrow">¶
 </section>
 </div>
 </section>
+</div>
 <div id="collected-abnf-appendix">
 <section id="appendix-A">
       <h2 id="name-updated-collected-abnf-for-">
@@ -1812,7 +1748,7 @@ the same care as any other source code.<a href="#section-4-2" class="pilcrow">¶
 <p id="appendix-A-2">It provides the full ABNF from <span>[<a href="#RFC8610" class="cite xref">RFC8610</a>]</span> with the updates
 applied in the present document.<a href="#appendix-A-2" class="pilcrow">¶</a></p>
 <span id="name-abnf-for-cddl-as-updated"></span><div id="collected-abnf">
-<figure id="figure-14">
+<figure id="figure-11">
         <div class="breakable lang-abnf sourcecode" id="appendix-A-3.1">
 <pre>
 cddl = S *(rule S)
@@ -1927,26 +1863,142 @@ NONASCII = %xA0-D7FF / %xE000-10FFFD
 CRLF = %x0A / %x0D.0A
 </pre>
 </div>
-<figcaption><a href="#figure-14" class="selfRef">Figure 14</a>:
+<figcaption><a href="#figure-11" class="selfRef">Figure 11</a>:
 <a href="#name-abnf-for-cddl-as-updated" class="selfRef">ABNF for CDDL as updated</a>
         </figcaption></figure>
 </div>
 </section>
 </div>
-<div id="acknowledgments">
+<div id="Err6543-covered">
 <section id="appendix-B">
+      <h2 id="name-details-about-covering-erra">
+<a href="#appendix-B" class="section-number selfRef">Appendix B. </a><a href="#name-details-about-covering-erra" class="section-name selfRef">Details about Covering Errata Report 6543</a>
+      </h2>
+<p id="appendix-B-1">This appendix is informative.<a href="#appendix-B-1" class="pilcrow">¶</a></p>
+<p id="appendix-B-2"><span>[<a href="#Err6543" class="cite xref">Err6543</a>]</span> observes that
+the ABNF used in <span>[<a href="#RFC8610" class="cite xref">RFC8610</a>]</span> for the content of byte string literals
+lumps together byte strings notated as text with byte strings notated
+in base16 (hex) or base64 (but see also updated BCHAR rule in <a href="#e6527-new2" class="auto internal xref">Figure 4</a>):<a href="#appendix-B-2" class="pilcrow">¶</a></p>
+<span id="name-original-rfc-8610-abnf-for-bc"></span><div id="e6527-orig2a">
+<figure id="figure-12">
+        <div class="lang-abnf sourcecode" id="appendix-B-3.1">
+<pre>
+; RFC 8610 ABNF:
+bytes = [bsqual] %x27 *BCHAR %x27
+BCHAR = %x20-26 / %x28-5B / %x5D-10FFFD / SESC / CRLF
+</pre>
+</div>
+<figcaption><a href="#figure-12" class="selfRef">Figure 12</a>:
+<a href="#name-original-rfc-8610-abnf-for-bc" class="selfRef">Original RFC 8610 ABNF for BCHAR</a>
+        </figcaption></figure>
+</div>
+<div id="change-proposed-by-errata-report-6543">
+<section id="appendix-B.1">
+        <h3 id="name-change-proposed-by-errata-r">
+<a href="#name-change-proposed-by-errata-r" class="section-name selfRef">Change Proposed By Errata Report 6543</a>
+        </h3>
+<p id="appendix-B.1-1">Errata report 6543 proposes to handle the two cases in separate
+ABNF rules (where, with an updated SESC, BCHAR obviously needs to be
+updated as above):<a href="#appendix-B.1-1" class="pilcrow">¶</a></p>
+<span id="name-errata-report-8653-proposal"></span><div id="e6543-1">
+<figure id="figure-13">
+          <div class="lang-abnf sourcecode" id="appendix-B.1-2.1">
+<pre>
+; Err6543 proposal:
+bytes = %x27 *BCHAR %x27
+      / bsqual %x27 *QCHAR %x27
+BCHAR = %x20-26 / %x28-5B / %x5D-10FFFD / SESC / CRLF
+QCHAR = DIGIT / ALPHA / "+" / "/" / "-" / "_" / "=" / WS
+</pre>
+</div>
+<figcaption><a href="#figure-13" class="selfRef">Figure 13</a>:
+<a href="#name-errata-report-8653-proposal" class="selfRef">Errata Report 8653 Proposal to Split the Byte String Rules</a>
+          </figcaption></figure>
+</div>
+<p id="appendix-B.1-3">This potentially causes a subtle change, which is hidden in the WS rule:<a href="#appendix-B.1-3" class="pilcrow">¶</a></p>
+<span id="name-abnf-definition-of-ws-from-"></span><div id="e6543-2">
+<figure id="figure-14">
+          <div class="lang-abnf sourcecode" id="appendix-B.1-4.1">
+<pre>
+; RFC 8610 ABNF:
+WS = SP / NL
+SP = %x20
+NL = COMMENT / CRLF
+COMMENT = ";" *PCHAR CRLF
+PCHAR = %x20-7E / %x80-10FFFD
+CRLF = %x0A / %x0D.0A
+</pre>
+</div>
+<figcaption><a href="#figure-14" class="selfRef">Figure 14</a>:
+<a href="#name-abnf-definition-of-ws-from-" class="selfRef">ABNF definition of WS from RFC 8610</a>
+          </figcaption></figure>
+</div>
+<p id="appendix-B.1-5">This allows any non-C0 character in a comment, so this fragment
+becomes possible:<a href="#appendix-B.1-5" class="pilcrow">¶</a></p>
+<div class="lang-cddl sourcecode" id="appendix-B.1-6">
+<pre>
+foo = h'
+   43424F52 ; 'CBOR'
+   0A       ; LF, but don't use CR!
+'
+</pre><a href="#appendix-B.1-6" class="pilcrow">¶</a>
+</div>
+<p id="appendix-B.1-7">The current text is not unambiguously saying whether the three apostrophes
+need to be escaped with a <code>\</code> or not, as in:<a href="#appendix-B.1-7" class="pilcrow">¶</a></p>
+<div class="lang-cddl sourcecode" id="appendix-B.1-8">
+<pre>
+foo = h'
+   43424F52 ; \'CBOR\'
+   0A       ; LF, but don\'t use CR!
+'
+</pre><a href="#appendix-B.1-8" class="pilcrow">¶</a>
+</div>
+<p id="appendix-B.1-9">... which would be supported by the existing ABNF in <span>[<a href="#RFC8610" class="cite xref">RFC8610</a>]</span>.<a href="#appendix-B.1-9" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="no-further-change-needed-after-updating-string-literal-grammar-e6527">
+<section id="appendix-B.2">
+        <h3 id="name-no-further-change-needed-af">
+<a href="#name-no-further-change-needed-af" class="section-name selfRef">No Further Change Needed After Updating String Literal Grammar (<span class="cite xref">Section 2.1</span>)</a>
+        </h3>
+<p id="appendix-B.2-1">This document takes the simpler approach of leaving the processing of
+the content of the byte string literal to a semantic step after
+processing the syntax of the <code>bytes</code>/<code>BCHAR</code> rules, as updated by
+<a href="#e6527-new1" class="auto internal xref">Figure 2</a> and <a href="#e6527-new2" class="auto internal xref">Figure 4</a> in <a href="#e6527" class="auto internal xref">Section 2.1</a> (updates prompted by the combination
+of <span>[<a href="#Err6527" class="cite xref">Err6527</a>]</span> and <span>[<a href="#Err6278" class="cite xref">Err6278</a>]</span>).<a href="#appendix-B.2-1" class="pilcrow">¶</a></p>
+<p id="appendix-B.2-2">The rules in <a href="#e6543-2" class="auto internal xref">Figure 14</a> (as updated by <a href="#e6527-new2" class="auto internal xref">Figure 4</a>) are therefore
+applied to the result of this
+processing where <code>bsqual</code> is given as <code>h</code> or <code>b64</code>.<a href="#appendix-B.2-2" class="pilcrow">¶</a></p>
+<p id="appendix-B.2-3">Note that this approach also works well with the use of byte strings
+in <span><a href="https://rfc-editor.org/rfc/rfc9165#section-3" class="relref">Section 3</a> of [<a href="#RFC9165" class="cite xref">RFC9165</a>]</span>.
+It does require some care when copy-pasting into CDDL models from ABNF
+that contains single quotes (which may also hide as apostrophes
+in comments); these need to be escaped or possibly replaced by <code>%x27</code>.<a href="#appendix-B.2-3" class="pilcrow">¶</a></p>
+<p id="appendix-B.2-4">Finally, the approach taken lends support to extending <code>bsqual</code> in CDDL
+similar to the way this is done for CBOR diagnostic notation in <span>[<a href="#I-D.ietf-cbor-edn-literals" class="cite xref">I-D.ietf-cbor-edn-literals</a>]</span>.
+(Note that the processing of string literals now is quite similar between
+CDDL and EDN, except that CDDL has "<code>;</code>"-based end-of-line comments, while EDN has
+two comment syntaxes, in-line "<code>/</code>"-based and end-of-line "<code>#</code>"-based.)<a href="#appendix-B.2-4" class="pilcrow">¶</a></p>
+</section>
+</div>
+</section>
+</div>
+<div id="acknowledgments">
+<section id="appendix-C">
       <h2 id="name-acknowledgments">
 <a href="#name-acknowledgments" class="section-name selfRef">Acknowledgments</a>
       </h2>
-<p id="appendix-B-1">Many thanks go to the submitters of the errata reports addressed in
+<p id="appendix-C-1">Many thanks go to the submitters of the errata reports addressed in
 this document.
 In one of the ensuing discussions, <span class="contact-name">Doug Ewell</span> proposed to define an
 ABNF rule NONASCII, of which we have included the essence.
-Special thanks to the reviewers <span class="contact-name">Marco Tiloca</span>, <span class="contact-name">Christian Amsüss</span> (shepherd review), and <span class="contact-name">Orie Steele</span> (AD review).<a href="#appendix-B-1" class="pilcrow">¶</a></p>
+Special thanks to the reviewers <span class="contact-name">Marco Tiloca</span>, <span class="contact-name">Christian Amsüss</span> (shepherd review and further guidance), <span class="contact-name">Orie Steele</span> (AD
+review and further guidance), and Éric Vyncke
+(detailed IESG review).<a href="#appendix-C-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="authors-addresses">
-<section id="appendix-C">
+<section id="appendix-D">
       <h2 id="name-authors-address">
 <a href="#name-authors-address" class="section-name selfRef">Author's Address</a>
       </h2>
