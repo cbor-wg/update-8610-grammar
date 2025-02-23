@@ -1,4 +1,3 @@
-*.xml
 *.html
 *.pdf
 *.redxml
@@ -8,9 +7,9 @@
 *~
 .tags
 /*-[0-9][0-9].xml
+/.*.mk
 /.gems/
 /.refcache
-/.targets.mk
 /.venv/
 /.vscode/
 /lib
@@ -18,7 +17,7 @@
 /versioned/
 Gemfile.lock
 archive.json
-draft-bormann-update-8610-grammar.xml
+draft-ietf-cbor-update-8610-grammar.xml
 package-lock.json
 report.xml
 !requirements.txt
