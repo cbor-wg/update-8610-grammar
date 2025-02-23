@@ -8,9 +8,6 @@ This is the working area for the IETF [CBOR Working Group](https://datatracker.i
 * [Compare Editor's Copy to Working Group Draft](https://cbor-wg.github.io/update-8610-grammar/#go.draft-ietf-cbor-update-8610-grammar.diff)
 
 
-[Access to all branches](https://cbor-wg.github.io/update-8610-grammar/)
-
-
 ## Contributing
 
 See the
