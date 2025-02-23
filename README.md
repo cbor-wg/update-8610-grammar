@@ -1,14 +1,11 @@
 # Updates to the CDDL grammar of RFC 8610
 
-This is the working area for the IETF [CBOR Working Group](https://datatracker.ietf.org/wg/cbor/documents/) Internet-Draft, "Updates to the CDDL grammar of RFC 8610".
+This is the working area for the IETF [CBOR Working Group](https://datatracker.ietf.org/group/cbor/documents/) Internet-Draft, "Updates to the CDDL grammar of RFC 8610".
 
 * [Editor's Copy](https://cbor-wg.github.io/update-8610-grammar/#go.draft-ietf-cbor-update-8610-grammar.html)
 * [Datatracker Page](https://datatracker.ietf.org/doc/draft-ietf-cbor-update-8610-grammar)
 * [Working Group Draft](https://datatracker.ietf.org/doc/html/draft-ietf-cbor-update-8610-grammar)
 * [Compare Editor's Copy to Working Group Draft](https://cbor-wg.github.io/update-8610-grammar/#go.draft-ietf-cbor-update-8610-grammar.diff)
-
-
-[Access to all branches](https://cbor-wg.github.io/update-8610-grammar/)
 
 
 ## Contributing
